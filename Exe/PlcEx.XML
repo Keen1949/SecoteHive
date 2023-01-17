@@ -1,0 +1,492 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PlcEx</name>
+    </assembly>
+    <members>
+        <member name="T:PlcEx.DataFormat">
+            <summary>
+            应用于多字节数据的解析或是生成格式
+            </summary>
+        </member>
+        <member name="F:PlcEx.DataFormat.ABCD">
+            <summary>
+            按照顺序排序
+            </summary>
+        </member>
+        <member name="F:PlcEx.DataFormat.BADC">
+            <summary>
+            按照单字反转
+            </summary>
+        </member>
+        <member name="F:PlcEx.DataFormat.CDAB">
+            <summary>
+            按照双字反转
+            </summary>
+        </member>
+        <member name="F:PlcEx.DataFormat.DCBA">
+            <summary>
+            按照倒序排序
+            </summary>
+        </member>
+        <member name="T:PlcEx.PlcBase">
+            <summary>
+            PLC基类
+            </summary>
+        </member>
+        <member name="F:PlcEx.PlcBase.m_bOpen">
+            <summary>
+            指示PLC设备是否打开
+            </summary>
+        </member>
+        <member name="F:PlcEx.PlcBase.m_nIndex">
+            <summary>
+            PLC设备的序号
+            </summary>
+        </member>
+        <member name="F:PlcEx.PlcBase.m_strName">
+            <summary>
+            PLC设备的名称
+            </summary>
+        </member>
+        <member name="P:PlcEx.PlcBase.DataFormat">
+            <summary>
+            获取或设置数据解析的格式，默认DCBA，也即是无修改，可选ABCD,BADC，CDAB，DCBA格式，对于Modbus协议来说，默认ABCD
+            </summary>
+        </member>
+        <member name="M:PlcEx.PlcBase.#ctor(System.Int32,System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="nIndex">索引</param>
+            <param name="strName">名称</param>
+        </member>
+        <member name="M:PlcEx.PlcBase.Open">
+            <summary>
+            连接PLC
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.Close">
+            <summary>
+            断开PLC连接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:PlcEx.PlcBase.IsOpen">
+            <summary>
+            是否连接
+            </summary>
+        </member>
+        <member name="M:PlcEx.PlcBase.Read(System.String,System.Int32,System.Byte[]@)">
+            <summary>
+            读寄存器的值
+            </summary>
+            <param name="address">寄存器地址</param>
+            <param name="nLen">长度</param>
+            <param name="v">寄存器值</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.Write(System.String,System.Byte[])">
+            <summary>
+            写寄存器的值
+            </summary>
+            <param name="address">寄存器地址</param>
+            <param name="v">寄存器值</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.ReadBit(System.String,System.Int32,System.Boolean@)">
+            <summary>
+            读取位寄存器
+            </summary>
+            <param name="address">寄存器地址：X100</param>
+            <param name="bit">bit位</param>
+            <param name="v">寄存器值</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.WriteBit(System.String,System.Int32,System.Boolean)">
+            <summary>
+            写位寄存器
+            </summary>
+            <param name="address">寄存器地址：X100</param>
+            <param name="bit">bit位</param>
+            <param name="v">寄存器值</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.ReadByte(System.String,System.Byte@)">
+            <summary>
+            读字节寄存器
+            </summary>
+            <param name="address">寄存器地址：D100</param>
+            <param name="v">寄存器值</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.WriteByte(System.String,System.Byte)">
+            <summary>
+            写字节寄存器
+            </summary>
+            <param name="address">寄存器地址：D100</param>
+            <param name="v">寄存器值</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.ReadWord(System.String,System.UInt16@)">
+            <summary>
+            读取字寄存器
+            </summary>
+            <param name="address">寄存器地址：D100</param>
+            <param name="v">寄存器值</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.WriteWord(System.String,System.UInt16)">
+            <summary>
+            写字寄存器
+            </summary>
+            <param name="address">寄存器地址：D100</param>
+            <param name="v">寄存器值</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.ReadDWord(System.String,System.UInt32@)">
+            <summary>
+            读取双字寄存器
+            </summary>
+            <param name="address">寄存器地址：D100</param>
+            <param name="v">寄存器值</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.WriteDWord(System.String,System.UInt32)">
+            <summary>
+            写双字寄存器
+            </summary>
+            <param name="address">寄存器地址：D100</param>
+            <param name="v">寄存器值</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.ReadMultWord(System.String,System.UInt16[]@)">
+            <summary>
+            读多个字寄存器
+            </summary>
+            <param name="address">寄存器地址：D100</param>
+            <param name="v">寄存器值</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.WriteMultWord(System.String,System.UInt16[])">
+            <summary>
+            写多个字寄存器
+            </summary>
+            <param name="address">寄存器地址：X100</param>
+            <param name="v">寄存器值</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.ReadMultDWord(System.String,System.UInt32[]@)">
+            <summary>
+            读多个双字寄存器
+            </summary>
+            <param name="address">寄存器地址：D100</param>
+            <param name="v">寄存器值</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.WriteMultDWord(System.String,System.UInt32[])">
+            <summary>
+            写多个双字寄存器
+            </summary>
+            <param name="address">寄存器地址：D100</param>
+            <param name="v">寄存器值</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.ByteTransDataFormat2(System.Byte[],System.Int32)">
+            <summary>
+            反转多字节的数据信息
+            </summary>
+            <param name="value">数据字节</param>
+            <param name="index">起始索引，默认值为0</param>
+            <returns>实际字节信息</returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.ByteTransDataFormat4(System.Byte[],System.Int32)">
+            <summary>
+            反转多字节的数据信息
+            </summary>
+            <param name="value">数据字节</param>
+            <param name="index">起始索引，默认值为0</param>
+            <returns>实际字节信息</returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.ByteTransDataFormat8(System.Byte[],System.Int32)">
+            <summary>
+            反转多字节的数据信息
+            </summary>
+            <param name="value">数据字节</param>
+            <param name="index">起始索引，默认值为0</param>
+            <returns>实际字节信息</returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.ReverseBytes(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            字节反转
+            </summary>
+            <param name="buffer">需要反转的字节</param>
+            <param name="index">起始索引</param>
+            <param name="len">反转字节的长度，-1表示到结尾，长度超过会按照最大长度</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.ReverseBytesToInt16(System.Byte[],System.Int32)">
+            <summary>
+            把缓存区数据反转转换为short
+            </summary>
+            <param name="buffer"></param>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.ReverseBytesToUInt16(System.Byte[],System.Int32)">
+            <summary>
+            把缓存区数据反转转换为ushort
+            </summary>
+            <param name="buffer"></param>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.ReverseBytesToInt32(System.Byte[],System.Int32)">
+            <summary>
+            把缓存区数据反转转换为short
+            </summary>
+            <param name="buffer"></param>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.PlcBase.ReverseBytesToUInt32(System.Byte[],System.Int32)">
+            <summary>
+            把缓存区数据反转转换为ushort
+            </summary>
+            <param name="buffer"></param>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PlcEx.Plc_ModbusTcp">
+            <summary>
+            ModbusTcp
+            </summary>
+        </member>
+        <member name="M:PlcEx.Plc_ModbusTcp.#ctor(System.Int32,System.String,Communicate.TcpLink,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="nIndex"></param>
+            <param name="strName"></param>
+            <param name="t"></param>
+            <param name="nID"></param>
+        </member>
+        <member name="T:PlcEx.OmronFinsDataType">
+            <summary>
+            欧姆龙的Fins协议的数据类型
+            </summary>
+        </member>
+        <member name="M:PlcEx.OmronFinsDataType.#ctor(System.Byte,System.Byte)">
+            <summary>
+            实例化一个Fins的数据类型
+            </summary>
+            <param name="bitCode">进行位操作的指令</param>
+            <param name="wordCode">进行字操作的指令</param>
+        </member>
+        <member name="P:PlcEx.OmronFinsDataType.BitCode">
+            <summary>
+            进行位操作的指令
+            </summary>
+        </member>
+        <member name="P:PlcEx.OmronFinsDataType.WordCode">
+            <summary>
+            进行字操作的指令
+            </summary>
+        </member>
+        <member name="F:PlcEx.OmronFinsDataType.DM">
+            <summary>
+            DM Area
+            </summary>
+        </member>
+        <member name="F:PlcEx.OmronFinsDataType.CIO">
+            <summary>
+            CIO Area
+            </summary>
+        </member>
+        <member name="F:PlcEx.OmronFinsDataType.WR">
+            <summary>
+            Work Area
+            </summary>
+        </member>
+        <member name="F:PlcEx.OmronFinsDataType.HR">
+            <summary>
+            Holding Bit Area
+            </summary>
+        </member>
+        <member name="F:PlcEx.OmronFinsDataType.AR">
+            <summary>
+            Auxiliary Bit Area
+            </summary>
+        </member>
+        <member name="T:PlcEx.Plc_OmronFinsTcp">
+            <summary>
+            欧姆龙PLC FinsTCP
+            </summary>
+        </member>
+        <member name="P:PlcEx.Plc_OmronFinsTcp.ICF">
+            <summary>
+            信息控制字段，默认0x80
+            </summary>
+        </member>
+        <member name="P:PlcEx.Plc_OmronFinsTcp.RSV">
+            <summary>
+            系统使用的内部信息
+            </summary>
+        </member>
+        <member name="P:PlcEx.Plc_OmronFinsTcp.GCT">
+            <summary>
+            网络层信息，默认0x02，如果有八层消息，就设置为0x07
+            </summary>
+        </member>
+        <member name="P:PlcEx.Plc_OmronFinsTcp.DNA">
+            <summary>
+            PLC的网络号地址，默认0x00
+            </summary>
+        </member>
+        <member name="P:PlcEx.Plc_OmronFinsTcp.DA1">
+            <summary>
+            PLC的节点地址，假如你的PLC的Ip地址为192.168.0.10，那么这个值就是10
+            </summary>
+            <remarks>
+            <note type="important">假如你的PLC的Ip地址为192.168.0.10，那么这个值就是10</note>
+            </remarks>
+        </member>
+        <member name="P:PlcEx.Plc_OmronFinsTcp.DA2">
+            <summary>
+            PLC的单元号地址
+            </summary>
+            <remarks>
+            <note type="important">通常都为0</note>
+            </remarks>
+        </member>
+        <member name="P:PlcEx.Plc_OmronFinsTcp.SNA">
+            <summary>
+            上位机的网络号地址
+            </summary>
+        </member>
+        <member name="P:PlcEx.Plc_OmronFinsTcp.SA1">
+            <summary>
+            上位机的节点地址，假如你的电脑的Ip地址为192.168.0.13，那么这个值就是13
+            </summary>
+            <remarks>
+            <note type="important">假如你的电脑的Ip地址为192.168.0.13，那么这个值就是13</note>
+            </remarks>
+        </member>
+        <member name="P:PlcEx.Plc_OmronFinsTcp.SA2">
+            <summary>
+            上位机的单元号地址
+            </summary>
+        </member>
+        <member name="P:PlcEx.Plc_OmronFinsTcp.SID">
+            <summary>
+            设备的标识号
+            </summary>
+        </member>
+        <member name="F:PlcEx.Plc_OmronFinsTcp.DM">
+            <summary>
+            DM Area
+            </summary>
+        </member>
+        <member name="F:PlcEx.Plc_OmronFinsTcp.CIO">
+            <summary>
+            CIO Area
+            </summary>
+        </member>
+        <member name="F:PlcEx.Plc_OmronFinsTcp.WR">
+            <summary>
+            Work Area
+            </summary>
+        </member>
+        <member name="F:PlcEx.Plc_OmronFinsTcp.HR">
+            <summary>
+            Holding Bit Area
+            </summary>
+        </member>
+        <member name="F:PlcEx.Plc_OmronFinsTcp.AR">
+            <summary>
+            Auxiliary Bit Area
+            </summary>
+        </member>
+        <member name="M:PlcEx.Plc_OmronFinsTcp.#ctor(System.Int32,System.String,Communicate.TcpLink,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="nIndex">索引</param>
+            <param name="strName">名称</param>
+            <param name="t">TCP连接</param>
+            <param name="nID">本机节点：1 - 254</param>
+        </member>
+        <member name="M:PlcEx.Plc_OmronFinsTcp.Open">
+            <summary>
+            连接PLC
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.Plc_OmronFinsTcp.Close">
+            <summary>
+            断开PLC连接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.Plc_OmronFinsTcp.Read(System.String,System.Int32,System.Byte[]@)">
+            <summary>
+            读数据
+            </summary>
+            <param name="address">PLC地址</param>
+            <param name="nLen">读取长度</param>
+            <param name="v">读取数据结果</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:PlcEx.Plc_OmronFinsTcp.Write(System.String,System.Byte[])">
+            <summary>
+            写数据
+            </summary>
+            <param name="address">PLC地址</param>
+            <param name="v">写入的数据</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.Plc_OmronFinsTcp.ReadBit(System.String,System.Int32,System.Boolean@)">
+            <summary>
+            读取位寄存器
+            </summary>
+            <param name="address">寄存器地址：D100</param>
+            <param name="bit">bit位</param>
+            <param name="v">寄存器值</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.Plc_OmronFinsTcp.WriteBit(System.String,System.Int32,System.Boolean)">
+            <summary>
+            写取位寄存器
+            </summary>
+            <param name="address">寄存器地址：D100</param>
+            <param name="bit">bit位</param>
+            <param name="v">寄存器值</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.Plc_OmronFinsTcp.AnalysisAddress(System.String,System.Int32,System.Byte[]@)">
+            <summary>
+            解析位地址
+            </summary>
+            <param name="address">地址：D100,C100,W100,H100,A100</param>
+            <param name="bit">位数</param>
+            <param name="startAddress">转化为起始地址数据</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.Plc_OmronFinsTcp.AnalysisAddress(System.String,System.Byte[]@)">
+            <summary>
+            解析地址
+            </summary>
+            <param name="address">地址：D100,C100,W100,H100,A100</param>
+            <param name="startAddress">转化为起始地址数据</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlcEx.Plc_OmronFinsTcp.PackCommand(System.Byte[])">
+            <summary>
+            将普通的指令打包成完整的指令
+            </summary>
+            <param name="cmd"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

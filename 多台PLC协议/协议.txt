@@ -1,0 +1,13 @@
+Error data : message,code,severity,beginTime,endTime
+machine state: state,time,code,message，previous state，state change reason ，sw_version  （code，message没有就写0）
+machine data:软件中自己配置
+
+
+TCP协议：
+PC IP:192.168.1.10
+machinedata  3000
+machinestate  3001
+errordata        3002
+
+
+注意：改变模式后，保存参数，然后需要重启软件

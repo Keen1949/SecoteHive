@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>AutoFrame自动测试报告</title>
+</head>
+<body>
+    <p>
+        <h1>自动测试报告</h1>
+
+        <table border="1">
+            <tr>
+                <td>开始时间：</td>
+                <td>{$:StartTime}</td>
+            </tr>
+
+            <tr>
+                <td>结束时间：</td>
+                <td>{$:EndTime}</td>
+            </tr>
+
+            <tr>
+                <td>最终得分：</td>
+                <td>{$:Score}</td>
+            </tr>
+        </table>
+
+        <h2>测试明细：</h2>
+
+        <table border="1">
+            <tr>
+                <th>序号</th>
+                <vt:foreach from="$Heads" item="head" tabindex="i">
+                    <th>{$:head}</th>
+                </vt:foreach>
+            </tr>
+
+            <vt:foreach from="$TestItems" item="test" index="i">
+                <tr>
+                    <td>{$:i}</td>
+                    <td>{$:test.Type}</td>
+                    <td>{$:test.Name.S}</td>
+                    <td>{$:test.Description}</td>
+                    <td>{$:test.Mode}</td>
+                    <td>{$:test.LimitTimeS}</td>
+                    <td>
+                        <vt:if var="test.Result" value="true" compare="=">
+                            PASS
+                        <vt:else />
+                            FAIL
+                        </vt:if>
+                    </td>
+                    <td>{$:test.UsedTimeS format="F3"}</td>
+                    <td>{$:test.Score format="F2"}</td>
+                    <td>{$:test.Message}</td>
+                </tr>
+            </vt:foreach>        
+
+        </table>
+    </p>
+</body>
+</html>

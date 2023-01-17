@@ -1,0 +1,539 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FF80071C-B31B-4170-AC7A-DF2C4A46E82C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AutoFrame</RootNamespace>
+    <AssemblyName>Hive Server</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\exe\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NO_EXPORT_APP_MAIN</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <DocumentationFile>
+    </DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>Custom</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>msdn.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>AutoFrame.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ABB.Robotics.Controllers.PC, Version=6.5.7502.1049, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Exe\ABB.Robotics.Controllers.PC.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoFrameDll, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Exe\AutoFrameDll.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoFrameUI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Exe\AutoFrameUI.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoFrameVision, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Exe\AutoFrameVision.dll</HintPath>
+    </Reference>
+    <Reference Include="CommonTool, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Exe\CommonTool.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=8.0.19.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Exe\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Exe\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.11.7\lib\net452\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RobotStudio.Services.RobApi, Version=6.5.7502.1049, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Exe\RobotStudio.Services.RobApi.dll</HintPath>
+    </Reference>
+    <Reference Include="RobotStudio.Services.RobApi.Desktop, Version=6.5.7502.1049, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Exe\RobotStudio.Services.RobApi.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ToolEx, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Exe\ToolEx.dll</HintPath>
+    </Reference>
+    <Reference Include="VTemplate.Engine">
+      <HintPath>..\packages\VTemplate\VTemplate.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoTestMgr.cs" />
+    <Compile Include="AutoTool.cs" />
+    <Compile Include="CameraOperate.cs" />
+    <Compile Include="CsvOperationEx.cs" />
+    <Compile Include="ErrorCodeMgr.cs" />
+    <Compile Include="FormServer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormServer.Designer.cs">
+      <DependentUpon>FormServer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSplash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSplash.Designer.cs">
+      <DependentUpon>FormSplash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_AutoTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_AutoTest.Designer.cs">
+      <DependentUpon>Form_AutoTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Config.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Config.Designer.cs">
+      <DependentUpon>Form_Config.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Data.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Data.Designer.cs">
+      <DependentUpon>Form_Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Alarm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Alarm.Designer.cs">
+      <DependentUpon>Form_Alarm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Auto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Auto.Designer.cs">
+      <DependentUpon>Form_Auto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_debug.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_debug.Designer.cs">
+      <DependentUpon>Form_debug.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Hive.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Hive.Designer.cs">
+      <DependentUpon>Form_Hive.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_HiveMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_HiveMessage.Designer.cs">
+      <DependentUpon>Form_HiveMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Image.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Image.Designer.cs">
+      <DependentUpon>Form_Image.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Help.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Help.Designer.cs">
+      <DependentUpon>Form_Help.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Input.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Input.Designer.cs">
+      <DependentUpon>Form_Input.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_IO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_IO.Designer.cs">
+      <DependentUpon>Form_IO.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Login.Designer.cs">
+      <DependentUpon>Form_Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Machine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Machine.Designer.cs">
+      <DependentUpon>Form_Machine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_MachineMgr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_MachineMgr.Designer.cs">
+      <DependentUpon>Form_MachineMgr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Main.Designer.cs">
+      <DependentUpon>Form_Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_File.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_File.Designer.cs">
+      <DependentUpon>Form_File.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Manual.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Manual.Designer.cs">
+      <DependentUpon>Form_Manual.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Msg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Msg.Designer.cs">
+      <DependentUpon>Form_Msg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Notify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Notify.Designer.cs">
+      <DependentUpon>Form_Notify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Opc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Opc.Designer.cs">
+      <DependentUpon>Form_Opc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Param.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Param.Designer.cs">
+      <DependentUpon>Form_Param.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_ParmSaveAs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_ParmSaveAs.Designer.cs">
+      <DependentUpon>Form_ParmSaveAs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Password.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Password.Designer.cs">
+      <DependentUpon>Form_Password.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Robot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Robot.Designer.cs">
+      <DependentUpon>Form_Robot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Select_Grr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Select_Grr.Designer.cs">
+      <DependentUpon>Form_Select_Grr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Select_Calib.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Select_Calib.Designer.cs">
+      <DependentUpon>Form_Select_Calib.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_sta_templete_ex.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_sta_templete_ex.designer.cs">
+      <DependentUpon>Form_sta_templete_ex.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_sta_templete.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_sta_templete.designer.cs">
+      <DependentUpon>Form_sta_templete.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_UserError.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_UserError.Designer.cs">
+      <DependentUpon>Form_UserError.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Warning.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Warning.Designer.cs">
+      <DependentUpon>Form_Warning.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GetErrorInfo.cs" />
+    <Compile Include="HiveMgr.cs" />
+    <Compile Include="ManulSafe.cs" />
+    <Compile Include="OracleHelper.cs" />
+    <Compile Include="PLCServer.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RegDefine.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RfidCtrl.cs" />
+    <Compile Include="Robot_ABB.cs" />
+    <Compile Include="ShareInfoSpace.cs" />
+    <Compile Include="StationDowntime.cs" />
+    <Compile Include="StationEx.cs" />
+    <Compile Include="StationMgrEx.cs" />
+    <Compile Include="StationCSV.cs" />
+    <Compile Include="StationParam.cs" />
+    <Compile Include="StationPLC.cs" />
+    <Compile Include="StationTCP.cs" />
+    <Compile Include="StationTemplate.cs" />
+    <Compile Include="StationTossing.cs" />
+    <Compile Include="SystemMgrEx.cs" />
+    <Compile Include="SystemResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SystemResource.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="FormServer.resx">
+      <DependentUpon>FormServer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSplash.resx">
+      <DependentUpon>FormSplash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_AutoTest.resx">
+      <DependentUpon>Form_AutoTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Config.resx">
+      <DependentUpon>Form_Config.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Data.resx">
+      <DependentUpon>Form_Data.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Alarm.resx">
+      <DependentUpon>Form_Alarm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Auto.resx">
+      <DependentUpon>Form_Auto.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_debug.resx">
+      <DependentUpon>Form_debug.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Hive.resx">
+      <DependentUpon>Form_Hive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_HiveMessage.resx">
+      <DependentUpon>Form_HiveMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Image.resx">
+      <DependentUpon>Form_Image.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Help.resx">
+      <DependentUpon>Form_Help.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Input.resx">
+      <DependentUpon>Form_Input.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_IO.resx">
+      <DependentUpon>Form_IO.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Login.resx">
+      <DependentUpon>Form_Login.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Machine.resx">
+      <DependentUpon>Form_Machine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_MachineMgr.resx">
+      <DependentUpon>Form_MachineMgr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Main.resx">
+      <DependentUpon>Form_Main.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_File.resx">
+      <DependentUpon>Form_File.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Manual.resx">
+      <DependentUpon>Form_Manual.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Msg.resx">
+      <DependentUpon>Form_Msg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Notify.resx">
+      <DependentUpon>Form_Notify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Opc.resx">
+      <DependentUpon>Form_Opc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Param.resx">
+      <DependentUpon>Form_Param.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_ParmSaveAs.resx">
+      <DependentUpon>Form_ParmSaveAs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Password.resx">
+      <DependentUpon>Form_Password.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Robot.resx">
+      <DependentUpon>Form_Robot.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Select_Grr.resx">
+      <DependentUpon>Form_Select_Grr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Select_Calib.resx">
+      <DependentUpon>Form_Select_Calib.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_sta_templete_ex.resx">
+      <DependentUpon>Form_sta_templete_ex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_sta_templete.resx">
+      <DependentUpon>Form_sta_templete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_UserError.resx">
+      <DependentUpon>Form_UserError.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Warning.resx">
+      <DependentUpon>Form_Warning.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SystemResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SystemResource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Communicate\Communicate.csproj">
+      <Project>{056fd569-fa3c-4d6a-ab7a-645ff43888bd}</Project>
+      <Name>Communicate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MotionIO\MotionIO.csproj">
+      <Project>{8281acc2-2ecd-48dd-a0dd-e99493926420}</Project>
+      <Name>MotionIO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="res\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="msdn.ico" />
+    <None Include="Resources\info.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

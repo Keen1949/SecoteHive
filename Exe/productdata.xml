@@ -1,0 +1,64 @@
+<SOAP-ENV:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<SOAP-ENV:Body>
+<a1:ArrayList id="ref-1" xmlns:a1="http://schemas.microsoft.com/clr/ns/System.Collections">
+<_items href="#ref-2"/>
+<_size>2</_size>
+<_version>2</_version>
+</a1:ArrayList>
+<SOAP-ENC:Array id="ref-2" SOAP-ENC:arrayType="xsd:anyType[4]">
+<item href="#ref-3"/>
+<item href="#ref-4"/>
+</SOAP-ENC:Array>
+<SOAP-ENC:Array id="ref-3" SOAP-ENC:arrayType="a3:ProductData[1]" xmlns:a3="http://schemas.microsoft.com/clr/nsassem/ToolEx/ToolEx%2C%20Version%3D1.0.8405.26153%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull">
+<item href="#ref-6"/>
+</SOAP-ENC:Array>
+<SOAP-ENC:Array id="ref-4" SOAP-ENC:arrayType="xsd:int[1]">
+<item>0</item>
+</SOAP-ENC:Array>
+<a3:ProductData id="ref-6" xmlns:a3="http://schemas.microsoft.com/clr/nsassem/ToolEx/ToolEx%2C%20Version%3D1.0.8405.26153%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull">
+<m_strBarCode id="ref-7"></m_strBarCode>
+<m_strJigCode href="#ref-7"/>
+<m_nGlueIndex>1</m_nGlueIndex>
+<m_dtBeginTime>2021-07-22T15:12:57.5729720+08:00</m_dtBeginTime>
+<m_dtEndTime>2021-07-22T15:12:57.5729720+08:00</m_dtEndTime>
+<m_dtStartGlue>2021-07-22T15:12:57.5729720+08:00</m_dtStartGlue>
+<m_dtEndGlue>2021-07-22T15:12:57.5729720+08:00</m_dtEndGlue>
+<m_dtStartAssem>2021-07-22T15:12:57.5729720+08:00</m_dtStartAssem>
+<m_dbRecheckX>0</m_dbRecheckX>
+<m_dbRecheckY>0</m_dbRecheckY>
+<m_dbRecheckU>0</m_dbRecheckU>
+<m_bResult>false</m_bResult>
+<StationNum>0</StationNum>
+<CaveNum>0</CaveNum>
+<str穴一吸气名称 xsi:null="1"/>
+<str穴一吹气名称 xsi:null="1"/>
+<str穴二吸气名称 xsi:null="1"/>
+<str穴二吹气名称 xsi:null="1"/>
+<bCaveOk1>false</bCaveOk1>
+<strCoilCode1 href="#ref-7"/>
+<dt涂锡开始时间1>2021-07-22T15:12:57.5729720+08:00</dt涂锡开始时间1>
+<dt涂锡结束时间1>2021-07-22T15:12:57.5729720+08:00</dt涂锡结束时间1>
+<dt焊锡_内_开始时间1>2021-07-22T15:12:57.5729720+08:00</dt焊锡_内_开始时间1>
+<dt焊锡_内_结束时间1>2021-07-22T15:12:57.5729720+08:00</dt焊锡_内_结束时间1>
+<dt焊锡_外_开始时间1>2021-07-22T15:12:57.5729720+08:00</dt焊锡_外_开始时间1>
+<dt焊锡_外_结束时间1>2021-07-22T15:12:57.5729720+08:00</dt焊锡_外_结束时间1>
+<bCaveOk2>false</bCaveOk2>
+<strCoilCode2 href="#ref-7"/>
+<dt涂锡开始时间2>2021-07-22T15:12:57.5729720+08:00</dt涂锡开始时间2>
+<dt涂锡结束时间2>2021-07-22T15:12:57.5729720+08:00</dt涂锡结束时间2>
+<dt焊锡_内_开始时间2>2021-07-22T15:12:57.5729720+08:00</dt焊锡_内_开始时间2>
+<dt焊锡_内_结束时间2>2021-07-22T15:12:57.5729720+08:00</dt焊锡_内_结束时间2>
+<dt焊锡_外_开始时间2>2021-07-22T15:12:57.5729720+08:00</dt焊锡_外_开始时间2>
+<dt焊锡_外_结束时间2>2021-07-22T15:12:57.5729720+08:00</dt焊锡_外_结束时间2>
+<strCoilCode href="#ref-7"/>
+<iStationNum>0</iStationNum>
+<iCaveNum>0</iCaveNum>
+<dt涂锡开始时间>2021-07-22T15:12:57.5729720+08:00</dt涂锡开始时间>
+<dt涂锡结束时间>2021-07-22T15:12:57.5729720+08:00</dt涂锡结束时间>
+<dt焊锡_内_开始时间>2021-07-22T15:12:57.5729720+08:00</dt焊锡_内_开始时间>
+<dt焊锡_内_结束时间>2021-07-22T15:12:57.5729720+08:00</dt焊锡_内_结束时间>
+<dt焊锡_外_开始时间>2021-07-22T15:12:57.5729720+08:00</dt焊锡_外_开始时间>
+<dt焊锡_外_结束时间>2021-07-22T15:12:57.5729720+08:00</dt焊锡_外_结束时间>
+</a3:ProductData>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

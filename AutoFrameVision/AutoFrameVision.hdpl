@@ -1,0 +1,1611 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.0" halcon_version="11.0.0.1" cs="650885771">
+<library/>
+<procedure name="InitTemplete">
+<interface>
+<ic>
+<par name="Directory"/>
+</ic>
+<oc>
+<par name="ModelId"/>
+<par name="ModelData"/>
+</oc>
+</interface>
+<body>
+<c></c>
+<l>ModelData :=[]</l>
+<l>read_image(ImageModel, Directory + '/Model.bmp')</l>
+<l>dev_display(ImageModel)</l>
+<l>WindowHandle := -1</l>
+<l>dev_get_window(WindowHandle)</l>
+<c></c>
+<l>* tuple_length(WindowHandle, num)</l>
+<l>read_shape_model (Directory + '/Model.shm', ModelId)</l>
+<c>*模板图片查找模板位置,不需要使用变形模板</c>
+<l>find_shape_model(ImageModel, ModelId, rad(0), rad(360), 0.6, 1, 0.5,\
+                 'least_squares', [5,1], 0.75, ModelRow, ModelColumn,\
+                 ModelAngle, ModelScore)</l>
+<c>* Matching 01: transform the model contours into the detected positions</c>
+<l>if (|ModelScore| &gt; 0)</l>
+<c>     *存储模板位置信息</c>
+<l>     tuple_concat(ModelData, ModelRow, ModelData)</l>
+<l>     tuple_concat (ModelData, ModelColumn, ModelData)</l>
+<l>     tuple_concat (ModelData, ModelAngle, ModelData)</l>
+<c>     </c>
+<l>     dev_display_shape_matching_results (ModelId, 'red', ModelRow,\
+                                         ModelColumn, ModelAngle, 1, \
+                                         1, 0)          </l>
+<l>     dev_disp_message( 'Model Score is '+ ModelScore, \
+                      'window', 20, 20, 'green', 'false')     </l>
+<l>else    </l>
+<c>     </c>
+<l>     dev_disp_message( 'Model find fail !', 'window',\
+                      20, 20, 'red', 'true')   </l>
+<c>     </c>
+<l>endif</l>
+<l>return ()</l>
+</body>
+<docu id="InitTemplete">
+<abstract lang="zh_CN">读取模板得到模板中心点和角度。</abstract>
+<short lang="zh_CN">读取模板得到模板中心点和角度。</short>
+<parameters>
+<parameter id="Directory">
+<description lang="zh_CN">输入保存模板的路径。</description>
+<sem_type>string</sem_type>
+</parameter>
+<parameter id="ModelData">
+<description lang="zh_CN">得到路径下模板的数据，分别为中心行坐标、中心列坐标、模板旋转弧度。</description>
+<sem_type>number</sem_type>
+</parameter>
+<parameter id="ModelId">
+<description lang="zh_CN">得到路径下模板的句柄。</description>
+<sem_type>integer</sem_type>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="ReadRoiRectangle2">
+<interface>
+<ic>
+<par name="FileName"/>
+</ic>
+<oc>
+<par name="TupleData"/>
+</oc>
+</interface>
+<body>
+<c></c>
+<l>open_file (FileName, 'input', FileHandle)</l>
+<l>IsEOF := 0</l>
+<l>x := 0</l>
+<l>y:=10</l>
+<l>TupleData := []</l>
+<l>while (IsEOF == 0)</l>
+<l>     fread_string (FileHandle, strText, IsEOF)    </l>
+<l>     if(strText == '&lt;roi')</l>
+<l>          while(IsEOF == 0)</l>
+<l>               fread_string (FileHandle, strText, IsEOF)</l>
+<l>*                disp_message (Window, strText, 'window', x, y, 'red', 'false')</l>
+<l>               x := x+15</l>
+<l>               if(strText == '&lt;rect2')</l>
+<l>                    fread_string (FileHandle, strOp, IsEOF)</l>
+<l>                    fread_string (FileHandle, strData, IsEOF)</l>
+<l>                    fread_string (FileHandle, len1, IsEOF)</l>
+<l>                    fread_string (FileHandle, len2, IsEOF)</l>
+<l>                    fread_string (FileHandle, row, IsEOF)</l>
+<l>                    fread_string (FileHandle, col, IsEOF)</l>
+<l>                    fread_string (FileHandle, phi, IsEOF)  </l>
+<l>*                     disp_message (Window, strOp + len1+len2+row+col+phi, 'window', x, y, 'red', 'false')</l>
+<l>                    x := x+15</l>
+<l>                    tuple_regexp_match (row, '="(.*)"', row)</l>
+<l>                    tuple_number(row, row)</l>
+<l>                    tuple_regexp_match (col, '="(.*)"', col)</l>
+<l>                    tuple_number(col, col)</l>
+<l>                    tuple_regexp_match (phi, '="(.*)"', phi)</l>
+<l>                    tuple_number(phi, phi)</l>
+<l>                    tuple_regexp_match (len1, '="(.*)"', len1)</l>
+<l>                    tuple_number(len1, len1)</l>
+<l>                    tuple_regexp_match (len2, '="(.*)"', len2)</l>
+<l>                    tuple_number(len2, len2)             </l>
+<c>                    </c>
+<l>                    tuple_concat(TupleData, row, TupleData) </l>
+<l>                    tuple_concat (TupleData, col, TupleData)</l>
+<l>                    tuple_concat (TupleData, phi, TupleData)</l>
+<l>                    tuple_concat (TupleData, len1, TupleData)</l>
+<l>                    tuple_concat (TupleData, len2, TupleData)</l>
+<c>                    </c>
+<l>*                     tuple_regexp_match (strOp, '="(.*)"', strOp)</l>
+<l>*                     if(strOp == 'none')</l>
+<l>*                     gen_rectangle2 (Region, row, col, rad(phi), len1, len2)</l>
+<l>*                     else</l>
+<l>*                     gen_rectangle2(Rectangle2, row, col,  rad(phi), len1, len2)</l>
+<l>*                     if(strOp == 'union')                              </l>
+<l>*                     union2 (Region, Rectangle2, Region)</l>
+<l>*                     elseif(strOp == 'intersection')                              </l>
+<l>*                     intersection (Region, Rectangle2, Region)</l>
+<l>*                     elseif(strOp == 'difference')                              </l>
+<l>*                     difference (Region, Rectangle2, Region)</l>
+<l>*                     else</l>
+<l>*                     disp_message (Window, strOp + 'not support!', 'window', x, y, 'red', 'false')</l>
+<l>*                     x := x+15</l>
+<l>*                     endif</l>
+<l>*                     endif                                                       </l>
+<l>               endif </l>
+<l>          endwhile</l>
+<l>     endif    </l>
+<l>endwhile</l>
+<l>close_file (FileHandle)</l>
+<l>return ()</l>
+</body>
+<docu id="ReadRoiRectangle2">
+<abstract lang="zh_CN">从ROI文件中读取旋转矩形参数,ROI文件由halcon的ROI助手保存生成.
+此函数只支持单个旋转矩形文件的读取.不适当的文件将可能导致异常.
+</abstract>
+<library lang="zh_CN">AutoFrameVision</library>
+<short lang="zh_CN">从ROI文件中读取旋转矩形参数</short>
+<parameters>
+<parameter id="FileName">
+<description lang="zh_CN">ROI文件名</description>
+</parameter>
+<parameter id="TupleData">
+<description lang="zh_CN">旋转矩形的数据,格式如下:
+{Row,Col,Phi,Len1,Len2}</description>
+<multivalue>true</multivalue>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="Test_Read_Roi">
+<interface/>
+<body>
+<c>    </c>
+<l>dev_set_draw('margin')</l>
+<l>dev_open_window(0, 0, 800, 640, 'black', WindowHandle)</l>
+<l>dev_set_part(0, 0,1944,  2592)</l>
+<c></c>
+<l>list_files ('/T1', ['files','follow_links'], ImageFiles)</l>
+<l>tuple_regexp_select (ImageFiles, ['\\.(roi)$','ignore_case'], \
+                     ImageFiles)</l>
+<l>for Index := 0 to |ImageFiles| - 1 by 1          </l>
+<l>     dev_clear_window()</l>
+<l>     ReadRoiRectangle2 (ImageFiles[Index], TupleData)</l>
+<l>     dev_display(region)</l>
+<l>     stop()</l>
+<l>endfor</l>
+<l>return ()</l>
+</body>
+<docu id="Test_Read_Roi">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="TranslateRoi">
+<interface>
+<ic>
+<par name="FixTool"/>
+<par name="TupleDataIn"/>
+</ic>
+<oc>
+<par name="TupleDataOut"/>
+</oc>
+</interface>
+<body>
+<l> hom_mat2d_to_affine_par(FixTool, Sx, Sy, Phi, Theta, Tx, Ty)</l>
+<l>tuple_length (TupleDataIn, Number)</l>
+<l> TupleDataOut :=[]</l>
+<c>*旋转矩形</c>
+<l> if(Number == 5)</l>
+<l>     affine_trans_point_2d (FixTool, TupleDataIn[0], TupleDataIn[1], \
+                            row, col)</l>
+<l>     TupleDataOut[0] := row</l>
+<l>     TupleDataOut[1] := col</l>
+<c>     *加上模板查找的角度并转换为弧角度</c>
+<l>     TupleDataOut[2] := rad(TupleDataIn[2]) + Phi</l>
+<l>     TupleDataOut[3] := TupleDataIn[3]</l>
+<l>     TupleDataOut[4] := TupleDataIn[4] </l>
+<l>*      gen_rectangle2 (Rectangle, TupleDataOut[0], TupleDataOut[1], TupleDataOut[2], TupleDataOut[3], TupleDataOut[4])</l>
+<c>            </c>
+<c> *圆环</c>
+<l> elseif(Number == 6)</l>
+<l>     affine_trans_point_2d (FixTool, TupleDataIn[0], TupleDataIn[1],\
+                            row, col)</l>
+<l>     TupleDataOut[0] := row</l>
+<l>     TupleDataOut[1] := col</l>
+<c>     *圆没有角度</c>
+<l>     TupleDataOut[2] := TupleDataIn[2]</l>
+<l>     affine_trans_point_2d (FixTool, TupleDataIn[3], TupleDataIn[4],\
+                            row, col)</l>
+<l>     TupleDataOut[3] := row</l>
+<l>     TupleDataOut[4] := col  </l>
+<l>     TupleDataOut[5] := TupleDataIn[5]       </l>
+<c> *圆弧环</c>
+<l> elseif(Number == 10)</l>
+<l>      TupleDataOut :=  TupleDataIn</l>
+<l>     affine_trans_point_2d (FixTool, TupleDataIn[0], TupleDataIn[1], \
+                            row, col)</l>
+<l>     TupleDataOut[0] := row</l>
+<l>     TupleDataOut[1] := col</l>
+<c>     *圆弧需要计算起始角度</c>
+<l>     TupleDataOut[3] := rad(TupleDataIn[3])+ Phi</l>
+<l>     TupleDataOut[4] := rad(TupleDataIn[4])</l>
+<c></c>
+<l>     affine_trans_point_2d (FixTool, TupleDataIn[5], TupleDataIn[6], \
+                            row, col)</l>
+<l>     TupleDataOut[5] := row</l>
+<l>     TupleDataOut[6] := col  </l>
+<l>     TupleDataOut[8] := rad(TupleDataIn[8])+ Phi  </l>
+<l>     TupleDataOut[9] := rad(TupleDataIn[9])</l>
+<c> *不支持的格式    </c>
+<l> else</l>
+<c>      </c>
+<l> endif</l>
+<c> </c>
+<c></c>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="TranslateRoi">
+<abstract lang="zh_CN">得到转换后的ROI数据。</abstract>
+<short lang="zh_CN">得到转换后的ROI数据。</short>
+<parameters>
+<parameter id="FixTool">
+<description lang="zh_CN">输入的转换矩阵，需要把实时图像的坐标与保存模板的坐标转换。</description>
+<sem_type>number</sem_type>
+</parameter>
+<parameter id="TupleDataIn">
+<description lang="zh_CN">输入参数数组，根据这个数组的个数区别读出的图形数据，5：旋转矩形；6：圆环；10：圆弧环。</description>
+<sem_type>number</sem_type>
+</parameter>
+<parameter id="TupleDataOut">
+<description lang="zh_CN">输出图形数据数组。
+5：旋转矩形 数据格式为 row，col，phi，len1，len2。
+6：圆环 数据格式为 row1，col1，radius1， row2，col2，radius2；
+10：圆弧环 数据格式为 row1，col1，radius1，startPhi1,extentPhi1, row2，col2，radius2，startPhi2,extentPhi2。</description>
+<sem_type>number</sem_type>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="FindLine">
+<interface>
+<io>
+<par name="Image"/>
+</io>
+<ic>
+<par name="TupleRectangle2"/>
+<par name="NumPoints"/>
+<par name="RectWidth"/>
+<par name="NumDropPoints"/>
+<par name="AmpThreshold"/>
+<par name="Smooth"/>
+<par name="Transition"/>
+<par name="Select"/>
+</ic>
+<oc>
+<par name="RowBegin"/>
+<par name="ColBegin"/>
+<par name="RowEnd"/>
+<par name="ColEnd"/>
+</oc>
+</interface>
+<body>
+<c>*解析ROI数据,转入查找直线函数</c>
+<l>FindLine_Rectangle2 (Image, TupleRectangle2[0], TupleRectangle2[1], TupleRectangle2[2], TupleRectangle2[3], TupleRectangle2[4], NumPoints, RectWidth, NumDropPoints, AmpThreshold, Smooth, Transition, Select, RowBegin, ColBegin, RowEnd, ColEnd)</l>
+</body>
+<docu id="FindLine">
+<abstract lang="zh_CN">通过输入参数寻找区域当中的直线</abstract>
+<short lang="zh_CN">通过输入参数寻找区域当中的直线</short>
+<parameters>
+<parameter id="AmpThreshold">
+<description lang="zh_CN">拟合直线边缘幅度。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="ColBegin">
+<description lang="zh_CN">找到的直线的首端点的列坐标。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="ColEnd">
+<description lang="zh_CN">找到的直线的末端点的列坐标。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Image">
+<description lang="zh_CN">输入图像变量。</description>
+<sem_type>image</sem_type>
+</parameter>
+<parameter id="NumDropPoints">
+<description lang="zh_CN">拟合直线允许丢弃的点的个数。</description>
+<sem_type>integer</sem_type>
+</parameter>
+<parameter id="NumPoints">
+<description lang="zh_CN">拟合直线找点的个数(测量点的个数)。</description>
+<sem_type>integer</sem_type>
+</parameter>
+<parameter id="RectWidth"/>
+<parameter id="RowBegin">
+<description lang="zh_CN">找到的直线的首端点的行坐标。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="RowEnd">
+<description lang="zh_CN">找到的直线的末端点的行坐标。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Select">
+<description lang="zh_CN">选择找点方法， 'first'为找第一个点， 'last'为找最后一个点，'strongest'为找所有边缘点。</description>
+<sem_type>string</sem_type>
+<values>
+<item>'all'</item>
+<item>'first'</item>
+<item>'strongest'</item>
+</values>
+</parameter>
+<parameter id="Smooth">
+<description lang="zh_CN">拟合直线的平滑度。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Transition">
+<description lang="zh_CN">找边缘点方向， 'negative'明到暗，'positive'暗到明，'all' 双方向。</description>
+<sem_type>string</sem_type>
+<values>
+<item>'negative'</item>
+<item>'positive,'all'.</item>
+</values>
+</parameter>
+<parameter id="TupleRectangle2">
+<description lang="zh_CN">输入参数数组变量，分别为：输入矩形的中心点的行坐标，输入矩形的中心点的列坐标，输入矩形的弧度，输入矩形的宽度，输入矩形的高度。</description>
+<sem_type>number</sem_type>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="ReadRoiAnnularCircle">
+<interface>
+<ic>
+<par name="FileName"/>
+</ic>
+<oc>
+<par name="TupleData"/>
+</oc>
+</interface>
+<body>
+<c></c>
+<l>open_file (FileName, 'input', FileHandle)</l>
+<l>IsEOF := 0</l>
+<l>x := 0</l>
+<l>y:=0</l>
+<l>TupleData := []</l>
+<l>while (IsEOF == 0)</l>
+<l>     fread_string (FileHandle, strText, IsEOF)  </l>
+<c>     *判断是否是ROI区</c>
+<l>     if(strText == '&lt;roi')</l>
+<l>          while(IsEOF == 0)</l>
+<l>               fread_string (FileHandle, strText, IsEOF)</l>
+<l>*                disp_message (Window, strText, 'window', x, y, 'red', 'false')</l>
+<l>*                x := x+15</l>
+<c>               *判断是否是圆</c>
+<l>               if(strText == '&lt;circle') </l>
+<l>                    fread_string (FileHandle, strOp, IsEOF)</l>
+<l>                    fread_string (FileHandle, strData, IsEOF)</l>
+<l>                    fread_string (FileHandle, row, IsEOF)</l>
+<l>                    fread_string (FileHandle, radius, IsEOF)</l>
+<l>                    fread_string (FileHandle, col, IsEOF) </l>
+<l>*                     disp_message (Window, strOp + row+radius+col, 'window', x, y, 'red', 'false')</l>
+<l>*                     x := x+15</l>
+<l>                    tuple_regexp_match (row, '="(.*)"', row)</l>
+<l>                    tuple_number(row, row)</l>
+<l>                    tuple_regexp_match (col, '="(.*)"', col)</l>
+<l>                    tuple_number(col, col)</l>
+<l>                    tuple_regexp_match (radius, '="(.*)"', radius)</l>
+<l>                    tuple_number(radius, radius)</l>
+<c>                    </c>
+<l>                    tuple_regexp_match (strOp, '="(.*)"', strOp)</l>
+<c>                    </c>
+<l>                    tuple_concat(TupleData, row, TupleData) </l>
+<l>                    tuple_concat (TupleData, col, TupleData)</l>
+<l>                    tuple_concat (TupleData, radius, TupleData)</l>
+<l>*                     if(strOp == 'none')  </l>
+<l>*                     gen_circle (Region, row, col, radius)</l>
+<l>*                     else</l>
+<l>*                     gen_circle(Circle, row, col, radius)</l>
+<l>*                     if(strOp == 'union')                              </l>
+<l>*                     union2 (Region, Circle, Region)</l>
+<l>*                     elseif(strOp == 'intersection')</l>
+<l>*                     intersection (Region, Circle, Region)</l>
+<l>*                     elseif(strOp == 'difference')</l>
+<l>*                     difference (Region, Circle, Region)</l>
+<l>*                     else</l>
+<l>*                     disp_message (Window, strOp + 'not support!', 'window', x, y, 'red', 'false')</l>
+<l>*                     x := x+15    </l>
+<l>*                     endif</l>
+<l>*                     endif                         </l>
+<l>               endif </l>
+<l>          endwhile</l>
+<l>     endif    </l>
+<l>endwhile</l>
+<l>close_file (FileHandle)</l>
+<l>return ()</l>
+<c></c>
+<c></c>
+<c></c>
+</body>
+<docu id="ReadRoiAnnularCircle">
+<abstract lang="zh_CN">读取圆roi的中心坐标以及半径。</abstract>
+<short lang="zh_CN">读取圆roi的中心坐标以及半径。</short>
+<parameters>
+<parameter id="FileName">
+<description lang="zh_CN">圆ROI文件名。</description>
+<sem_type>string</sem_type>
+</parameter>
+<parameter id="TupleData">
+<description lang="zh_CN">读取到的圆ROI的数据，分别为圆中心行坐标、圆中心列坐标、圆半径。
+圆ROI的数据,格式如下: 
+{Row,Col,radius}</description>
+<sem_type>number</sem_type>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="ReadRoiRectangle1">
+<interface>
+<ic>
+<par name="FileName"/>
+</ic>
+<oc>
+<par name="TupleData"/>
+</oc>
+</interface>
+<body>
+<c></c>
+<c>*正矩形,暂不使用</c>
+<l>open_file (FileName, 'input', FileHandle)</l>
+<l>IsEOF := 0</l>
+<l>x := 0</l>
+<l>y:=10</l>
+<l>TupleData := []</l>
+<l>while (IsEOF == 0)</l>
+<l>     fread_string (FileHandle, strText, IsEOF)    </l>
+<l>     if(strText == '&lt;roi')</l>
+<l>          while(IsEOF == 0)</l>
+<l>               fread_string (FileHandle, strText, IsEOF)</l>
+<l>*                disp_message (Window, strText, 'window', x, y, 'red', 'false')</l>
+<l>               x := x+15</l>
+<l>               if(strText == '&lt;rect1')  </l>
+<l>                    fread_string (FileHandle, strOp, IsEOF)</l>
+<l>                    fread_string (FileHandle, strData, IsEOF)</l>
+<l>                    fread_string (FileHandle, col1, IsEOF)</l>
+<l>                    fread_string (FileHandle, col2, IsEOF)</l>
+<l>                    fread_string (FileHandle, row1, IsEOF)</l>
+<l>                    fread_string (FileHandle, row2, IsEOF)   </l>
+<l>*                     disp_message (Window, strOp + col1+col2+row1+row2, 'window', x, y, 'red', 'false')</l>
+<l>                    x := x+15</l>
+<l>                    tuple_regexp_match (row1, '="(.*)"', row1)</l>
+<l>                    tuple_number(row1, row1)</l>
+<l>                    tuple_regexp_match (col1, '="(.*)"', col1)</l>
+<l>                    tuple_number(col1, col1)</l>
+<l>                    tuple_regexp_match (row2, '="(.*)"', row2)</l>
+<l>                    tuple_number(row2, row2)</l>
+<l>                    tuple_regexp_match (col2, '="(.*)"', col2)</l>
+<l>                    tuple_number(col2, col2)</l>
+<c>                    </c>
+<c>                    </c>
+<l>                    tuple_concat(TupleData, row1, TupleData) </l>
+<l>                    tuple_concat (TupleData, col1, TupleData)</l>
+<l>                    tuple_concat (TupleData, row2, TupleData)</l>
+<l>                    tuple_concat (TupleData, col2, TupleData)</l>
+<c>                    </c>
+<l>*                     tuple_regexp_match (strOp, '="(.*)"', strOp)</l>
+<l>*                     if(strOp == 'none')</l>
+<l>*                     gen_rectangle1 (Region, row1, col1, row2, col2)</l>
+<l>*                     else</l>
+<l>*                     gen_rectangle1(Rectangle1, row1, col1, row2, col2)</l>
+<l>*                     if(strOp == 'union')                              </l>
+<l>*                     union2 (Region, Rectangle1, Region)</l>
+<l>*                     elseif(strOp == 'intersection')                              </l>
+<l>*                     intersection (Region, Rectangle1, Region)</l>
+<l>*                     elseif(strOp == 'difference')                              </l>
+<l>*                     difference (Region, Rectangle1, Region)</l>
+<l>*                     else</l>
+<l>*                     disp_message (Window, strOp + 'not support!', 'window', x, y, 'red', 'false')</l>
+<l>*                     x := x+15</l>
+<l>*                     endif</l>
+<l>*                     endif                     </l>
+<l>               endif </l>
+<l>          endwhile</l>
+<l>     endif    </l>
+<l>endwhile</l>
+<l>close_file (FileHandle)</l>
+<l>return ()</l>
+<c></c>
+</body>
+<docu id="ReadRoiRectangle1">
+<abstract lang="zh_CN">读取矩形ROI数据(不带角度)。</abstract>
+<short lang="zh_CN">读取矩形ROI数据(不带角度)。</short>
+<parameters>
+<parameter id="FileName">
+<description lang="zh_CN">ROI文件名。</description>
+<sem_type>string</sem_type>
+</parameter>
+<parameter id="TupleData">
+<description lang="zh_CN">读取到矩形的数据,格式如下: 
+{Row,Col,Len1,Len2}</description>
+<sem_type>number</sem_type>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="ReadRoiAnnularArc">
+<interface>
+<ic>
+<par name="FileName"/>
+</ic>
+<oc>
+<par name="TupleData"/>
+</oc>
+</interface>
+<body>
+<c>*读取圆环弧</c>
+<l>open_file (FileName, 'input', FileHandle)</l>
+<l>IsEOF := 0</l>
+<l>x := 0</l>
+<l>y:=0</l>
+<l>TupleData := []</l>
+<l>while (IsEOF == 0)</l>
+<l>     fread_string (FileHandle, strText, IsEOF) </l>
+<c>     *判断是否是ROI</c>
+<l>     if(strText == '&lt;roi')</l>
+<l>          while(IsEOF == 0)</l>
+<c>               *读取两个圆弧</c>
+<l>               fread_string (FileHandle, strText, IsEOF)</l>
+<l>*                disp_message (Window, strText, 'window', x, y, 'red', 'false')</l>
+<l>               x := x+15</l>
+<c>               *判断是否是圆弧</c>
+<l>               if(strText == '&lt;circ_arc') </l>
+<l>                    fread_string (FileHandle, strOp, IsEOF)</l>
+<l>                    fread_string (FileHandle, strData, IsEOF)</l>
+<l>                    fread_string (FileHandle, row, IsEOF)</l>
+<l>                    fread_string (FileHandle, radius, IsEOF)</l>
+<l>                    fread_string (FileHandle, extentPhi, IsEOF)</l>
+<l>                    fread_string (FileHandle, startPhi, IsEOF)</l>
+<l>                    fread_string (FileHandle, col, IsEOF) </l>
+<l>*                     disp_message (Window, strOp + row+radius+col, 'window', x, y, 'red', 'false')</l>
+<l>                    x := x+15</l>
+<c>                    *采用正则表达式取值</c>
+<l>                    tuple_regexp_match (row, '="(.*)"', row)</l>
+<l>                    tuple_number(row, row)</l>
+<l>                    tuple_regexp_match (col, '="(.*)"', col)</l>
+<l>                    tuple_number(col, col)</l>
+<l>                    tuple_regexp_match (radius, '="(.*)"', radius)</l>
+<l>                    tuple_number(radius, radius) </l>
+<l>                    tuple_regexp_match (startPhi, '="(.*)"', startPhi)</l>
+<l>                    tuple_number(startPhi, startPhi)</l>
+<l>                    tuple_regexp_match (extentPhi, '="(.*)"', extentPhi)</l>
+<l>                    tuple_number(extentPhi, extentPhi) </l>
+<c>                    </c>
+<l>                    tuple_regexp_match (strOp, '="(.*)"', strOp)</l>
+<c>                    </c>
+<l>*                     if(strOp == 'none')</l>
+<l>                    tuple_concat(TupleData, row, TupleData) </l>
+<l>                    tuple_concat (TupleData, col, TupleData)</l>
+<l>                    tuple_concat (TupleData, radius, TupleData)</l>
+<l>                    tuple_concat (TupleData, startPhi, TupleData)</l>
+<l>                    tuple_concat (TupleData, extentPhi, TupleData)</l>
+<l>*                     else</l>
+<l>*                     tuple_concat (TupleData, radius, TupleData)</l>
+<l>*                     endif </l>
+<c>                    </c>
+<c>                    </c>
+<l>*                     if(strOp == 'none')  </l>
+<l>*                     gen_circle (Region, row, col, radius)</l>
+<l>*                     else</l>
+<l>*                     gen_circle(Circle, row, col, radius)</l>
+<l>*                     if(strOp == 'union')                              </l>
+<l>*                     union2 (Region, Circle, Region)</l>
+<l>*                     elseif(strOp == 'intersection')</l>
+<l>*                     intersection (Region, Circle, Region)</l>
+<l>*                     elseif(strOp == 'difference')</l>
+<l>*                     difference (Region, Circle, Region)</l>
+<l>*                     else</l>
+<l>*                     disp_message (Window, strOp + 'not support!', 'window', x, y, 'red', 'false')</l>
+<l>*                     x := x+15    </l>
+<l>*                     endif</l>
+<l>*                     endif                         </l>
+<l>               endif </l>
+<l>          endwhile</l>
+<l>     endif    </l>
+<l>endwhile</l>
+<l>close_file (FileHandle)</l>
+<l>return ()</l>
+<c></c>
+<c></c>
+<c></c>
+</body>
+<docu id="ReadRoiAnnularArc">
+<abstract lang="zh_CN">读取圆弧ROI的数据。得到圆心坐标、半径、圆弧起始角度。</abstract>
+<short lang="zh_CN">读取圆弧ROI的数据。</short>
+<parameters>
+<parameter id="FileName">
+<description lang="zh_CN">圆弧ROI文件名。</description>
+<sem_type>string</sem_type>
+</parameter>
+<parameter id="TupleData">
+<description lang="zh_CN">圆弧ROI数据，分别为圆心坐标、半径、圆弧起始角度(弧度)。
+圆弧ROI的数据,格式如下: 
+{Row,Col，radius，startPhi，extentPhi}</description>
+<sem_type>number</sem_type>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="FindLine_Rectangle2">
+<interface>
+<io>
+<par name="Image"/>
+</io>
+<ic>
+<par name="Row"/>
+<par name="Col"/>
+<par name="Phi"/>
+<par name="Len1"/>
+<par name="Len2"/>
+<par name="NumPoints"/>
+<par name="RectWidth"/>
+<par name="NumDropPoints"/>
+<par name="AmpThreshold"/>
+<par name="Smooth"/>
+<par name="Transition"/>
+<par name="Select"/>
+</ic>
+<oc>
+<par name="RowBegin"/>
+<par name="ColBegin"/>
+<par name="RowEnd"/>
+<par name="ColEnd"/>
+</oc>
+</interface>
+<body>
+<c></c>
+<c></c>
+<l>get_image_size(Image, imgWidth, imgHeight)</l>
+<c></c>
+<l>Rect_Row := []</l>
+<l>Rect_Col:= [] </l>
+<l>RowOut :=[]</l>
+<l>ColOut :=[]</l>
+<c></c>
+<c>*计算量测小矩形的座标位置及角度</c>
+<l>Rect_offset := Len1/NumPoints</l>
+<l>Phi_Tmp := Phi + rad(90)</l>
+<l>Rect_Row := Row  + Len2 * sin(Phi_Tmp) -Rect_offset * sin(Phi_Tmp) /2</l>
+<l>Rect_Col := Col - Len2 * cos(Phi_Tmp)+ Rect_offset * cos(Phi_Tmp) /2</l>
+<l>Rect_Phi := Phi</l>
+<l>Rect_Len1 := Len1</l>
+<l>Rect_Len2 := RectWidth/2</l>
+<c></c>
+<l>hom_mat2d_identity(HomMat2DIdentity)</l>
+<l>hom_mat2d_translate(HomMat2DIdentity,-Len2* 2 * sin(Phi_Tmp) /NumPoints,\
+                    Len2 * cos(Phi_Tmp)* 2 /NumPoints,  \
+                    HomMat2DTranslate)</l>
+<l>gen_measure_rectangle2 (Rect_Row, Rect_Col, Rect_Phi, Rect_Len1, \
+                        Rect_Len2,\
+                        imgWidth, imgHeight, 'nearest_neighbor', \
+                        MsrHandle)</l>
+<c></c>
+<l>for Index := 0 to NumPoints-1 by 1   </l>
+<c>     *显示当前的量测矩形区域</c>
+<l>     if(0)</l>
+<l>          dev_set_color ('green')</l>
+<l>          dev_set_draw('margin')</l>
+<l>          dev_get_window(WindowHandle)</l>
+<l>          disp_rectangle2(WindowHandle, Rect_Row, Rect_Col, \
+                          Rect_Phi, Rect_Len1, Rect_Len2)</l>
+<l>     endif</l>
+<c>     *查找边缘点</c>
+<l>     FindPoint (Image, MsrHandle, Smooth, AmpThreshold, Transition,\
+                Select, RowMeasure, ColMeasure)</l>
+<l>     tuple_length(RowMeasure, num)</l>
+<l>     if(num &gt; 0)</l>
+<l>          tuple_concat(RowOut, RowMeasure, RowOut)</l>
+<l>          tuple_concat(ColOut, ColMeasure, ColOut)</l>
+<l>     endif</l>
+<c>     *旋转及平移量测区区域</c>
+<l>     affine_trans_pixel(HomMat2DTranslate, Rect_Row, Rect_Col,\
+                        Rect_Row, Rect_Col)</l>
+<l>     translate_measure(MsrHandle, Rect_Row, Rect_Col)</l>
+<l>endfor</l>
+<l>close_measure (MsrHandle)</l>
+<c></c>
+<c>*要求获取到的最终的边缘点大于总点数的一半</c>
+<l>if(|RowOut| &gt; NumPoints / 10)</l>
+<c>     *绘制每个边缘点</c>
+<l>     if(1)    </l>
+<l>          dev_set_color ('blue')</l>
+<l>          gen_cross_contour_xld(cross,RowOut, ColOut, 10, 0.785398)</l>
+<l>          dev_display(cross)</l>
+<l>     endif</l>
+<c>     </c>
+<c>     </c>
+<l>     gen_contour_polygon_xld (Contour, RowOut, ColOut)</l>
+<l>     fit_line_contour_xld (Contour, 'tukey',NumPoints * 0.9,0,15,5,RowBegin,\
+                           ColBegin, RowEnd, ColEnd, Nr, Nc, Dist)</l>
+<c>     *显示查找到的直线</c>
+<l>     if(1)</l>
+<l>          dev_set_color ('red')</l>
+<l>          rowLine :=[]</l>
+<l>          colLine :=[]</l>
+<l>          tuple_concat(rowLine, RowBegin,rowLine)</l>
+<l>          tuple_concat(rowLine, RowEnd,rowLine)</l>
+<l>          tuple_concat(colLine, ColBegin,colLine)</l>
+<l>          tuple_concat(colLine, ColEnd,colLine)</l>
+<l>          gen_contour_polygon_xld(Line, rowLine,colLine)</l>
+<l>          dev_display(Line)</l>
+<l>     endif</l>
+<l>else</l>
+<l>    RowBegin:=[]</l>
+<l>    ColBegin :=[]</l>
+<l>    RowEnd :=[]</l>
+<l>    ColEnd :=[]</l>
+<l>endif</l>
+<l>return ()</l>
+<c></c>
+<c></c>
+</body>
+<docu id="FindLine_Rectangle2">
+<abstract lang="zh_CN">通过输入带角度的矩形框寻找中间的直线</abstract>
+<short lang="zh_CN">通过输入带角度的矩形框寻找中间的直线</short>
+<parameters>
+<parameter id="AmpThreshold">
+<description lang="zh_CN">拟合直线边缘幅度。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Col">
+<description lang="zh_CN">输入矩形的中心点的列坐标。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="ColBegin">
+<description lang="zh_CN">找到的直线的首端点的列坐标。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="ColEnd">
+<description lang="zh_CN">找到的直线的末端点的列坐标。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Image">
+<description lang="zh_CN">输入图像变量。</description>
+<sem_type>image</sem_type>
+</parameter>
+<parameter id="Len1">
+<description lang="zh_CN">输入矩形的宽度。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Len2">
+<description lang="zh_CN">输入矩形的高度。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="NumDropPoints">
+<description lang="zh_CN">拟合直线允许丢弃的点的个数。</description>
+<sem_type>integer</sem_type>
+</parameter>
+<parameter id="NumPoints">
+<description lang="zh_CN">拟合直线找点的个数(测量点的个数)。</description>
+<sem_type>integer</sem_type>
+</parameter>
+<parameter id="Phi">
+<description lang="zh_CN">输入矩形的弧度。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="RectWidth"/>
+<parameter id="Row">
+<description lang="zh_CN">输入矩形的中心点的行坐标。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="RowBegin">
+<description lang="zh_CN">找到的直线的首端点的行坐标。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="RowEnd">
+<description lang="zh_CN">找到的直线的末端点的行坐标。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Select">
+<description lang="zh_CN">选择找点方法， 'first'为找第一个点， 'last'为找最后一个点，'strongest'为找所有边缘点。</description>
+<sem_type>string</sem_type>
+<values>
+<item>'all'</item>
+<item>'first'</item>
+<item>'strongest'</item>
+</values>
+</parameter>
+<parameter id="Smooth">
+<description lang="zh_CN">拟合直线的平滑度。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Transition">
+<description lang="zh_CN">找边缘点方向， 'negative'明到暗，'positive'暗到明，'all' 双方向。</description>
+<sem_type>string</sem_type>
+<values>
+<item>'negative'</item>
+<item>'positive,'all'.</item>
+</values>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="FindCircle_Circle">
+<interface>
+<io>
+<par name="Image"/>
+</io>
+<ic>
+<par name="RowCircle"/>
+<par name="ColCircle"/>
+<par name="RadiusCircle"/>
+<par name="Length"/>
+<par name="PhiStart"/>
+<par name="PhiExtent"/>
+<par name="NumPoints"/>
+<par name="NumDropPoints"/>
+<par name="AmpThreshold"/>
+<par name="Smooth"/>
+<par name="Transition"/>
+<par name="Select"/>
+</ic>
+<oc>
+<par name="Row"/>
+<par name="Col"/>
+<par name="Radius"/>
+</oc>
+</interface>
+<body>
+<c></c>
+<l>get_image_size(Image, imgWidth, imgHeight)</l>
+<l>RowOut :=[]</l>
+<l>ColOut :=[]</l>
+<c></c>
+<c>*分割矩形的中心坐标</c>
+<l>Row_Rect :=  RowCircle - sin(PhiStart) * (RadiusCircle + Length / 2)</l>
+<l>Col_Rect := ColCircle + cos(PhiStart) * (RadiusCircle + Length / 2)</l>
+<c></c>
+<c>*分割角度</c>
+<l>Angle := (PhiExtent / NumPoints)</l>
+<l>RoiWidth := sin(Angle) * (RadiusCircle + Length / 2) / 2</l>
+<c></c>
+<c>*显示整体的ROI区域</c>
+<l>* dev_get_window(WindowHandle)</l>
+<l>* disp_circle(WindowHandle, RowCircle, ColCircle, RadiusCircle)</l>
+<l>* disp_circle(WindowHandle, RowCircle, ColCircle, RadiusCircle + Length)</l>
+<c></c>
+<l>if(Length &gt; 0)</l>
+<c>     *由内向外</c>
+<l>     direction := 0</l>
+<l>else</l>
+<c>     *由外向内</c>
+<l>     direction := rad(180)</l>
+<l>     Length := -Length</l>
+<l>endif</l>
+<c></c>
+<l>hom_mat2d_identity(HomMat2DIdentity)</l>
+<l>hom_mat2d_rotate(HomMat2DIdentity, Angle, RowCircle,ColCircle,\
+                 HomMat2DRotate)</l>
+<l>for Index := 0 to NumPoints-1 by 1</l>
+<c>     *显示当前查找边缘的ROI区</c>
+<l>     if(0)</l>
+<l>          dev_set_color ('green')</l>
+<l>          dev_set_draw('margin')</l>
+<l>          dev_get_window(WindowHandle)</l>
+<l>          disp_rectangle2(WindowHandle, Row_Rect, Col_Rect, \
+                          PhiStart + Index * Angle+  direction,\
+                          Length / 2, RoiWidth)</l>
+<l>     endif</l>
+<c>     </c>
+<l>     gen_measure_rectangle2(Row_Rect, Col_Rect, PhiStart + Index *\
+                            Angle + direction, Length/2,RoiWidth,\
+                            imgWidth, imgHeight, 'nearest_neighbor',\
+                            MsrHandle)</l>
+<l>     RowMeasure:= []</l>
+<c>     *查找边缘点</c>
+<l>     FindPoint (Image, MsrHandle, Smooth, AmpThreshold, Transition,\
+                Select, RowMeasure, ColMeasure)</l>
+<l>     tuple_length(RowMeasure, num)</l>
+<l>     if(num &gt; 0)</l>
+<l>          tuple_concat(RowOut, RowMeasure, RowOut)</l>
+<l>          tuple_concat(ColOut, ColMeasure, ColOut)</l>
+<l>     endif</l>
+<l>     close_measure (MsrHandle)</l>
+<c>     *旋转量测区域中心点</c>
+<l>     affine_trans_pixel(HomMat2DRotate, Row_Rect, Col_Rect, Row_Rect,\
+                        Col_Rect)</l>
+<l>endfor</l>
+<c>*要求获取到的最终的边缘点大于总点数的一半</c>
+<l>if(|RowOut| &gt; NumPoints / 2)</l>
+<c>     *显示所有找到的边缘点</c>
+<l>     if(1)</l>
+<l>          dev_set_color ('blue')</l>
+<l>          gen_cross_contour_xld(cross,RowOut, ColOut, 15, 0.785398)</l>
+<l>          dev_display(cross)  </l>
+<l>     endif</l>
+<c>     </c>
+<l>     gen_contour_polygon_xld (Contour, RowOut, ColOut)</l>
+<l>     fit_circle_contour_xld (Contour, 'atukey',NumPoints-NumDropPoints,\
+                             0,  0,15, 6, Row, Col, Radius, StartPhi, \
+                             EndPhi, PointOrder)</l>
+<c>     *显示找到的圆弧</c>
+<l>     if(1)</l>
+<l>          dev_set_color ('red')</l>
+<l>          gen_circle_contour_xld(Circle, Row, Col, Radius,StartPhi, \
+                                 EndPhi, PointOrder,1)</l>
+<l>          dev_display(Circle)</l>
+<l>     endif</l>
+<l>else</l>
+<l>     Row := []</l>
+<l>     Col :=[]</l>
+<l>     Radius := []</l>
+<l>endif</l>
+<l>return ()</l>
+</body>
+<docu id="FindCircle_Circle">
+<parameters>
+<parameter id="AmpThreshold">
+<description lang="zh_CN">拟合圆边缘幅度。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Col">
+<description lang="zh_CN">找到的圆的列(Col)坐标。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="ColCircle">
+<description lang="zh_CN">圆心列坐标。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Image">
+<description lang="zh_CN">输入图像变量。</description>
+<multichannel>true</multichannel>
+<sem_type>image</sem_type>
+</parameter>
+<parameter id="Length">
+<description lang="zh_CN">找点区域ROI宽度的2倍。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="NumDropPoints">
+<description lang="zh_CN">允许丢弃的点的个数。</description>
+<sem_type>integer</sem_type>
+</parameter>
+<parameter id="NumPoints">
+<description lang="zh_CN">找点的个数。</description>
+<sem_type>integer</sem_type>
+</parameter>
+<parameter id="PhiExtent">
+<description lang="zh_CN">找点的角度(弧度)大小。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="PhiStart">
+<description lang="zh_CN">找点的开始角度(弧度)。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Radius">
+<description lang="zh_CN">找到的圆的半径。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="RadiusCircle">
+<description lang="zh_CN">圆的半径。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Row">
+<description lang="zh_CN">找到的圆的行(Row)坐标。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="RowCircle">
+<description lang="zh_CN">圆心的行坐标。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Select">
+<description lang="zh_CN">选择找点方法， 'first'为找第一个点， 'last'为找最后一个点，'strongest'为找所有边缘点。</description>
+<sem_type>string</sem_type>
+<values>
+<item>'all'</item>
+<item>'first'</item>
+<item>'strongest'</item>
+</values>
+</parameter>
+<parameter id="Smooth">
+<description lang="zh_CN">拟合圆的平滑度。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Transition">
+<description lang="zh_CN">找边缘方向， 'negative'明到暗，'positive'暗到明，'all' 双方向。</description>
+<sem_type>string</sem_type>
+<values>
+<item>'negative'</item>
+<item>'positive,'all'.</item>
+</values>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="FindCircle">
+<interface>
+<io>
+<par name="Image"/>
+</io>
+<ic>
+<par name="TupleAnnular"/>
+<par name="Direction"/>
+<par name="NumPoints"/>
+<par name="NumDropPoints"/>
+<par name="AmpThreshold"/>
+<par name="Smooth"/>
+<par name="Transition"/>
+<par name="Select"/>
+</ic>
+<oc>
+<par name="Row"/>
+<par name="Col"/>
+<par name="Radius"/>
+</oc>
+</interface>
+<body>
+<c></c>
+<c>*解析圆数据,根据长度判断是圆环还是圆弧环</c>
+<l>if(|TupleAnnular| == 6)   </l>
+<c>     *由内向外时,中心点和半径以小圆为基准, 长度值为正值</c>
+<l>     if(Direction == 'inner')</l>
+<l>          if(TupleAnnular[2] &lt; TupleAnnular[5])</l>
+<l>               RowCircle := TupleAnnular[0]</l>
+<l>               ColCircle := TupleAnnular[1]</l>
+<l>               RadiusCircle := TupleAnnular[2]</l>
+<c>               *大小圆相减,得到查找长度范围</c>
+<l>               Length := TupleAnnular[5]-TupleAnnular[2]</l>
+<l>          else</l>
+<l>               RowCircle := TupleAnnular[3]</l>
+<l>               ColCircle := TupleAnnular[4]</l>
+<l>               RadiusCircle := TupleAnnular[5]</l>
+<l>               Length := TupleAnnular[2]-TupleAnnular[5]               </l>
+<l>          endif        </l>
+<c>          *由外向内时,中心点和半径以大圆为基准, 长度值为负值</c>
+<l>     else</l>
+<l>          if(TupleAnnular[2] &lt; TupleAnnular[5])</l>
+<l>               RowCircle := TupleAnnular[3]</l>
+<l>               ColCircle := TupleAnnular[4]</l>
+<l>               RadiusCircle := TupleAnnular[5]</l>
+<c>               *大小圆相减,得到查找长度范围</c>
+<l>               Length := TupleAnnular[2]-TupleAnnular[5]</l>
+<l>          else</l>
+<l>               RowCircle := TupleAnnular[0]</l>
+<l>               ColCircle := TupleAnnular[1]</l>
+<l>               RadiusCircle := TupleAnnular[2]</l>
+<c>               *大小圆相减,得到查找长度范围</c>
+<l>               Length := TupleAnnular[5]-TupleAnnular[2]               </l>
+<l>          endif        </l>
+<l>     endif</l>
+<c>     *起始角度0,结束角度360</c>
+<l>     FindCircle_Circle (Image, RowCircle, ColCircle, RadiusCircle,\
+                        Length,rad(0),rad(360), NumPoints, \
+                        NumDropPoints,AmpThreshold, Smooth, \
+                        Transition, Select, Row, Col, Radius)</l>
+<l>elseif(|TupleAnnular| == 10)</l>
+<c>          *由内向外时,中心点和半径以小圆为基准, 长度值为正值</c>
+<l>     if(Direction == 'inner')</l>
+<l>          if(TupleAnnular[2] &lt; TupleAnnular[7])</l>
+<l>               RowCircle := TupleAnnular[0]</l>
+<l>               ColCircle := TupleAnnular[1]</l>
+<l>               RadiusCircle := TupleAnnular[2]</l>
+<c>               *大小圆相减,得到查找长度范围</c>
+<l>               Length := TupleAnnular[7]-TupleAnnular[2]</l>
+<l>               PhiStart := TupleAnnular[3]</l>
+<l>               PhiExtent := TupleAnnular[4]</l>
+<l>          else</l>
+<l>               RowCircle := TupleAnnular[5]</l>
+<l>               ColCircle := TupleAnnular[6]</l>
+<l>               RadiusCircle := TupleAnnular[7]</l>
+<c>               *大小圆相减,得到查找长度范围</c>
+<l>               Length := TupleAnnular[2]-TupleAnnular[7]   </l>
+<l>               PhiStart := TupleAnnular[8]</l>
+<l>               PhiExtent := TupleAnnular[9]</l>
+<l>          endif        </l>
+<c>          *由外向内时,中心点和半径以大圆为基准, 长度值为负值</c>
+<l>     else</l>
+<l>          if(TupleAnnular[2] &lt; TupleAnnular[7])</l>
+<l>               RowCircle := TupleAnnular[5]</l>
+<l>               ColCircle := TupleAnnular[6]</l>
+<l>               RadiusCircle := TupleAnnular[7]</l>
+<c>               *大小圆相减,得到查找长度范围</c>
+<l>               Length := TupleAnnular[2]-TupleAnnular[7]</l>
+<l>               PhiStart := TupleAnnular[8]</l>
+<l>               PhiExtent := TupleAnnular[9]</l>
+<l>          else</l>
+<l>               RowCircle := TupleAnnular[0]</l>
+<l>               ColCircle := TupleAnnular[1]</l>
+<l>               RadiusCircle := TupleAnnular[2]</l>
+<c>               *大小圆相减,得到查找长度范围</c>
+<l>               Length := TupleAnnular[7]-TupleAnnular[2]</l>
+<l>               PhiStart := TupleAnnular[3]</l>
+<l>               PhiExtent := TupleAnnular[4]             </l>
+<l>          endif        </l>
+<l>     endif</l>
+<l>     FindCircle_Circle (Image, RowCircle, ColCircle, RadiusCircle,\
+                        Length,PhiStart, PhiExtent, NumPoints, \
+                        NumDropPoints,AmpThreshold, Smooth, \
+                        Transition, Select, Row, Col, Radius)</l>
+<c>    </c>
+<l>endif</l>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="FindCircle">
+<abstract lang="zh_CN">通过两个圆环或者圆弧环寻找中间的圆，两圆环时输入的两者的中心点和半径。两圆弧环时输入两者的中心点、半径、开始弧度、弧度大小。通过找点个数、可丢弃点个数、边缘幅度阈值、平滑度、边缘方向、找边缘方法等参数调节。</abstract>
+<library lang="zh_CN">AutoFrameVision</library>
+<short lang="zh_CN">通过两个圆环或者圆弧环寻找中间的圆</short>
+<parameters>
+<parameter id="AmpThreshold">
+<description lang="zh_CN">拟合圆边缘幅度。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Col">
+<description lang="zh_CN">找到的圆的列(Col)坐标。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Direction">
+<description lang="zh_CN">方向变量，'inner'寻点方向为由小圆环(圆弧环)到大圆环(圆弧环)；
+'outer'寻点方向为由大圆环(圆弧环)到小圆环(圆弧环)。</description>
+<sem_type>string</sem_type>
+</parameter>
+<parameter id="Image">
+<description lang="zh_CN">输入图像变量。</description>
+<multichannel>true</multichannel>
+<sem_type>image</sem_type>
+</parameter>
+<parameter id="NumDropPoints">
+<description lang="zh_CN">拟合圆允许丢弃的点的个数。</description>
+<sem_type>integer</sem_type>
+</parameter>
+<parameter id="NumPoints">
+<description lang="zh_CN">拟合圆找点的个数(测量点的个数)。</description>
+<sem_type>integer</sem_type>
+</parameter>
+<parameter id="Radius">
+<description lang="zh_CN">找到的圆的半径。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Row">
+<description lang="zh_CN">找到的圆的行(Row)坐标。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Select">
+<description lang="zh_CN">选择找点方法， 'first'为找第一个点， 'last'为找最后一个点，'strongest'为找所有边缘点。</description>
+<sem_type>string</sem_type>
+<values>
+<item>'all'</item>
+<item>'first'</item>
+<item>'strongest'</item>
+</values>
+</parameter>
+<parameter id="Smooth">
+<description lang="zh_CN">拟合圆的平滑度。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Transition">
+<description lang="zh_CN">找边缘方向， 'negative'明到暗，'positive'暗到明，'all' 双方向。</description>
+<sem_type>string</sem_type>
+<values>
+<item>'negative'</item>
+<item>'positive,'all'.</item>
+</values>
+</parameter>
+<parameter id="TupleAnnular">
+<description lang="zh_CN">数组包含6或者10个数据，当为6个时说明为两圆环，分别代表第一个圆的圆心坐标(先Row后col)、半径、第二个圆的圆心坐标、半径；当为10个时说明为两圆弧环，分别代表第一个圆的圆心坐标(先Row后col)、半径、开始弧度、圆弧的大小(弧度)、第二个圆的圆心坐标、半径、开始弧度、圆弧的大小(弧度)。</description>
+<multivalue>true</multivalue>
+<sem_type>number</sem_type>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="FindPoint">
+<interface>
+<io>
+<par name="Image"/>
+</io>
+<ic>
+<par name="MsrHandle"/>
+<par name="Smooth"/>
+<par name="AmpThreshold"/>
+<par name="Transition"/>
+<par name="Select"/>
+</ic>
+<oc>
+<par name="Row"/>
+<par name="Col"/>
+</oc>
+</interface>
+<body>
+<l>dev_set_check ('~give_error')</l>
+<l>try</l>
+<c>    </c>
+<c>    </c>
+<c>*取第一点或最后一点时,直接调用</c>
+<l>if(Select = 'first' or Select = 'last')</l>
+<l>     measure_pos (Image, MsrHandle, Smooth, AmpThreshold, Transition,\
+                  Select, Row, Col, Amplitude_Measure, Distance_Measure)</l>
+<l>elseif(Select = 'strongest')</l>
+<c>     *取最强点是,需要全部查找出来排序取最大值</c>
+<l>     measure_pos (Image, MsrHandle, Smooth, AmpThreshold, Transition,\
+                  'all', Row_Measure, Col_Measure, Amplitude_Measure,\
+                  Distance_Measure)</l>
+<l>     tuple_length(Row_Measure, num)</l>
+<l>     if(num &gt; 0)</l>
+<l>          tuple_sort_index(Amplitude_Measure, Indices)</l>
+<l>          index := Indices[num -1]</l>
+<l>          Row := Row_Measure[index]</l>
+<l>          Col := Col_Measure[index]</l>
+<l>     endif</l>
+<l>endif</l>
+<l>catch(Exception)</l>
+<c>    </c>
+<l>endtry</l>
+<l>dev_set_check ('give_error')</l>
+<l>return ()</l>
+</body>
+<docu id="FindPoint">
+<abstract lang="zh_CN">通过输入图像以及图像范围的量测句柄寻找边缘点，平滑度，边缘幅度阈值，边缘点的方向，选择找点方法可自由选择。</abstract>
+<short lang="zh_CN">寻找制定图像区域的边缘点。</short>
+<parameters>
+<parameter id="AmpThreshold">
+<description lang="zh_CN">找点的边缘幅度。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Col">
+<description lang="zh_CN">找到的点的列(Col)坐标。</description>
+<multivalue>optional</multivalue>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Image">
+<description lang="zh_CN">输入图像。</description>
+<multichannel>true</multichannel>
+<sem_type>image</sem_type>
+</parameter>
+<parameter id="MsrHandle">
+<description lang="zh_CN">图形对象的句柄。</description>
+<sem_type>integer</sem_type>
+</parameter>
+<parameter id="Row">
+<description lang="zh_CN">找到的点的行(Row)坐标。</description>
+<multivalue>optional</multivalue>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Select">
+<description lang="zh_CN">选择找点方法， 'first'为找第一个点， 'last'为找最后一个点，'strongest'为找所有边缘点。</description>
+<sem_type>string</sem_type>
+<values>
+<item>'first'，'last'，'strongest'</item>
+</values>
+</parameter>
+<parameter id="Smooth">
+<description lang="zh_CN">找点的平滑度。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Transition">
+<description lang="zh_CN">找边缘点的方向， 'negative'明到暗，'positive'暗到明，'all' 双方向。</description>
+<sem_type>string</sem_type>
+<values>
+<item>'negative'</item>
+<item>'positive,'all'.</item>
+</values>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="dev_disp_message">
+<interface>
+<ic>
+<par name="String"/>
+<par name="CoordSystem"/>
+<par name="Row"/>
+<par name="Column"/>
+<par name="Color"/>
+<par name="Box"/>
+</ic>
+</interface>
+<body>
+<c></c>
+<c>*获取当前活动窗口</c>
+<l>WindowHandle := -1</l>
+<l>dev_get_window(WindowHandle)</l>
+<l>if(WindowHandle != -1)</l>
+<l>     disp_message(WindowHandle, String, CoordSystem, Row, Column, Color, Box)</l>
+<l>endif</l>
+<l>return ()</l>
+</body>
+<docu id="dev_disp_message">
+<parameters>
+<parameter id="Box"/>
+<parameter id="Color"/>
+<parameter id="Column"/>
+<parameter id="CoordSystem"/>
+<parameter id="Row"/>
+<parameter id="String"/>
+</parameters>
+</docu>
+</procedure>
+<procedure name="CalcRotateCenter">
+<interface>
+<ic>
+<par name="Row1"/>
+<par name="Col1"/>
+<par name="Row2"/>
+<par name="Col2"/>
+<par name="Angle"/>
+</ic>
+<oc>
+<par name="RowCenter"/>
+<par name="ColCenter"/>
+</oc>
+</interface>
+<body>
+<c>*输入两个点及两点之间的旋转角度，求出旋转中心</c>
+<c></c>
+<c>*求出等腰三角形的底角A</c>
+<l>angleTest := 180-abs(Angle)</l>
+<l>angleTest := rad(angleTest/2)</l>
+<c></c>
+<c>*确定变换旋转矩阵的旋转方向</c>
+<l>flag := 1</l>
+<l>if(Angle &lt; 0)</l>
+<l>     flag := -1</l>
+<l>endif</l>
+<c></c>
+<l>* gen_cross_contour_xld(Cross, Row1, Col1, 60, 0.785398)</l>
+<l>* gen_cross_contour_xld(Cross, Row2, Col2, 60, 0.785398)</l>
+<c>*第二点以第一点为中心点旋转A度</c>
+<l>hom_mat2d_identity(mat0)</l>
+<l>hom_mat2d_rotate(mat0, flag * angleTest, Row1, Col1, mat1)</l>
+<c></c>
+<l>affine_trans_point_2d(mat1, Row2, Col2, RowTrans1, ColTrans1)</l>
+<c></c>
+<l>* gen_cross_contour_xld(Cross1,  RowTrans1,ColTrans1, 60, 0.785398)</l>
+<l>* distance_pp(Row1, Col1, Row2, Col2, Distance1)</l>
+<l>* distance_pp (Row1, Col1, RowTrans1, ColTrans1, Distance2)</l>
+<c></c>
+<c>*让第一点以第二点反向旋转A度</c>
+<l>hom_mat2d_rotate(mat0, -flag * angleTest, Row2, Col2, mat2)</l>
+<l>affine_trans_point_2d(mat2, Row1, Col1, RowTrans2, ColTrans2)</l>
+<c></c>
+<l>* gen_cross_contour_xld(Cross1,  RowTrans2, ColTrans2,60, 0.785398)</l>
+<l>* distance_pp(Row2, Col2, Row1, Col1, Distance3)</l>
+<l>* distance_pp (Row2, Col2, RowTrans2, ColTrans2, Distance4)</l>
+<c></c>
+<c>*求出两线的交点，即为旋转中心</c>
+<l>intersection_lines(Row1, Col1, RowTrans1, ColTrans1, \
+                   Row2, Col2, RowTrans2, ColTrans2, \
+                   RowCenter, ColCenter, IsOverlapping)</l>
+<c></c>
+<l>* gen_cross_contour_xld(Cross2, Row, Column, 60, 0.785398)</l>
+<l>* gen_region_line(RegionLine1, Row, Column, Row1, Col1)</l>
+<l>* gen_region_line(RegionLine1, Row, Column, Row2, Col2)</l>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="CalcRotateCenter">
+<abstract lang="zh_CN">已知两点座标，以及两点之前的旋转角度，求出旋转中心</abstract>
+<parameters>
+<parameter id="Angle">
+<description lang="zh_CN">已知的旋转角度， 用deg值表示</description>
+</parameter>
+<parameter id="Col1">
+<description lang="zh_CN">第一点列座标</description>
+</parameter>
+<parameter id="Col2">
+<description lang="zh_CN">第一点列座标</description>
+</parameter>
+<parameter id="ColCenter">
+<description lang="zh_CN">求出的旋转中心列座标</description>
+</parameter>
+<parameter id="Row1">
+<description lang="zh_CN">第一点行座标</description>
+</parameter>
+<parameter id="Row2">
+<description lang="zh_CN">第二点行座标</description>
+</parameter>
+<parameter id="RowCenter">
+<description lang="zh_CN">求出的旋转中心行座标</description>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="CalcRotatePoint">
+<interface>
+<ic>
+<par name="RowCenter"/>
+<par name="ColCenter"/>
+<par name="RowOld"/>
+<par name="ColOld"/>
+<par name="Angle"/>
+</ic>
+<oc>
+<par name="RowNew"/>
+<par name="ColNew"/>
+</oc>
+</interface>
+<body>
+<c></c>
+<c></c>
+<c></c>
+<c>*已知旋转中心点，将要被旋转的点和需要旋转的角度，计算旋转后的点的位置</c>
+<l>hom_mat2d_identity(mat0)</l>
+<l>hom_mat2d_rotate(mat0, rad(Angle), RowCenter, ColCenter, mat1)</l>
+<l>affine_trans_point_2d(mat1, RowOld, ColOld, RowNew, ColNew)</l>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+</body>
+<docu id="CalcRotatePoint">
+<parameters>
+<parameter id="Angle">
+<description lang="zh_CN">将要被旋转的角度</description>
+</parameter>
+<parameter id="ColCenter">
+<description lang="zh_CN">已知的旋转中心点列座标</description>
+</parameter>
+<parameter id="ColNew">
+<description lang="zh_CN">围绕中心点旋转指定角度后点的列座标</description>
+</parameter>
+<parameter id="ColOld">
+<description lang="zh_CN">将要被旋转的点的行座标</description>
+</parameter>
+<parameter id="RowCenter">
+<description lang="zh_CN">已知的旋转中心点行座标</description>
+</parameter>
+<parameter id="RowNew">
+<description lang="zh_CN">围绕中心点旋转指定角度后点的行座标</description>
+</parameter>
+<parameter id="RowOld">
+<description lang="zh_CN">将要被旋转的点的行座标</description>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="FindTemplete">
+<interface>
+<io>
+<par name="Image"/>
+</io>
+<ic>
+<par name="ModelId"/>
+<par name="ModelData"/>
+</ic>
+<oc>
+<par name="ModelScore"/>
+<par name="FixTool"/>
+</oc>
+</interface>
+<body>
+<c></c>
+<c></c>
+<l>find_scaled_shape_model (Image, ModelId, rad(0),rad(360),0.95,1.05,\
+                         0.40, 1, 0.5, 'least_squares',[5,1], 0.75,\
+                         ModelRow, ModelColumn, ModelAngle, ModelScale,\
+                         ModelScore)</l>
+<l>if(|ModelScore| &gt; 0)     </l>
+<c>     *生成座标转换矩阵</c>
+<l>     vector_angle_to_rigid(ModelData[0],ModelData[1], ModelData[2],\
+                           ModelRow, ModelColumn, ModelAngle, FixTool)            </l>
+<c>     *显示找到的轮廓</c>
+<l>     if(1)</l>
+<l>          dev_display_shape_matching_results (ModelId, 'red', ModelRow,\
+                                              ModelColumn, ModelAngle,\
+                                              1, 1, 0)</l>
+<l>*           DetlaAngle := ModelAngle - InitAngle           </l>
+<l>     endif  </l>
+<c>     *显示模板查找得分信息</c>
+<c>     </c>
+<l>     dev_disp_message( 'Model Score is '+ ModelScore, \
+                      'window', 20, 20, 'green', 'false')</l>
+<c>     </c>
+<l>else</l>
+<l>*      ModelScore := []</l>
+<l>     dev_disp_message( 'Model find fail !', 'window', 20, 20, 'red', 'true')          </l>
+<l>endif</l>
+<l>return ()</l>
+</body>
+<docu id="FindTemplete">
+<abstract lang="zh_CN">通过输入图像查找模板与保存好的模板比较获取转换的坐标矩阵。</abstract>
+<short lang="zh_CN">通过输入图像查找模板获取转换的坐标矩阵。</short>
+<parameters>
+<parameter id="FixTool">
+<description lang="zh_CN">输入模板参数与寻找到的模板参数生成的座标转换矩阵。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Image">
+<description lang="zh_CN">输入图形变量。</description>
+<sem_type>image</sem_type>
+</parameter>
+<parameter id="ModelData">
+<description lang="zh_CN">输入保存好的模板参数，依次为中心行坐标、中心列坐标、模板旋转弧度。</description>
+<sem_type>number</sem_type>
+</parameter>
+<parameter id="ModelId">
+<description lang="zh_CN">输入图形的模板句柄。</description>
+<sem_type>integer</sem_type>
+</parameter>
+<parameter id="ModelScore">
+<description lang="zh_CN">寻找到的模板的分数。</description>
+<sem_type>real</sem_type>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="FindTemplete_Angle">
+<interface>
+<io>
+<par name="Image"/>
+</io>
+<ic>
+<par name="ModelId"/>
+<par name="ModelData"/>
+</ic>
+<oc>
+<par name="ModelScore"/>
+<par name="FixTool"/>
+</oc>
+</interface>
+<body>
+<c></c>
+<c></c>
+<l>find_scaled_shape_model (Image, ModelId, rad(0),rad(360),0.95,1.05,\
+                         0.40, 1, 0.5, 'least_squares',[5,1], 0.75,\
+                         ModelRow, ModelColumn, ModelAngle, ModelScale,\
+                         ModelScore)</l>
+<l>if(|ModelScore| &gt; 0)     </l>
+<c>     *生成座标转换矩阵</c>
+<l>     vector_angle_to_rigid(ModelData[0],ModelData[1], ModelData[2],\
+                           ModelRow, ModelColumn, ModelAngle, FixTool)            </l>
+<c>     *显示找到的轮廓</c>
+<l>     if(1)</l>
+<l>          dev_display_shape_matching_results (ModelId, 'red', ModelRow,\
+                                              ModelColumn, ModelAngle,\
+                                              1, 1, 0)</l>
+<l>*           DetlaAngle := ModelAngle - InitAngle           </l>
+<l>     endif  </l>
+<c>     *显示模板查找得分信息</c>
+<c>     </c>
+<l>     dev_disp_message( 'Model Score is '+ ModelScore, \
+                      'window', 20, 20, 'green', 'false')</l>
+<c>     </c>
+<l>else</l>
+<l>*      ModelScore := []</l>
+<l>     dev_disp_message( 'Model find fail !', 'window', 20, 20, 'red', 'true')          </l>
+<l>endif</l>
+<l>return ()</l>
+</body>
+<docu id="FindTemplete_Angle">
+<abstract lang="zh_CN">通过输入图像查找模板与保存好的模板比较获取转换的坐标矩阵。</abstract>
+<short lang="zh_CN">通过输入图像查找模板获取转换的坐标矩阵。</short>
+<parameters>
+<parameter id="FixTool">
+<description lang="zh_CN">输入模板参数与寻找到的模板参数生成的座标转换矩阵。</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Image">
+<description lang="zh_CN">输入图形变量。</description>
+<sem_type>image</sem_type>
+</parameter>
+<parameter id="ModelData">
+<description lang="zh_CN">输入保存好的模板参数，依次为中心行坐标、中心列坐标、模板旋转弧度。</description>
+<sem_type>number</sem_type>
+</parameter>
+<parameter id="ModelId">
+<description lang="zh_CN">输入图形的模板句柄。</description>
+<sem_type>integer</sem_type>
+</parameter>
+<parameter id="ModelScore">
+<description lang="zh_CN">寻找到的模板的分数。</description>
+<sem_type>real</sem_type>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

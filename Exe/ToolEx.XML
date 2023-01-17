@@ -1,0 +1,3097 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ToolEx</name>
+    </assembly>
+    <members>
+        <member name="T:ToolEx.CylinderCtrl">
+            <summary>
+            气缸控制控件
+            </summary>
+        </member>
+        <member name="T:ToolEx.CylinderCtrl.IsCylinderSafeHandler">
+            <summary>
+            委托
+            </summary>
+            <param name="cyl"></param>
+            <returns></returns>
+        </member>
+        <member name="E:ToolEx.CylinderCtrl.IsCylinderSafeEvent">
+            <summary>
+            事件
+            </summary>
+        </member>
+        <member name="M:ToolEx.CylinderCtrl.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:ToolEx.CylinderCtrl.CylinderObject">
+            <summary>
+            气缸对象
+            </summary>
+        </member>
+        <member name="F:ToolEx.CylinderCtrl.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:ToolEx.CylinderCtrl.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:ToolEx.CylinderCtrl.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:ToolEx.CylType">
+            <summary>
+            气缸类型
+            </summary>
+        </member>
+        <member name="F:ToolEx.CylType.Single">
+            <summary>
+            单控
+            </summary>
+        </member>
+        <member name="F:ToolEx.CylType.Double">
+            <summary>
+            双控
+            </summary>
+        </member>
+        <member name="T:ToolEx.ShowLogHandler">
+            <summary>
+            ShowLog委托
+            </summary>
+            <param name="strLog"></param>
+            <param name="level"></param>
+        </member>
+        <member name="T:ToolEx.WaitIoHandler">
+            <summary>
+            WaitIo委托
+            </summary>
+            <param name="strIoName">IO名称</param>
+            <param name="bValid">有效值</param>
+            <param name="nTimeOut">超时时间</param>
+            <param name="bShowDialog">是否显示超时对话框</param>
+            <param name="bPause">是否暂停</param>
+        </member>
+        <member name="T:ToolEx.Cylinder">
+            <summary>
+            气缸类
+            </summary>
+        </member>
+        <member name="F:ToolEx.Cylinder.m_CylType">
+            <summary>
+            气缸类型
+            </summary>
+        </member>
+        <member name="F:ToolEx.Cylinder.m_strName">
+            <summary>
+            气缸名称
+            </summary>
+        </member>
+        <member name="F:ToolEx.Cylinder.m_strIoOuts">
+            <summary>
+            气缸输出IO
+            </summary>
+        </member>
+        <member name="F:ToolEx.Cylinder.m_strIoIns">
+            <summary>
+            气缸输入IO
+            </summary>
+        </member>
+        <member name="F:ToolEx.Cylinder.m_bEnableIns">
+            <summary>
+            气缸输入是否禁用
+            </summary>
+        </member>
+        <member name="F:ToolEx.Cylinder.m_nTimeOutS">
+            <summary>
+            超时时间,单位s
+            </summary>
+        </member>
+        <member name="P:ToolEx.Cylinder.CylOutTimeMs">
+            <summary>
+            气缸伸出时间
+            </summary>
+        </member>
+        <member name="P:ToolEx.Cylinder.CylBackTimeMs">
+            <summary>
+            气缸缩回时间
+            </summary>
+        </member>
+        <member name="M:ToolEx.Cylinder.#ctor(System.String,ToolEx.CylType,System.String[],System.String[],System.Boolean[],System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="strName">气缸名称</param>
+            <param name="type">气缸类型</param>
+            <param name="IoOut">输出IO</param>
+            <param name="IoIn">输入IO</param>
+            <param name="bIoIn">输入IO是否启用</param>
+            <param name="nTimeout">超时时间ms</param>
+        </member>
+        <member name="P:ToolEx.Cylinder.IsOut">
+            <summary>
+            气缸伸出状态
+            </summary>
+        </member>
+        <member name="M:ToolEx.Cylinder.CylOut(ToolEx.ShowLogHandler,ToolEx.WaitIoHandler)">
+            <summary>
+            气缸伸出
+            </summary>
+            <param name="ShowLog">委托</param>
+            <param name="WaitIo">委托</param>
+            <returns>0：未超时 1：超时</returns>
+        </member>
+        <member name="M:ToolEx.Cylinder.CylBack(ToolEx.ShowLogHandler,ToolEx.WaitIoHandler)">
+            <summary>
+            气缸缩回
+            </summary>
+            <param name="ShowLog">委托</param>
+            <param name="WaitIo">委托</param>
+            <returns>0：未超时 1：超时</returns>
+        </member>
+        <member name="M:ToolEx.Cylinder.WaitOut(ToolEx.ShowLogHandler,ToolEx.WaitIoHandler)">
+            <summary>
+            等待气缸伸出
+            </summary>
+            <param name="ShowLog">委托</param>
+            <param name="WaitIo">委托</param>
+            <returns>0：未超时 1：超时</returns>
+        </member>
+        <member name="M:ToolEx.Cylinder.WaitBack(ToolEx.ShowLogHandler,ToolEx.WaitIoHandler)">
+            <summary>
+            等待气缸缩回
+            </summary>
+            <param name="ShowLog">委托</param>
+            <param name="WaitIo">委托</param>
+            <returns>0：未超时 1：超时</returns>
+        </member>
+        <member name="T:ToolEx.CylinderMgr">
+            <summary>
+            气缸管理类
+            </summary>
+        </member>
+        <member name="F:ToolEx.CylinderMgr.m_dictCylinders">
+            <summary>
+            气缸数据
+            </summary>
+        </member>
+        <member name="F:ToolEx.CylinderMgr.HEADS">
+            <summary>
+            表头
+            </summary>
+        </member>
+        <member name="M:ToolEx.CylinderMgr.GetCyLinder(System.String)">
+            <summary>
+            获取气缸对象
+            </summary>
+            <param name="strName">气缸名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.CylinderMgr.GetCylTranslate(System.String)">
+            <summary>
+            获取气缸翻译
+            </summary>
+            <param name="strName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.CylinderMgr.ReadCfgFromXml(System.Xml.XmlDocument)">
+            <summary>
+            从xml文件中读取定义的Data信息
+            </summary>
+            <param name="doc"></param>
+        </member>
+        <member name="M:ToolEx.CylinderMgr.UpdateGridFromParam(System.Windows.Forms.DataGridView)">
+            <summary>
+            跟新内存参数到表格数据
+            </summary>
+            <param name="grid">界面表格控件</param>
+        </member>
+        <member name="M:ToolEx.CylinderMgr.UpdateParamFromGrid(System.Windows.Forms.DataGridView)">
+            <summary>
+            更新表格数据到内存参数
+            </summary>
+            <param name="grid">界面表格控件</param>
+        </member>
+        <member name="M:ToolEx.CylinderMgr.SaveCfgXML(System.Xml.XmlDocument)">
+            <summary>
+            保存内存参数到xml文件
+            </summary>
+            <param name="doc">已打开的xml文档</param>
+        </member>
+        <member name="T:ToolEx.MySQL">
+            <summary>
+            MySQL数据库
+            </summary>
+        </member>
+        <member name="M:ToolEx.MySQL.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:ToolEx.MySQL.GenConnectString(System.String,System.Int32,System.String,System.String,System.String)">
+            <summary>
+            生成连接字符串
+            </summary>
+            <param name="strServer"></param>
+            <param name="nPort"></param>
+            <param name="strUserID"></param>
+            <param name="strPassword"></param>
+            <param name="strDatabase"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.MySQL.GenerateCreateTableString(ToolEx.Table)">
+            <summary>
+            生成创建表的字符串
+            </summary>
+            <param name="table"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.MySQL.GenerateInsertTableString(ToolEx.Table)">
+            <summary>
+            生成创建表的字符串
+            </summary>
+            <param name="table"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.MySQL.Connect(System.String)">
+            <summary>
+            连接数据库
+            </summary>
+            <param name="strConn"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.MySQL.Connect(System.String,System.Int32,System.String,System.String,System.String)">
+            <summary>
+            连接数据库
+            </summary>
+            <param name="strServer"></param>
+            <param name="nPort"></param>
+            <param name="strUserID"></param>
+            <param name="strPassword"></param>
+            <param name="strDatabase"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.MySQL.Disconnect">
+            <summary>
+            断开连接
+            </summary>
+        </member>
+        <member name="M:ToolEx.MySQL.ExecuteDataTable(System.String)">
+            <summary>
+            执行SQL语句返回DataTable,用于查询数据库
+            </summary>
+            <param name="sql"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.MySQL.ExecuteNonQuery(System.String)">
+            <summary>
+            执行SQL语句,用于插入、更新和删除数据
+            </summary>
+            <param name="sql"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.MySQL.ExecuteScalar(System.String)">
+            <summary>
+            用于查询数据时，返回查询结果集中第一行第一列的值，即只返回一个值。
+            </summary>
+            <param name="sql"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.MySQL.IsTableExist(System.String)">
+            <summary>
+            判断数据表是否存在
+            </summary>
+            <param name="tableName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.MySQL.IsDatabaseExist(System.String)">
+            <summary>
+            判断数据库是否存在
+            </summary>
+            <param name="database"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.MySQL.CreateDataBase(System.String)">
+            <summary>
+            创建数据库
+            </summary>
+            <param name="database"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.MySQL.CreateTable(ToolEx.Table)">
+            <summary>
+            创建数据表
+            </summary>
+            <param name="table"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.MySQL.AddTableData(ToolEx.Table)">
+            <summary>
+            添加数据
+            </summary>
+            <param name="table"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.MySQL.GetTables(System.String)">
+            <summary>
+            获取所有表的名称
+            </summary>
+            <param name="database"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.MySQL.GetTableColumns(System.String,System.String)">
+            <summary>
+            获取表的所有表项
+            </summary>
+            <param name="database"></param>
+            <param name="tableName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ToolEx.TableColumn">
+            <summary>
+            数据表
+            </summary>
+        </member>
+        <member name="F:ToolEx.TableColumn.Name">
+            <summary>
+            列名称
+            </summary>
+        </member>
+        <member name="F:ToolEx.TableColumn.DataType">
+            <summary>
+            数据类型
+            </summary>
+        </member>
+        <member name="F:ToolEx.TableColumn.Value">
+            <summary>
+            数值
+            </summary>
+        </member>
+        <member name="T:ToolEx.Table">
+            <summary>
+            数据表
+            </summary>
+        </member>
+        <member name="P:ToolEx.Table.Name">
+            <summary>
+            数据表名称
+            </summary>
+        </member>
+        <member name="P:ToolEx.Table.PrimaryKey">
+            <summary>
+            关键字
+            </summary>
+        </member>
+        <member name="M:ToolEx.Table.Add(System.String,System.Type,System.Object)">
+            <summary>
+            添加列
+            </summary>
+            <param name="strColumn"></param>
+            <param name="type"></param>
+            <param name="value"></param>
+        </member>
+        <member name="T:ToolEx.SqlBase">
+            <summary>
+            数据库基类
+            </summary>
+        </member>
+        <member name="F:ToolEx.SqlBase.m_bIsConnected">
+            <summary>
+            数据库是否连接
+            </summary>
+        </member>
+        <member name="P:ToolEx.SqlBase.IsConnected">
+            <summary>
+            数据库是否连接
+            </summary>
+        </member>
+        <member name="M:ToolEx.SqlBase.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:ToolEx.SqlBase.Connect(System.String)">
+            <summary>
+            连接数据库
+            </summary>
+            <param name="strConn"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.SqlBase.Connect(System.String,System.Int32,System.String,System.String,System.String)">
+            <summary>
+            连接数据库
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.SqlBase.Disconnect">
+            <summary>
+            断开连接
+            </summary>
+        </member>
+        <member name="M:ToolEx.SqlBase.ExecuteNonQuery(System.String)">
+            <summary>
+            执行SQL语句,用于插入、更新和删除数据
+            </summary>
+            <param name="sql"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.SqlBase.ExecuteDataTable(System.String)">
+            <summary>
+            执行SQL语句返回DataTable,用于查询数据库
+            </summary>
+            <param name="sql"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.SqlBase.ExecuteScalar(System.String)">
+            <summary>
+            用于查询数据时，返回查询结果集中第一行第一列的值，即只返回一个值。
+            </summary>
+            <param name="sql"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.SqlBase.IsTableExist(System.String)">
+            <summary>
+            判断数据表是否存在
+            </summary>
+            <param name="tableName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.SqlBase.IsDatabaseExist(System.String)">
+            <summary>
+            判断数据库是否存在
+            </summary>
+            <param name="database"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.SqlBase.CreateDataBase(System.String)">
+            <summary>
+            创建数据库
+            </summary>
+            <param name="database"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.SqlBase.CreateTable(ToolEx.Table)">
+            <summary>
+            创建数据表
+            </summary>
+            <param name="table"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.SqlBase.DropTable(System.String)">
+            <summary>
+            删除表
+            </summary>
+            <param name="tableName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.SqlBase.AddTableData(ToolEx.Table)">
+            <summary>
+            添加数据
+            </summary>
+            <param name="table"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:ToolEx.SqlBase.GetTables(System.String)" -->
+        <member name="M:ToolEx.SqlBase.GetTableColumns(System.String,System.String)">
+            <summary>
+            获取表的所有表项
+            </summary>
+            <param name="database"></param>
+            <param name="tableName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.SqlBase.Dispose">
+            <summary>
+            释放资源
+            </summary>
+        </member>
+        <member name="T:ToolEx.DataType">
+            <summary>
+            数据类型，用于PDCA
+            </summary>
+        </member>
+        <member name="F:ToolEx.DataType.pdata">
+            <summary>
+            data数据
+            </summary>
+        </member>
+        <member name="F:ToolEx.DataType.attr">
+            <summary>
+            属性数据
+            </summary>
+        </member>
+        <member name="F:ToolEx.DataType.dut_pos">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ToolEx.DataType.start_time">
+            <summary>
+            开始时间，yyyy-MM-dd HH:mm:ss
+            </summary>
+        </member>
+        <member name="F:ToolEx.DataType.stop_time">
+            <summary>
+            结束时间，yyyy-MM-dd HH:mm:ss
+            </summary>
+        </member>
+        <member name="F:ToolEx.DataType.log_file">
+            <summary>
+            日志文件
+            </summary>
+        </member>
+        <member name="T:ToolEx.SaveType">
+            <summary>
+            保存类型
+            </summary>
+        </member>
+        <member name="F:ToolEx.SaveType.INI">
+            <summary>
+            INI文件
+            </summary>
+        </member>
+        <member name="F:ToolEx.SaveType.CSV">
+            <summary>
+            CSV文件
+            </summary>
+        </member>
+        <member name="F:ToolEx.SaveType.DB">
+            <summary>
+            数据库文件
+            </summary>
+        </member>
+        <member name="T:ToolEx.Data">
+            <summary>
+            数据类
+            </summary>
+        </member>
+        <member name="F:ToolEx.Data.m_strName">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="F:ToolEx.Data.m_strDataType">
+            <summary>
+            数据类型
+            </summary>
+        </member>
+        <member name="F:ToolEx.Data.m_dbStandardValue">
+            <summary>
+            标准值
+            </summary>
+        </member>
+        <member name="F:ToolEx.Data.m_dbCurValue">
+            <summary>
+            当前值
+            </summary>
+        </member>
+        <member name="F:ToolEx.Data.m_strDataIndex">
+            <summary>
+            对应ProductData中的数据字符串索引
+            </summary>
+        </member>
+        <member name="F:ToolEx.Data.m_dbLimitU">
+            <summary>
+            上限
+            </summary>
+        </member>
+        <member name="F:ToolEx.Data.m_dbLimitL">
+            <summary>
+            下限
+            </summary>
+        </member>
+        <member name="F:ToolEx.Data.m_dbOffset">
+            <summary>
+            补偿值
+            </summary>
+        </member>
+        <member name="F:ToolEx.Data.m_strUnit">
+            <summary>
+            单位
+            </summary>
+        </member>
+        <member name="T:ToolEx.DataGroup">
+            <summary>
+            数据组
+            </summary>
+        </member>
+        <member name="F:ToolEx.DataGroup.m_strGroupName">
+            <summary>
+            数据组名称
+            </summary>
+        </member>
+        <member name="F:ToolEx.DataGroup.m_strVersion">
+            <summary>
+            数据版本
+            </summary>
+        </member>
+        <member name="F:ToolEx.DataGroup.m_bIsPDCA">
+            <summary>
+            是否PDCA数据
+            </summary>
+        </member>
+        <member name="F:ToolEx.DataGroup.m_nLevel">
+            <summary>
+            权限等级，0 - OP 1 - AE  2 - Adjustor 3 - Engineer 4 - Administator
+            </summary>
+        </member>
+        <member name="F:ToolEx.DataGroup.m_dictData">
+            <summary>
+            数据
+            </summary>
+        </member>
+        <member name="T:ToolEx.DataMgr">
+            <summary>
+            数据管理类
+            </summary>
+        </member>
+        <member name="F:ToolEx.DataMgr.m_dictDataGroup">
+            <summary>
+            数据组
+            </summary>
+        </member>
+        <member name="F:ToolEx.DataMgr.m_strDescribe">
+            <summary>
+            数据项
+            </summary>
+        </member>
+        <member name="F:ToolEx.DataMgr.m_dictDataShow">
+            <summary>
+            显示的数据
+            </summary>
+        </member>
+        <member name="F:ToolEx.DataMgr.m_dictDataSave">
+            <summary>
+            保存的数据
+            </summary>
+        </member>
+        <member name="T:ToolEx.DataMgr.DataShowChangeHander">
+            <summary>
+            显示数据改变委托
+            </summary>
+        </member>
+        <member name="E:ToolEx.DataMgr.DataShowChangeEvent">
+            <summary>
+            显示数据改变事件
+            </summary>
+        </member>
+        <member name="E:ToolEx.DataMgr.DataSaveChangeEvent">
+            <summary>
+            保存数据改变事件
+            </summary>
+        </member>
+        <member name="T:ToolEx.DataMgr.DataChangedHandler">
+            <summary>
+            数据改变委托
+            </summary>
+            <param name="strGroup"></param>
+            <param name="strData"></param>
+            <param name="oldValue"></param>
+            <param name="newValue"></param>
+        </member>
+        <member name="E:ToolEx.DataMgr.StandardValueChangedEvent">
+            <summary>
+            标准值改变事件
+            </summary>
+        </member>
+        <member name="E:ToolEx.DataMgr.OffsetValueChangedEvent">
+            <summary>
+            补偿值改变事件
+            </summary>
+        </member>
+        <member name="E:ToolEx.DataMgr.LimitUValueChangedEvent">
+            <summary>
+            上限改变事件
+            </summary>
+        </member>
+        <member name="E:ToolEx.DataMgr.LimitLValueChangedEvent">
+            <summary>
+            下限改变事件
+            </summary>
+        </member>
+        <member name="M:ToolEx.DataMgr.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:ToolEx.DataMgr.SavePath">
+            <summary>
+            保存数据的路径，只针对保存的数据
+            </summary>
+        </member>
+        <member name="P:ToolEx.DataMgr.DataShowSaveEnable">
+            <summary>
+            显示界面的数据是否需要保存
+            </summary>
+        </member>
+        <member name="P:ToolEx.DataMgr.DataSaveEnable">
+            <summary>
+            保存界面的数据是否需要保存
+            </summary>
+        </member>
+        <member name="P:ToolEx.DataMgr.SaveType">
+            <summary>
+            保存类型
+            </summary>
+        </member>
+        <member name="P:ToolEx.DataMgr.Server">
+            <summary>
+            数据库服务地址
+            </summary>
+        </member>
+        <member name="P:ToolEx.DataMgr.Port">
+            <summary>
+            数据库端口号
+            </summary>
+        </member>
+        <member name="P:ToolEx.DataMgr.UserID">
+            <summary>
+            数据库用户名
+            </summary>
+        </member>
+        <member name="P:ToolEx.DataMgr.Password">
+            <summary>
+            数据库密码，加密字符串
+            </summary>
+        </member>
+        <member name="P:ToolEx.DataMgr.Database">
+            <summary>
+            数据库名称
+            </summary>
+        </member>
+        <member name="P:ToolEx.DataMgr.TableName">
+            <summary>
+            数据表名称
+            </summary>
+        </member>
+        <member name="M:ToolEx.DataMgr.ReadCfgFromXml(System.Xml.XmlDocument)">
+            <summary>
+            从xml文件中读取定义的Data信息
+            </summary>
+            <param name="doc"></param>
+        </member>
+        <member name="M:ToolEx.DataMgr.AppendDataCfgFromResource(System.String)">
+            <summary>
+            从资源中追加数据配置
+            </summary>
+            <param name="strResource"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.DataMgr.UpdateGridFromParam(System.String,System.Windows.Forms.DataGridView)">
+            <summary>
+            更新内存参数到表格数据
+            </summary>
+            <param name="strGroupName">组名</param>
+            <param name="grid">控件</param>
+        </member>
+        <member name="M:ToolEx.DataMgr.UpdateDataGridFromParam(System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView)">
+            <summary>
+            更新内存参数到表格数据
+            </summary>
+            <param name="gridShow"></param>
+            <param name="gridSave"></param>
+        </member>
+        <member name="M:ToolEx.DataMgr.UpdateParamFromGrid(System.String,System.String,System.Boolean,System.Int32,System.Windows.Forms.DataGridView)">
+            <summary>
+            更新表格数据到内存参数
+            </summary>
+            <param name="strGroupName"></param>
+            <param name="strVersion"></param>
+            <param name="isPDCA"></param>
+            <param name="nLevel">权限等级</param>
+            <param name="grid"></param>
+        </member>
+        <member name="M:ToolEx.DataMgr.UpdateParamFromDataGrid(System.Windows.Forms.DataGridView,System.Boolean,System.Windows.Forms.DataGridView,System.String,System.Boolean)">
+            <summary>
+            更新表格数据到内存参数
+            </summary>
+            <param name="gridShow"></param>
+            <param name="bSaveShow"></param>
+            <param name="gridSave"></param>
+            <param name="strSavePath"></param>
+            <param name="bSave"></param>
+        </member>
+        <member name="M:ToolEx.DataMgr.SaveCfgXML(System.Xml.XmlDocument)">
+            <summary>
+            保存内存参数到xml文件
+            </summary>
+            <param name="doc">已打开的xml文档</param>
+        </member>
+        <member name="M:ToolEx.DataMgr.BackupXML(System.Xml.XmlDocument,System.String)">
+            <summary>
+            备份XML
+            </summary>
+            <param name="doc"></param>
+            <param name="strFile"></param>
+        </member>
+        <member name="T:ToolEx.Form_CylinderMgr">
+            <summary>
+            气缸管理界面
+            </summary>
+        </member>
+        <member name="M:ToolEx.Form_CylinderMgr.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:ToolEx.Form_CylinderMgr.OnChangeMode">
+            <summary>
+            权限变更响应
+            </summary>
+        </member>
+        <member name="F:ToolEx.Form_CylinderMgr.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:ToolEx.Form_CylinderMgr.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:ToolEx.Form_CylinderMgr.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:ToolEx.Form_DataMgr">
+            <summary>
+            数据管理界面
+            </summary>
+        </member>
+        <member name="M:ToolEx.Form_DataMgr.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:ToolEx.Form_DataMgr.OnChangeMode">
+            <summary>
+            权限变更响应
+            </summary>
+        </member>
+        <member name="F:ToolEx.Form_DataMgr.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:ToolEx.Form_DataMgr.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:ToolEx.Form_DataMgr.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:ToolEx.Form_DataQuery.#ctor">
+            <summary>
+            数据库查询界面
+            </summary>
+        </member>
+        <member name="F:ToolEx.Form_DataQuery.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:ToolEx.Form_DataQuery.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:ToolEx.Form_DataQuery.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:ToolEx.Form_LightMgr">
+            <summary>
+            光源管理界面
+            </summary>
+        </member>
+        <member name="M:ToolEx.Form_LightMgr.#ctor">
+            <summary>
+            光源管理
+            </summary>
+        </member>
+        <member name="M:ToolEx.Form_LightMgr.OnChangeMode">
+            <summary>
+            权限变更响应
+            </summary>
+        </member>
+        <member name="F:ToolEx.Form_LightMgr.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:ToolEx.Form_LightMgr.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:ToolEx.Form_LightMgr.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:ToolEx.Form_MachineDataConfig.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ToolEx.Form_MachineDataConfig.button_LoadFromFile_Click(System.Object,System.EventArgs)">
+            <summary>
+            从配置文件读取machine data 需要上传的数据类型和格式
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ToolEx.Form_MachineDataConfig.CreateXml">
+            <summary>
+            如果不存在配置文件，就创建
+            </summary>
+        </member>
+        <member name="M:ToolEx.Form_MachineDataConfig.ReadConfigXML(System.Xml.XmlDocument)">
+            <summary>
+            读取配置文件数据
+            </summary>
+            <param name="doc"></param>
+        </member>
+        <member name="M:ToolEx.Form_MachineDataConfig.InsertNode(System.String,System.String,System.String,System.String)">
+            <summary>
+            插入machine data 的配置信息
+            </summary>
+            <param name="strName"></param>
+            <param name="strDataIndex"></param>
+            <param name="strDataStyle"></param>
+            <param name="index"></param>
+        </member>
+        <member name="F:ToolEx.Form_MachineDataConfig.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:ToolEx.Form_MachineDataConfig.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:ToolEx.Form_MachineDataConfig.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:ToolEx.Form_RobotMgr">
+            <summary>
+            机器人管理界面
+            </summary>
+        </member>
+        <member name="M:ToolEx.Form_RobotMgr.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:ToolEx.Form_RobotMgr.OnChangeMode">
+            <summary>
+            权限变更响应
+            </summary>
+        </member>
+        <member name="F:ToolEx.Form_RobotMgr.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:ToolEx.Form_RobotMgr.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:ToolEx.Form_RobotMgr.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:ToolEx.LightBase">
+            <summary>
+            光源基类
+            </summary>
+        </member>
+        <member name="F:ToolEx.LightBase.m_strName">
+            <summary>
+            光源名称
+            </summary>
+        </member>
+        <member name="F:ToolEx.LightBase.m_nCommIndex">
+            <summary>
+            通信接口索引
+            </summary>
+        </member>
+        <member name="F:ToolEx.LightBase.m_nChannel">
+            <summary>
+            通道
+            </summary>
+        </member>
+        <member name="F:ToolEx.LightBase.m_bInit">
+            <summary>
+            是否初始化
+            </summary>
+        </member>
+        <member name="M:ToolEx.LightBase.#ctor(System.String,System.Int32,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="strName"></param>
+            <param name="nChannel"></param>
+            <param name="nCommIndex"></param>
+        </member>
+        <member name="P:ToolEx.LightBase.Name">
+            <summary>
+            光源名称
+            </summary>
+        </member>
+        <member name="P:ToolEx.LightBase.CommIndex">
+            <summary>
+            通信索引
+            </summary>
+        </member>
+        <member name="P:ToolEx.LightBase.Channel">
+            <summary>
+            通道
+            </summary>
+        </member>
+        <member name="M:ToolEx.LightBase.Init">
+            <summary>
+            初始化
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.LightBase.DeInit">
+            <summary>
+            反初始化
+            </summary>
+        </member>
+        <member name="M:ToolEx.LightBase.LightOn(System.Int32)">
+            <summary>
+            打开光源
+            </summary>
+            <param name="nLight">亮度</param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.LightBase.LightOff">
+            <summary>
+            关闭光源
+            </summary>
+        </member>
+        <member name="T:ToolEx.LightMgr">
+            <summary>
+            光源管理类
+            </summary>
+        </member>
+        <member name="F:ToolEx.LightMgr.m_dictLights">
+            <summary>
+            光源数据
+            </summary>
+        </member>
+        <member name="F:ToolEx.LightMgr.HEADS">
+            <summary>
+            数据表头
+            </summary>
+        </member>
+        <member name="M:ToolEx.LightMgr.ReadCfgFromXml(System.Xml.XmlDocument)">
+            <summary>
+            从xml文件中读取定义的Data信息
+            </summary>
+            <param name="doc"></param>
+        </member>
+        <member name="M:ToolEx.LightMgr.UpdateGridFromParam(System.Windows.Forms.DataGridView)">
+            <summary>
+            跟新内存参数到表格数据
+            </summary>
+            <param name="grid">界面表格控件</param>
+        </member>
+        <member name="M:ToolEx.LightMgr.UpdateParamFromGrid(System.Windows.Forms.DataGridView)">
+            <summary>
+            更新表格数据到内存参数
+            </summary>
+            <param name="grid">界面表格控件</param>
+        </member>
+        <member name="M:ToolEx.LightMgr.SaveCfgXML(System.Xml.XmlDocument)">
+            <summary>
+            保存内存参数到xml文件
+            </summary>
+            <param name="doc">已打开的xml文档</param>
+        </member>
+        <member name="M:ToolEx.LightMgr.GetLight(System.String)">
+            <summary>
+            获取光源对象
+            </summary>
+            <param name="strName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.LightMgr.DeInit">
+            <summary>
+            资源释放
+            </summary>
+        </member>
+        <member name="T:ToolEx.ColorInfo">
+            <summary>
+            扩展ListBox的颜色信息
+            </summary>
+        </member>
+        <member name="T:ToolEx.ListBoxEx">
+            <summary>
+            扩展ListBox类
+            </summary>
+        </member>
+        <member name="M:ToolEx.ListBoxEx.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:ToolEx.ListBoxEx.Count">
+            <summary>
+            数量
+            </summary>
+        </member>
+        <member name="M:ToolEx.ListBoxEx.Append(System.String,System.Drawing.Color,System.Drawing.Color,System.Boolean)">
+            <summary>
+            追加记录
+            </summary>
+            <param name="strText">文本</param>
+            <param name="bkColor">背景颜色</param>
+            <param name="textColor">文本颜色</param>
+            <param name="bFlash">是否闪烁</param>
+        </member>
+        <member name="M:ToolEx.ListBoxEx.OnDrawItem(System.Windows.Forms.DrawItemEventArgs)">
+            <summary>
+            重绘
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:ToolEx.ListBoxEx.OnMeasureItem(System.Windows.Forms.MeasureItemEventArgs)">
+            <summary>
+            重绘
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:ToolEx.ListBoxEx.SetBkColor(System.Int32,System.Drawing.Color)">
+            <summary>
+            设置背景颜色
+            </summary>
+            <param name="nItem">索引号</param>
+            <param name="color">颜色</param>
+        </member>
+        <member name="M:ToolEx.ListBoxEx.GetBkColor(System.Int32)">
+            <summary>
+            获取背景颜色
+            </summary>
+            <param name="nItem">索引号</param>
+            <returns>颜色</returns>
+        </member>
+        <member name="M:ToolEx.ListBoxEx.SetTextColor(System.Int32,System.Drawing.Color)">
+            <summary>
+            设置文本颜色
+            </summary>
+            <param name="nItem">索引号</param>
+            <param name="color">颜色</param>
+        </member>
+        <member name="M:ToolEx.ListBoxEx.GetTextColor(System.Int32)">
+            <summary>
+            获取文本颜色
+            </summary>
+            <param name="nItem">索引号</param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.ListBoxEx.Clear">
+            <summary>
+            重置背景颜色和文本颜色
+            </summary>
+        </member>
+        <member name="M:ToolEx.ListBoxEx.RemoveAt(System.Int32)">
+            <summary>
+            移除
+            </summary>
+            <param name="index"></param>
+        </member>
+        <member name="T:ToolEx.ManaulTool">
+            <summary>
+            手动控制类
+            </summary>
+        </member>
+        <member name="T:ToolEx.ManaulTool.ControlSort">
+            <summary>
+            控件排序
+            </summary>
+        </member>
+        <member name="M:ToolEx.ManaulTool.ControlSort.Compare(System.Windows.Forms.Control,System.Windows.Forms.Control)">
+            <summary>
+            定义类型为比较两个对象而实现的方法。  
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.ManaulTool.GetStation(System.Windows.Forms.Form)">
+            <summary>
+            通过窗体对象得到相应工站对象
+            </summary>
+            <param name="frm">窗体对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.ManaulTool.UpdateGrid(AutoFrameDll.StationBase,System.Windows.Forms.DataGridView)">
+            <summary>
+            更新内存中的点位参数到站位表格
+            </summary>
+            <param name="s">站位对象</param>
+            <param name="grid">表格控件</param>
+        </member>
+        <member name="T:ToolEx.ManaulTool.IsManulAxisMotionSafeHandler">
+            <summary>
+            单轴运动安全委托
+            </summary>
+            <param name="nAxis"></param>
+            <returns></returns>
+        </member>
+        <member name="E:ToolEx.ManaulTool.IsManulAxisMotionSafeEvent">
+            <summary>
+            单轴运动安全委托事件
+            </summary>
+        </member>
+        <member name="M:ToolEx.ManaulTool.absMove(System.Int32,System.Windows.Forms.TextBox,System.Windows.Forms.TextBox,System.Boolean)">
+            <summary>
+            绝对运动
+            </summary>
+            <param name="nAxis">轴号</param>
+            <param name="textBox_tar">目标位置</param>
+            <param name="textBox_speed">速度</param>
+            <param name="bPositive">方向 true正  false负</param>
+        </member>
+        <member name="M:ToolEx.ManaulTool.relMove(System.Int32,System.Windows.Forms.TextBox,System.Windows.Forms.TextBox,System.Boolean)">
+            <summary>
+            相对运动
+            </summary>
+            <param name="nAxis">轴号</param>
+            <param name="textBox_tar">目标位置距离</param>
+            <param name="textBox_speed">速度</param>
+            <param name="bPositive">方向 true正  false负</param>
+        </member>
+        <member name="M:ToolEx.ManaulTool.jogMove(System.Int32,System.Windows.Forms.TextBox,System.Windows.Forms.TextBox,System.Boolean)">
+            <summary>
+            jog运动
+            </summary>
+            <param name="nAxis">轴号</param>
+            <param name="textBox_tar">目标位置</param>
+            <param name="textBox_speed">速度</param>
+            <param name="bPositive">方向 true正  false负</param>
+        </member>
+        <member name="T:ToolEx.ManaulTool.IsManulStaMotionSafeHandler">
+            <summary>
+            单站运动安全委托
+            </summary>
+            <param name="staion"></param>
+            <returns></returns>
+        </member>
+        <member name="E:ToolEx.ManaulTool.IsManulStaMotionSafeEvent">
+            <summary>
+            单站运动安全事件
+            </summary>
+        </member>
+        <member name="M:ToolEx.ManaulTool.singleMove(System.Windows.Forms.DataGridView,AutoFrameDll.StationBase,System.Windows.Forms.TextBox[])">
+            <summary>
+            根据选中的点位表格单元单轴移动
+            </summary>
+            <param name="dataGridView_point">点位表格</param>
+            <param name="sta">工站对象</param>
+            <param name="tb">速度</param>
+        </member>
+        <member name="M:ToolEx.ManaulTool.allMove(System.Windows.Forms.DataGridView,AutoFrameDll.StationBase,System.Windows.Forms.TextBox[])">
+            <summary>
+            根据选中的点位表格行全轴移动
+            </summary>
+            <param name="dataGridView_point">点位表格</param>
+            <param name="sta">工站对象</param>
+            <param name="tb">速度</param>
+        </member>
+        <member name="M:ToolEx.ManaulTool.updateAxisPos(System.Windows.Forms.DataGridView,AutoFrameDll.StationBase)">
+            <summary>
+            根据选中的点位表格更新此轴的位置
+            </summary>
+            <param name="dataGridView_point">点位表格</param>
+            <param name="sta">工站对象</param>
+        </member>
+        <member name="M:ToolEx.ManaulTool.updatePointPos(System.Windows.Forms.DataGridView,AutoFrameDll.StationBase)">
+            <summary>
+            根据选中的点位表格更新此点所有轴的位置
+            </summary>
+            <param name="dataGridView_point">点位表格</param>
+            <param name="sta">工站对象</param>
+        </member>
+        <member name="M:ToolEx.ManaulTool.SavePoint(System.Windows.Forms.DataGridView,AutoFrameDll.StationBase)">
+            <summary>
+            保存当前工站所有点位到文件
+            </summary>
+            <param name="dataGridView_point">点位表格</param>
+            <param name="sta">工站对象</param>
+        </member>
+        <member name="M:ToolEx.ManaulTool.UpdateMotionState(System.Windows.Forms.Form,System.Windows.Forms.TextBox[],System.Windows.Forms.Label[0:,0:],System.Int32)">
+            <summary>
+            通过窗体对象(工站对话框)更新轴状态
+            </summary>
+            <param name="frm">窗体对象</param>
+            <param name="textBox_pos"></param>
+            <param name="label_state"></param>
+            <param name="nIndex">页面索引：0/1</param>
+        </member>
+        <member name="M:ToolEx.ManaulTool.UpdateMotionState(System.Int32,System.Windows.Forms.TextBox,System.Windows.Forms.Label[])">
+            <summary>
+            通过轴号更新相应轴状态
+            </summary>
+            <param name="nAxisNo">轴号</param>
+            <param name="textBox_pos"></param>
+            <param name="label_state"></param>
+        </member>
+        <member name="M:ToolEx.ManaulTool.updateIoText(System.Windows.Forms.Button[],System.String[],System.Boolean)">
+            <summary>
+            显示系统IO输入输出点名字
+            </summary>
+            <param name="btn">按钮对象数组</param>
+            <param name="strIO">要显示IO点名字索引数组</param>
+            <param name="bIn">ture为输入,false为输出</param>
+        </member>
+        <member name="M:ToolEx.ManaulTool.updateIoState(System.Windows.Forms.Button[],System.String[],System.Boolean)">
+            <summary>
+            更新IO的状态
+            </summary>
+            <param name="btn">按钮对象数组</param>
+            <param name="strIO">字符串数组,包含卡号和位数</param>
+            <param name="bIn">ture为输入,false为输出</param>
+        </member>
+        <member name="T:ToolEx.ManaulTool.IsManulIoSafeHandler">
+            <summary>
+            IO操作安全委托
+            </summary>
+            <param name="strIoName"></param>
+            <returns></returns>
+        </member>
+        <member name="E:ToolEx.ManaulTool.IsManulIoSafeEvent">
+            <summary>
+            IO操作安全事件
+            </summary>
+        </member>
+        <member name="M:ToolEx.ManaulTool.Form_IO_Out_Click(System.Object,System.EventArgs)">
+            <summary>
+            单击输出按钮事件
+            </summary>
+            <param name="sender">事件源</param>
+            <param name="e">附带数据的对象</param>
+        </member>
+        <member name="T:ToolEx.ManaulTool.IsCylinderSafeHandler">
+            <summary>
+            气缸安全委托
+            </summary>
+            <param name="cyl"></param>
+            <returns></returns>
+        </member>
+        <member name="E:ToolEx.ManaulTool.IsCylinderSafeEvent">
+            <summary>
+            气缸安全事件
+            </summary>
+        </member>
+        <member name="M:ToolEx.ManaulTool.IsCylinderSafe(ToolEx.Cylinder)">
+            <summary>
+            判断是否满足气缸动作条件
+            </summary>
+            <param name="cyl">气缸</param>
+            <returns></returns>
+        </member>
+        <member name="T:ToolEx.PDCAMgr">
+            <summary>
+            PDCA上传管理
+            </summary>
+        </member>
+        <member name="F:ToolEx.PDCAMgr.m_lock">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.Connect(Communicate.TcpLink)">
+            <summary>
+            连接PDCA
+            </summary>
+            <param name="link"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.Disconnect">
+            <summary>
+            断开PDCA连接
+            </summary>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.CreateStartMessage(System.String)">
+            <summary>
+            创建开始信息 eg: CCQM7000FY1K@start
+            </summary>
+            <param name="serialNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.CreateStartTimeMessage(System.DateTime)">
+            <summary>
+            创建开始时间信息 eg: CCQM7000FY1K@start_time@2020-02-27 13:00:00
+            </summary>
+            <param name="time"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.CreateStartTimeMessage(System.DateTime,System.String)">
+            <summary>
+            创建开始时间信息 eg: CCQM7000FY1K@start_time@2020-02-27 13@yyyy-MM-dd HH
+            </summary>
+            <param name="time"></param>
+            <param name="timeFormat"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.CreateStopTimeMessage(System.DateTime)">
+            <summary>
+            创建结束时间信息  CCQM7000FY1K@stop_time@2020-02-27 14:00:00
+            </summary>
+            <param name="time"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.CreateStopTimeMessage(System.DateTime,System.String)">
+            <summary>
+            创建开始时间信息 eg: CCQM7000FY1K@stop_time@2020-02-27 14@yyyy-MM-dd HH
+            </summary>
+            <param name="time"></param>
+            <param name="timeFormat"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.CreateDUT_POSMessage(System.String,System.String)">
+            <summary>
+            创建DUT_POS信息 eg: CCQMTESTFY1K@dut_pos@BUEN01@H1
+            </summary>
+            <param name="fixtureID">最长16个字符</param>
+            <param name="headID">最长8个字符</param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.CreatePDataMessage(System.String,System.Single)">
+            <summary>
+            创建数据信息 eg: CCQMTESTFY1K@pdata@second@0.01
+            </summary>
+            <param name="testName"></param>
+            <param name="testValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.CreatePDataMessage(System.String,System.Double,System.Double,System.Double)">
+            <summary>
+            创建数据信息 eg: CCQMTESTFY1K@pdata@second@0.01@0.1@0.11
+            </summary>
+            <param name="testName"></param>
+            <param name="testValue"></param>
+            <param name="lowerLimit"></param>
+            <param name="upperLimit"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.CreatePDataMessage(System.String,System.Single,System.Single,System.Single,System.String)">
+            <summary>
+            创建数据信息 eg: CCQMTESTFY1K@pdata@second@0.01@0.1@0.11@dec
+            </summary>
+            <param name="testName"></param>
+            <param name="testValue"></param>
+            <param name="lowerLimit"></param>
+            <param name="upperLimit"></param>
+            <param name="measurementUnit"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.CreateAtrrMessage(System.String,System.Single)">
+            <summary>
+            创建属性信息 eg:CCQMTESTFY1K@attr@MLBSN@Hello
+            </summary>
+            <param name="testName"></param>
+            <param name="testValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.CreateLogMessage(System.String)">
+            <summary>
+            创建上传日志信息 eg:CCQMTESTFY1K@log@we are now logging to pudding using Bali protocol
+            </summary>
+            <param name="log"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.CreateLogFileMessage(System.String)">
+            <summary>
+            创建上传日志文件信息 eg:CCQMTESTFY1K@log_ﬁle@http://thebrainfever.com/images/apple-logos/Silhouette.png
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.CreateLogFileMessage(System.String,System.String,System.String)">
+            <summary>
+            创建上传日志文件信息 eg:CCQMTESTFY1K@log_ﬁle@smb://127.0.0.1/Downloads/gitbox-1.6.2-ml.zip@uid@pwd
+            </summary>
+            <param name="path"></param>
+            <param name="userid"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.CreateSubmitMessage(System.String)">
+            <summary>
+            创建提交信息 eg:CCQMTESTFY1K@submit@1.0
+            </summary>
+            <param name="SWVersion"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.SendMessage(System.String)">
+            <summary>
+            发送信息
+            </summary>
+            <param name="msg"></param>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.GetSingleReplay">
+            <summary>
+            获取单个数据的回复
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.GetMutiReplay">
+            <summary>
+            获取数据组的回复
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.IsSuccess(System.String)">
+            <summary>
+            判断PDCA回复是否成功
+            </summary>
+            <param name="reply"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.ParseSingleReply(System.String)">
+            <summary>
+            解析单个回复数据
+            </summary>
+            <param name="reply"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.QueryRecord(System.String,System.String)">
+            <summary>
+            查询记录
+            </summary>
+            <param name="strSN"></param>
+            <param name="strName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.PDCAMgr.WriteFile(System.String,System.String)">
+            <summary>
+            写文件
+            </summary>
+            <param name="strFileName"></param>
+            <param name="strText"></param>
+        </member>
+        <member name="T:ToolEx.ProductData">
+            <summary>
+            生产数据，根据实际项目修改
+            </summary>
+        </member>
+        <member name="F:ToolEx.ProductData.bCaveOk1">
+            <summary>
+            一穴是否能做
+            </summary>
+        </member>
+        <member name="F:ToolEx.ProductData.bCaveOk2">
+            <summary>
+            二穴是否能做
+            </summary>
+        </member>
+        <member name="M:ToolEx.ProductData.Clone">
+            <summary>
+            拷贝，固定方法
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.ProductData.GetValue(System.String)">
+            <summary>
+            根据名称获取字段或者属性值，固定方法
+            </summary>
+            <param name="strName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.ProductData.GetType(System.String)">
+            <summary>
+            根据名称获取字段或者属性的类型，固定方法
+            </summary>
+            <param name="strName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ToolEx.ProductMgr">
+            <summary>
+            生产数据管理类
+            </summary>
+        </member>
+        <member name="F:ToolEx.ProductMgr.m_queGlueData">
+            <summary>
+            点胶数据
+            </summary>
+        </member>
+        <member name="F:ToolEx.ProductMgr.m_queScanFrontCode">
+            <summary>
+            前置二维码信息
+            </summary>
+        </member>
+        <member name="T:ToolEx.ProductMgr.SendProductDataHandler">
+            <summary>
+            发送生产数据委托
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="E:ToolEx.ProductMgr.SendProductDataEvent">
+            <summary>
+            发送生产数据事件
+            </summary>
+        </member>
+        <member name="T:ToolEx.ProductMgr.ProductInfoChangedHandler">
+            <summary>
+            产品信息改变委托
+            </summary>
+        </member>
+        <member name="E:ToolEx.ProductMgr.ProductInfoChangedEvent">
+            <summary>
+            产品系统改变事件
+            </summary>
+        </member>
+        <member name="M:ToolEx.ProductMgr.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:ToolEx.ProductMgr.Finalize">
+            <summary>
+            析构函数
+            </summary>
+        </member>
+        <member name="M:ToolEx.ProductMgr.ReadCfg">
+            <summary>
+            读配置文件
+            </summary>
+        </member>
+        <member name="M:ToolEx.ProductMgr.WriteCfg">
+            <summary>
+            写配置文件
+            </summary>
+        </member>
+        <member name="P:ToolEx.ProductMgr.DeviceName">
+            <summary>
+            设备名称
+            </summary>
+        </member>
+        <member name="P:ToolEx.ProductMgr.DeviceID">
+            <summary>
+            设备ID
+            </summary>
+        </member>
+        <member name="P:ToolEx.ProductMgr.MachineTime">
+            <summary>
+            设备运行时间
+            </summary>
+        </member>
+        <member name="P:ToolEx.ProductMgr.SoftwareTime">
+            <summary>
+            软件运行时间
+            </summary>
+        </member>
+        <member name="P:ToolEx.ProductMgr.JobCount">
+            <summary>
+            作业工位数量
+            </summary>
+        </member>
+        <member name="P:ToolEx.ProductMgr.Mode">
+            <summary>
+            作业模式
+            </summary>
+        </member>
+        <member name="P:ToolEx.ProductMgr.Voltage">
+            <summary>
+            设备电压
+            </summary>
+        </member>
+        <member name="P:ToolEx.ProductMgr.Current">
+            <summary>
+            设备电流
+            </summary>
+        </member>
+        <member name="P:ToolEx.ProductMgr.Power">
+            <summary>
+            设备功率
+            </summary>
+        </member>
+        <member name="P:ToolEx.ProductMgr.AirPressure">
+            <summary>
+            设备气压
+            </summary>
+        </member>
+        <member name="P:ToolEx.ProductMgr.MotionArray">
+            <summary>
+            设备使用运动板卡
+            </summary>
+        </member>
+        <member name="P:ToolEx.ProductMgr.RobotArray">
+            <summary>
+            设备使用机器人
+            </summary>
+        </member>
+        <member name="P:ToolEx.ProductMgr.LightArray">
+            <summary>
+            设备使用光源
+            </summary>
+        </member>
+        <member name="P:ToolEx.ProductMgr.CCDArray">
+            <summary>
+            设备使用相机
+            </summary>
+        </member>
+        <member name="P:ToolEx.ProductMgr.LensArray">
+            <summary>
+            设备使用镜头
+            </summary>
+        </member>
+        <member name="P:ToolEx.ProductMgr.Job">
+            <summary>
+            作业类
+            </summary>
+        </member>
+        <member name="E:ToolEx.ProductMgr.CurrentWorkerChangedEvent">
+            <summary>
+            当前操作者改变事件
+            </summary>
+        </member>
+        <member name="P:ToolEx.ProductMgr.CurrentWorker">
+            <summary>
+            当前操作者
+            </summary>
+        </member>
+        <member name="P:ToolEx.ProductMgr.WorkerLength">
+            <summary>
+            操作者工号长度
+            </summary>
+        </member>
+        <member name="M:ToolEx.ProductMgr.SendProductData(ToolEx.ProductData)">
+            <summary>
+            发送生产数据
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:ToolEx.ProductMgr.GetPDCAString(ToolEx.DataGroup,System.String,ToolEx.ProductData)">
+            <summary>
+            获取PDCA上传格式字符串
+            </summary>
+            <param name="pdca">PDCA数据组</param>
+            <param name="strSN">PDCA绑定SN</param>
+            <param name="data">生产数据</param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.ProductMgr.Test">
+            <summary>
+            测试PDCA
+            </summary>
+        </member>
+        <member name="M:ToolEx.ProductMgr.UpdateProductInfo">
+            <summary>
+            更新设备信息
+            </summary>
+        </member>
+        <member name="M:ToolEx.ProductMgr.SaveIniData(ToolEx.ProductData,System.String,System.String)">
+            <summary>
+            保存INI文件
+            </summary>
+            <param name="data"></param>
+            <param name="strSavePath"></param>
+            <param name="fileName"></param>
+        </member>
+        <member name="M:ToolEx.ProductMgr.SaveCSVData(ToolEx.ProductData,System.String,System.String)">
+            <summary>
+            保存CSV文件
+            </summary>
+            <param name="data"></param>
+            <param name="strSavePath"></param>
+            <param name="fileName"></param>
+        </member>
+        <member name="M:ToolEx.ProductMgr.SaveDBData(ToolEx.ProductData,System.String,System.String)">
+            <summary>
+            保存数据库文件
+            </summary>
+            <param name="data"></param>
+            <param name="strConn"></param>
+            <param name="strTableName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.ProductMgr.SaveData(ToolEx.ProductData)">
+            <summary>
+            保存数据
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.ProductMgr.LogChanged(System.String,System.String,System.String)">
+            <summary>
+            记录数据变更
+            </summary>
+            <param name="name"></param>
+            <param name="oldValue"></param>
+            <param name="curValue"></param>
+        </member>
+        <member name="T:ToolEx.JobMode">
+            <summary>
+            作业模式
+            </summary>
+        </member>
+        <member name="F:ToolEx.JobMode.Rotate">
+            <summary>
+            转盘模式
+            </summary>
+        </member>
+        <member name="F:ToolEx.JobMode.Line">
+            <summary>
+            普通流水线模式
+            </summary>
+        </member>
+        <member name="F:ToolEx.JobMode.LineEx">
+            <summary>
+            扩展流水线模式，支持中途踢料
+            </summary>
+        </member>
+        <member name="T:ToolEx.JobBase">
+            <summary>
+            作业基类
+            </summary>
+        </member>
+        <member name="F:ToolEx.JobBase.m_nJobCount">
+            <summary>
+            作业工位数量
+            </summary>
+        </member>
+        <member name="F:ToolEx.JobBase.m_arrayProductData">
+            <summary>
+            生产数据数组
+            </summary>
+        </member>
+        <member name="F:ToolEx.JobBase.m_lock">
+            <summary>
+            互斥锁
+            </summary>
+        </member>
+        <member name="M:ToolEx.JobBase.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:ToolEx.JobBase.LoadData">
+            <summary>
+            加载序列化文件
+            </summary>
+        </member>
+        <member name="M:ToolEx.JobBase.SaveData">
+            <summary>
+            保存序列化文件
+            </summary>
+        </member>
+        <member name="P:ToolEx.JobBase.JobCount">
+            <summary>
+            作业工位数量
+            </summary>
+        </member>
+        <member name="M:ToolEx.JobBase.Init">
+            <summary>
+            初始化
+            </summary>
+        </member>
+        <member name="M:ToolEx.JobBase.Update(System.Int32)">
+            <summary>
+            更新生产数据列表
+            </summary>
+            <param name="nStationIndex">作业工位索引。转盘作业此参数无效</param>
+        </member>
+        <member name="M:ToolEx.JobBase.Get(System.Int32)">
+            <summary>
+            获取生产数据
+            </summary>
+            <param name="nStationIndex">作业工位索引，从1开始</param>
+            <returns>生产数据</returns>
+        </member>
+        <member name="M:ToolEx.JobBase.Set(System.Int32,ToolEx.ProductData,System.Boolean)">
+            <summary>
+            设置生产数据
+            </summary>
+            <param name="nStationIndex">作业工位索引，从1开始</param>
+            <param name="data">生产数据</param>
+            <param name="bRef">是否传入引用，此参数用于决定是否重新创建一个生产数据对象</param>
+        </member>
+        <member name="T:ToolEx.RotateJob">
+            <summary>
+            转盘作业
+            </summary>
+        </member>
+        <member name="M:ToolEx.RotateJob.#ctor(System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="nCount">作业工位数量</param>
+        </member>
+        <member name="M:ToolEx.RotateJob.Init">
+            <summary>
+            初始化
+            </summary>
+        </member>
+        <member name="M:ToolEx.RotateJob.Get(System.Int32)">
+            <summary>
+            获取生产数据
+            </summary>
+            <param name="nStationIndex">作业工位索引，从1开始</param>
+            <returns>生产数据</returns>
+        </member>
+        <member name="M:ToolEx.RotateJob.Set(System.Int32,ToolEx.ProductData,System.Boolean)">
+            <summary>
+            设置生产数据
+            </summary>
+            <param name="nStationIndex">作业工位索引，从1开始</param>
+            <param name="data">生产数据</param>
+            <param name="bRef">是否传入引用，此参数用于决定是否重新创建一个生产数据对象</param>
+        </member>
+        <member name="M:ToolEx.RotateJob.Update(System.Int32)">
+            <summary>
+            更新生产数据列表，在转盘转动时执行
+            </summary>
+            <param name="nStationIndex">转盘作业此参数无效</param>
+        </member>
+        <member name="M:ToolEx.RotateJob.LoadData">
+            <summary>
+            加载序列化文件
+            </summary>
+        </member>
+        <member name="M:ToolEx.RotateJob.SaveData">
+            <summary>
+            保存序列化文件
+            </summary>
+        </member>
+        <member name="T:ToolEx.LineJob">
+            <summary>
+            流水线作业
+            </summary>
+        </member>
+        <member name="M:ToolEx.LineJob.#ctor(System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="nCount">作业站位数量</param>
+        </member>
+        <member name="M:ToolEx.LineJob.Init">
+            <summary>
+            初始化
+            </summary>
+        </member>
+        <member name="M:ToolEx.LineJob.Get(System.Int32)">
+            <summary>
+            获取生产数据
+            </summary>
+            <param name="nStationIndex">作业站位索引，从1开始</param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.LineJob.Set(System.Int32,ToolEx.ProductData,System.Boolean)">
+            <summary>
+            设置生产数据，一般只在第一站调用
+            </summary>
+            <param name="nStationIndex">作业工位索引，从1开始</param>
+            <param name="data">生产数据</param>
+            <param name="bRef">是否传入引用，此参数用于决定是否重新创建一个生产数据对象</param>
+        </member>
+        <member name="M:ToolEx.LineJob.Update(System.Int32)">
+            <summary>
+            更新生产数据列表，在当前作业站位数据更新完后，执行
+            </summary>
+            <param name="nStationIndex">作业工位索引，从1开始</param>
+        </member>
+        <member name="M:ToolEx.LineJob.LoadData">
+            <summary>
+            加载序列化文件
+            </summary>
+        </member>
+        <member name="M:ToolEx.LineJob.SaveData">
+            <summary>
+            保存序列化文件
+            </summary>
+        </member>
+        <member name="T:ToolEx.LineExJob">
+            <summary>
+            扩展流水线作业，支持中途拿料
+            </summary>
+        </member>
+        <member name="M:ToolEx.LineExJob.#ctor(System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="nCount"></param>
+        </member>
+        <member name="M:ToolEx.LineExJob.Update(System.Int32)">
+            <summary>
+            更新数据，把本站的数据传递给下一站,必须在下站是空闲状态才能传递
+            </summary>
+            <param name="nStationIndex"></param>
+        </member>
+        <member name="M:ToolEx.LineExJob.Set(System.Int32,ToolEx.ProductData,System.Boolean)">
+            <summary>
+            传递数据，传递值
+            </summary>
+            <param name="nStationIndex"></param>
+            <param name="data"></param>
+            <param name="bRef"></param>
+        </member>
+        <member name="T:ToolEx.Properties.Resources">
+            <summary>
+              一个强类型的资源类，用于查找本地化的字符串等。
+            </summary>
+        </member>
+        <member name="P:ToolEx.Properties.Resources.ResourceManager">
+            <summary>
+              返回此类使用的缓存的 ResourceManager 实例。
+            </summary>
+        </member>
+        <member name="P:ToolEx.Properties.Resources.Culture">
+            <summary>
+              使用此强类型资源类，为所有资源查找
+              重写当前线程的 CurrentUICulture 属性。
+            </summary>
+        </member>
+        <member name="T:ToolEx.CommMode">
+            <summary>
+            通信方式
+            </summary>
+        </member>
+        <member name="F:ToolEx.CommMode.Tcp">
+            <summary>
+            网络通信
+            </summary>
+        </member>
+        <member name="F:ToolEx.CommMode.Com">
+            <summary>
+            串口通信
+            </summary>
+        </member>
+        <member name="T:ToolEx.ActiveLevel">
+            <summary>
+            有效电平
+            </summary>
+        </member>
+        <member name="F:ToolEx.ActiveLevel.Low">
+            <summary>
+            低电平
+            </summary>
+        </member>
+        <member name="F:ToolEx.ActiveLevel.High">
+            <summary>
+            高电平
+            </summary>
+        </member>
+        <member name="F:ToolEx.ActiveLevel.Pluse">
+            <summary>
+            脉冲
+            </summary>
+        </member>
+        <member name="T:ToolEx.RobotVendor">
+            <summary>
+            机械手品牌
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotVendor.Epson">
+            <summary>
+            爱普生
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotVendor.Mitsubishi">
+            <summary>
+            三菱
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotVendor.Yamaha">
+            <summary>
+            雅马哈
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotVendor.ABB">
+            <summary>
+            ABB
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotVendor.Toshiba">
+            <summary>
+            东芝
+            </summary>
+        </member>
+        <member name="T:ToolEx.RobotSysIo">
+            <summary>
+            机器人远程控制IO
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotSysIo.m_strIoFuction">
+            <summary>
+            功能
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotSysIo.m_strIoName">
+            <summary>
+            IO名称
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotSysIo.m_activeLevel">
+            <summary>
+            有效方式
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotSysIo.m_nPluseWidthMs">
+            <summary>
+            脉冲宽度，单位ms
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotSysIo.m_bEnable">
+            <summary>
+            是否启用
+            </summary>
+        </member>
+        <member name="T:ToolEx.RobotIo">
+            <summary>
+            机器人IO
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotIo.m_nIndex">
+            <summary>
+            IO点位
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotIo.m_strName">
+            <summary>
+            IO名称
+            </summary>
+        </member>
+        <member name="T:ToolEx.RobotPoint">
+            <summary>
+            机器人Point
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotPoint.m_nIndex">
+            <summary>
+            点位
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotPoint.m_strName">
+            <summary>
+            点位名称
+            </summary>
+        </member>
+        <member name="T:ToolEx.RobotCmd">
+            <summary>
+            机器人命令
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotCmd.m_strCmd">
+            <summary>
+            命令
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotCmd.m_strDesc">
+            <summary>
+            命令描述
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotCmd.m_nLength">
+            <summary>
+            参数长度
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotCmd.m_strRespond">
+            <summary>
+            命令返回
+            </summary>
+        </member>
+        <member name="T:ToolEx.RobotComm">
+            <summary>
+            机器人通信
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotComm.m_comMode">
+            <summary>
+            通信模式，Tcp、Com
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotComm.m_nRemoteComm">
+            <summary>
+            远程控制通信索引
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotComm.m_nManulComm">
+            <summary>
+            手动控制通信索引
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotComm.m_nMonitorComm">
+            <summary>
+            监控通信索引
+            </summary>
+        </member>
+        <member name="T:ToolEx.Robot">
+            <summary>
+            机器人类
+            </summary>
+        </member>
+        <member name="T:ToolEx.Robot.MoveMode">
+            <summary>
+            运动模式
+            </summary>
+        </member>
+        <member name="F:ToolEx.Robot.MoveMode.Jump">
+            <summary>
+            关节运动跳转
+            </summary>
+        </member>
+        <member name="F:ToolEx.Robot.MoveMode.Go">
+            <summary>
+            关节运动Go
+            </summary>
+        </member>
+        <member name="F:ToolEx.Robot.MoveMode.Move">
+            <summary>
+            直线运动Move
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.RobotAxis">
+            <summary>
+            机器人轴数量
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.X">
+            <summary>
+            机器人X坐标
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.Y">
+            <summary>
+            机器人Y坐标
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.Z">
+            <summary>
+            机器人Z坐标
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.U">
+            <summary>
+            机器人U坐标
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.V">
+            <summary>
+            机器人V坐标
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.W">
+            <summary>
+            机器人W坐标
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.Tool">
+            <summary>
+            机器人工具
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.IoIn">
+            <summary>
+            输入状态
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.IoOut">
+            <summary>
+            输出状态
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.SpeedFactor">
+            <summary>
+            速度百分比
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.Motor">
+            <summary>
+            机器上电状态
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.Power">
+            <summary>
+            机器人高功率状态
+            </summary>
+        </member>
+        <member name="M:ToolEx.Robot.#ctor(System.String,ToolEx.RobotComm,ToolEx.RobotVendor)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="strName">机器人名称</param>
+            <param name="comm">通信方式</param>
+            <param name="vendor">品牌</param>
+        </member>
+        <member name="P:ToolEx.Robot.RobotName">
+            <summary>
+            机械手名称
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.Vendor">
+            <summary>
+            机器人品牌
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.Comm">
+            <summary>
+            机器人通信方式
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.RobotSysIoIns">
+            <summary>
+            机器人远程输入IO
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.RobotSysIoOuts">
+            <summary>
+            机器人远程输出IO
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.RobotIoIns">
+            <summary>
+            机器人输入IO
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.RobotIoOuts">
+            <summary>
+            机器人输出IO
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.RobotPoints">
+            <summary>
+            机器人运行点位
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.RobotCmds">
+            <summary>
+            机器人命令
+            </summary>
+        </member>
+        <member name="M:ToolEx.Robot.UpdateRobotIoIn(System.String,ToolEx.RobotSysIo)">
+            <summary>
+            更新机器人输入IO信息
+            </summary>
+            <param name="strFunction">IO功能</param>
+            <param name="info">IO信息</param>
+        </member>
+        <member name="M:ToolEx.Robot.UpdateRobotIoIn(System.String,ToolEx.RobotIo)">
+            <summary>
+            更新机器人输入IO信息
+            </summary>
+            <param name="strIoName">IO名称</param>
+            <param name="io">IO信息</param>
+        </member>
+        <member name="M:ToolEx.Robot.UpdateRobotIoOut(System.String,ToolEx.RobotSysIo)">
+            <summary>
+            更新机器人输出IO信息
+            </summary>
+            <param name="strFunction">IO功能</param>
+            <param name="info">IO信息</param>
+        </member>
+        <member name="M:ToolEx.Robot.UpdateRobotIoOut(System.String,ToolEx.RobotIo)">
+            <summary>
+            更新机器人输出IO信息
+            </summary>
+            <param name="strIoName">IO名称</param>
+            <param name="io">io信息</param>
+        </member>
+        <member name="M:ToolEx.Robot.UpdateRobotPoint(System.String,ToolEx.RobotPoint)">
+            <summary>
+            更新机器人点位
+            </summary>
+            <param name="strPointName">点位名称</param>
+            <param name="pt">点位</param>
+        </member>
+        <member name="M:ToolEx.Robot.UpdateRobotCmd(System.String,ToolEx.RobotCmd)">
+            <summary>
+            更新机器人命令
+            </summary>
+            <param name="strCmd"></param>
+            <param name="cmd"></param>
+        </member>
+        <member name="P:ToolEx.Robot.LinkRemote">
+            <summary>
+            远程通信连接对象
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.LinkManul">
+            <summary>
+            手动控制通信连接对象
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.LinkMonitor">
+            <summary>
+            监控通信连接对象
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.Mode">
+            <summary>
+            通信方式
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.IsRunning">
+            <summary>
+            机器人是否在运行状态
+            </summary>
+        </member>
+        <member name="P:ToolEx.Robot.IsInited">
+            <summary>
+            机器人是否初始化
+            </summary>
+        </member>
+        <member name="M:ToolEx.Robot.TriggerIo(System.String)">
+            <summary>
+            触发IO
+            </summary>
+            <param name="strFunction"></param>
+        </member>
+        <member name="M:ToolEx.Robot.RobotStop">
+            <summary>
+            机器人停止
+            </summary>
+        </member>
+        <member name="M:ToolEx.Robot.RobotPause">
+            <summary>
+            机器人暂停
+            </summary>
+        </member>
+        <member name="M:ToolEx.Robot.RobotContinue">
+            <summary>
+            机器人继续
+            </summary>
+        </member>
+        <member name="M:ToolEx.Robot.WaitIo(System.String,System.Int32)">
+            <summary>
+            等待IO
+            </summary>
+            <param name="strFunction"></param>
+            <param name="nTimeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.Robot.InitRobot">
+            <summary>
+            初始化机器人
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.Robot.DeInitRobot">
+            <summary>
+            机器人反初始化
+            </summary>
+        </member>
+        <member name="M:ToolEx.Robot.ConnectRemote(System.Boolean)">
+            <summary>
+            打开、断开远程连接
+            </summary>
+            <param name="connect">打开、断开</param>
+            <returns>连接结果</returns>
+        </member>
+        <member name="P:ToolEx.Robot.IsRemoteConnected">
+            <summary>
+            远程是否连接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.Robot.ConnectManul(System.Boolean)">
+            <summary>
+            打开、断开手动连接
+            </summary>
+            <param name="connect">打开、断开</param>
+            <returns>连接结果</returns>
+        </member>
+        <member name="P:ToolEx.Robot.IsManulConnected">
+            <summary>
+            手动控制是否连接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.Robot.ConnectMonitor(System.Boolean)">
+            <summary>
+            打开、断开监视连接
+            </summary>
+            <param name="connect">打开、断开</param>
+            <returns>连接结果</returns>
+        </member>
+        <member name="P:ToolEx.Robot.IsMonitorConnected">
+            <summary>
+            监控是否连接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.Robot.ReadLine(System.String@)">
+            <summary>
+            读数据
+            </summary>
+            <param name="strData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.Robot.WriteLine(System.String)">
+            <summary>
+            写数据
+            </summary>
+            <param name="strData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.Robot.ReadLine(System.Object,System.String@)">
+            <summary>
+            读数据
+            </summary>
+            <param name="link"></param>
+            <param name="strData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.Robot.WriteLine(System.Object,System.String)">
+            <summary>
+            写数据
+            </summary>
+            <param name="link"></param>
+            <param name="strData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.Robot.Lock">
+            <summary>
+            锁定
+            </summary>
+        </member>
+        <member name="M:ToolEx.Robot.UnLock">
+            <summary>
+            解锁
+            </summary>
+        </member>
+        <member name="M:ToolEx.Robot.SetDO(System.Int32,System.Boolean)">
+            <summary>
+            设置输出
+            </summary>
+            <param name="index"></param>
+            <param name="on"></param>
+        </member>
+        <member name="M:ToolEx.Robot.GetDI(System.Int32)">
+            <summary>
+            获取输入状态
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.Robot.GetDO(System.Int32)">
+            <summary>
+            获取输出状态
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.Robot.MotorOn(System.Boolean)">
+            <summary>
+            机器人上电
+            </summary>
+            <param name="bOn"></param>
+        </member>
+        <member name="M:ToolEx.Robot.PowerHigh(System.Boolean)">
+            <summary>
+            设置机器人功率
+            </summary>
+            <param name="bOn"></param>
+        </member>
+        <member name="M:ToolEx.Robot.Reset">
+            <summary>
+            机器人重置
+            </summary>
+        </member>
+        <member name="M:ToolEx.Robot.SetTool(System.Int32)">
+            <summary>
+            设置工具坐标
+            </summary>
+            <param name="tool"></param>
+        </member>
+        <member name="M:ToolEx.Robot.SetLocal(System.Int32)">
+            <summary>
+            设置Local坐标
+            </summary>
+            <param name="local"></param>
+        </member>
+        <member name="M:ToolEx.Robot.SetSpeedFactor(System.Int32)">
+            <summary>
+            设置速度比
+            </summary>
+            <param name="speed"></param>
+        </member>
+        <member name="M:ToolEx.Robot.Jump(System.Int32)">
+            <summary>
+            Jump到点
+            </summary>
+            <param name="pos"></param>
+        </member>
+        <member name="M:ToolEx.Robot.Jump(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Jump到绝对位置
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="z"></param>
+            <param name="u"></param>
+        </member>
+        <member name="M:ToolEx.Robot.Go(System.Int32)">
+            <summary>
+            Go到点
+            </summary>
+            <param name="pos"></param>
+        </member>
+        <member name="M:ToolEx.Robot.Go(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Go到绝对位置
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="z"></param>
+            <param name="u"></param>
+            <param name="v"></param>
+            <param name="w"></param>
+        </member>
+        <member name="M:ToolEx.Robot.Move(System.Int32)">
+            <summary>
+            Move到点
+            </summary>
+            <param name="pos"></param>
+        </member>
+        <member name="M:ToolEx.Robot.Move(System.Boolean,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Move到绝对位置
+            </summary>
+            <param name="bAbs">是否绝对运动</param>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="z"></param>
+            <param name="u"></param>
+            <param name="v"></param>
+            <param name="w"></param>
+        </member>
+        <member name="M:ToolEx.Robot.ContinueOn(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            连续运动开始
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="z"></param>
+            <param name="u"></param>
+            <param name="v"></param>
+            <param name="w"></param>
+        </member>
+        <member name="M:ToolEx.Robot.ContinueOff">
+            <summary>
+            连续运动结束
+            </summary>
+        </member>
+        <member name="M:ToolEx.Robot.TeachPoint(System.Int32)">
+            <summary>
+            示教点位
+            </summary>
+            <param name="pos"></param>
+        </member>
+        <member name="M:ToolEx.Robot.StartMonitor">
+            <summary>
+            开始监控
+            </summary>
+        </member>
+        <member name="M:ToolEx.Robot.StopMonitor">
+            <summary>
+            停止监控
+            </summary>
+        </member>
+        <member name="M:ToolEx.Robot.EpsonInit">
+            <summary>
+            爱普生机器人初始化
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ToolEx.RobotMgrEx">
+            <summary>
+            机器人管理类
+            </summary>
+        </member>
+        <member name="F:ToolEx.RobotMgrEx.m_dictRobot">
+            <summary>
+            机器人数据
+            </summary>
+        </member>
+        <member name="M:ToolEx.RobotMgrEx.ReadCfgFromXml(System.Xml.XmlDocument)">
+            <summary>
+            从xml文件中读取定义的Data信息
+            </summary>
+            <param name="doc"></param>
+        </member>
+        <member name="M:ToolEx.RobotMgrEx.UpdateGridFromParam(System.String,System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView)">
+            <summary>
+            更新内存参数到表格数据
+            </summary>
+            <param name="strRobotName"></param>
+            <param name="gridSysIoIn"></param>
+            <param name="gridSysIoOut"></param>
+            <param name="gridIoIn"></param>
+            <param name="gridIoOut"></param>
+            <param name="gridPoint"></param>
+            <param name="gridCmd"></param>
+        </member>
+        <member name="M:ToolEx.RobotMgrEx.UpdateParamFromGrid(System.String,ToolEx.RobotComm,System.Int32,System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView)">
+            <summary>
+            更新表格数据到内存参数
+            </summary>
+            <param name="strRobotName"></param>
+            <param name="comm"></param>
+            <param name="vendor"></param>
+            <param name="gridSysIoIn"></param>
+            <param name="gridSysIoOut"></param>
+            <param name="gridIoIn"></param>
+            <param name="gridIoOut"></param>
+            <param name="gridPoint"></param>
+            <param name="gridCmd"></param>
+        </member>
+        <member name="M:ToolEx.RobotMgrEx.SaveCfgXML(System.Xml.XmlDocument)">
+            <summary>
+            保存内存参数到xml文件
+            </summary>
+            <param name="doc">已打开的xml文档</param>
+        </member>
+        <member name="M:ToolEx.RobotMgrEx.GetRobot(System.String)">
+            <summary>
+            获取机器人对象
+            </summary>
+            <param name="strRobotName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ToolEx.TValue">
+            <summary>
+            通用数据类型
+            </summary>
+        </member>
+        <member name="M:ToolEx.TValue.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:ToolEx.TValue.#ctor(System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="v"></param>
+        </member>
+        <member name="M:ToolEx.TValue.#ctor(System.Double)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="v"></param>
+        </member>
+        <member name="M:ToolEx.TValue.#ctor(System.Boolean)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="v"></param>
+        </member>
+        <member name="M:ToolEx.TValue.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="v"></param>
+        </member>
+        <member name="P:ToolEx.TValue.I">
+            <summary>
+            转换为int型数据
+            </summary>
+        </member>
+        <member name="P:ToolEx.TValue.D">
+            <summary>
+            转换为double型数据
+            </summary>
+        </member>
+        <member name="P:ToolEx.TValue.B">
+            <summary>
+            转换为bool型数据
+            </summary>
+        </member>
+        <member name="P:ToolEx.TValue.S">
+            <summary>
+            转换为string型数据
+            </summary>
+        </member>
+        <member name="P:ToolEx.TValue.IsNumber">
+            <summary>
+            是否是数字
+            </summary>
+        </member>
+        <member name="P:ToolEx.TValue.IsNullOrEmpty">
+            <summary>
+            是否为空
+            </summary>
+        </member>
+        <member name="M:ToolEx.TValue.ToString">
+            <summary>
+            转换为字符串
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.Equals(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.GetHashCode">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.Clone">
+            <summary>
+            拷贝
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.op_Implicit(System.Int32)~ToolEx.TValue">
+            <summary>
+            int型数据隐式转换为TValue类型
+            </summary>
+            <param name="v"></param>
+        </member>
+        <member name="M:ToolEx.TValue.op_Implicit(System.Double)~ToolEx.TValue">
+            <summary>
+            double型数据隐式转换为TValue类型
+            </summary>
+            <param name="v"></param>
+        </member>
+        <member name="M:ToolEx.TValue.op_Implicit(System.Boolean)~ToolEx.TValue">
+            <summary>
+            bool型数据隐式转换为TValue类型
+            </summary>
+            <param name="v"></param>
+        </member>
+        <member name="M:ToolEx.TValue.op_Implicit(System.String)~ToolEx.TValue">
+            <summary>
+            string型数据隐式转换为TValue类型
+            </summary>
+            <param name="v"></param>
+        </member>
+        <member name="M:ToolEx.TValue.op_Addition(ToolEx.TValue,System.Int32)">
+            <summary>
+            重载+运算
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.op_Addition(ToolEx.TValue,System.Double)">
+            <summary>
+            重载+运算
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.op_Addition(ToolEx.TValue,System.String)">
+            <summary>
+            重载+运算
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.op_GreaterThan(ToolEx.TValue,System.Int32)">
+            <summary>
+            重载>运算
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.op_GreaterThan(ToolEx.TValue,System.Double)">
+            <summary>
+            重载>运算
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.op_GreaterThanOrEqual(ToolEx.TValue,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.op_GreaterThanOrEqual(ToolEx.TValue,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.op_LessThan(ToolEx.TValue,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.op_LessThan(ToolEx.TValue,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.op_LessThanOrEqual(ToolEx.TValue,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.op_LessThanOrEqual(ToolEx.TValue,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.op_Equality(ToolEx.TValue,ToolEx.TValue)">
+            <summary>
+            
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.op_Inequality(ToolEx.TValue,ToolEx.TValue)">
+            <summary>
+            
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.op_Equality(ToolEx.TValue,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.op_Equality(ToolEx.TValue,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.op_Inequality(ToolEx.TValue,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolEx.TValue.op_Inequality(ToolEx.TValue,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="T:HelperTool.SerializerHelper">
+            <summary>
+            序列化类
+            </summary>
+        </member>
+        <member name="M:HelperTool.SerializerHelper.SaveObjectToFile(System.Object,System.String)">
+            <summary>
+            把对象序列化为二进制进行保存
+            </summary>
+            <param name="obj"></param>
+            <param name="path"></param>
+        </member>
+        <member name="M:HelperTool.SerializerHelper.LoadObjectFromFile(System.String)">
+            <summary>
+            从二进制序列化文件加载对象
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HelperTool.SerializerHelper.DeepCopy``1(``0)">
+            <summary>
+            深度拷贝
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HelperTool.SerializerHelper.SerializeBinary``1(System.String,``0)">
+            <summary>
+            二进制序列化
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="file"></param>
+            <param name="obj"></param>
+        </member>
+        <member name="M:HelperTool.SerializerHelper.DeserializeBinary``1(System.String)">
+            <summary>
+            二进制反序列化
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HelperTool.SerializerHelper.SerializeSoap``1(System.String,``0)">
+            <summary>
+            SOAP序列化
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="file"></param>
+            <param name="obj"></param>
+        </member>
+        <member name="M:HelperTool.SerializerHelper.DeserializeSoap``1(System.String)">
+            <summary>
+            SOAP反序列化
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

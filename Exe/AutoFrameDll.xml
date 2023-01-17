@@ -1,0 +1,2792 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AutoFrameDll</name>
+    </assembly>
+    <members>
+        <member name="T:AutoFrameDll.ConfigMgr">
+            <summary>
+            配置文件管理类
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.ConfigMgr.CfgFileName">
+            <summary>
+            当前系统配置的名称
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.ConfigMgr.LoadCfgFile(System.String)">
+            <summary>
+            读取系统配置
+            </summary>
+            <param name="strFile">配置文件 </param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.ConfigMgr.SaveCfgFile(System.String)">
+            <summary>
+            保存系统配置
+            </summary>
+            <param name="strFile">配置文件 </param>
+        </member>
+        <member name="T:AutoFrameDll.CsvOperation">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.#ctor">
+            <summary>
+            默认以系统参数路径，当前日期生成文件名
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.#ctor(System.String)">
+             <summary>
+            以系统参数路径，文件名称及当前日期组合生成文件名
+             </summary>
+             <param name="fileName">文件名,包括文件路径</param>
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.#ctor(System.String,System.Text.Encoding)">
+             <summary>
+            指定文件名和编码方式
+             </summary>
+             <param name="fileName">文件名,包括文件路径</param>
+             <param name="encoding">文件编码</param>
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.#ctor(System.String,System.String)">
+            <summary>
+            指定文件路径和文件名
+            </summary>
+            <param name="filePath">文件路径</param>
+            <param name="fileName">文件名,包括文件路径</param>
+        </member>
+        <member name="P:AutoFrameDll.CsvOperation.FileName">
+            <summary>
+            文件名,包括文件路径
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.CsvOperation.BInsertQuota">
+            <summary>
+            是否添加引号
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.CsvOperation.FileEncoding">
+            <summary>
+            文件编码
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.CsvOperation.RowCount">
+            <summary>
+            获取行数
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.CsvOperation.ColCount">
+            <summary>
+            获取列数
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.CsvOperation.Item(System.Int32,System.Int32)">
+            <summary>
+            获取某行某列的数据
+            row:行,row = 1代表第一行
+            col:列,col = 1代表第一列  
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.CsvOperation.Rows">
+            <summary>
+            获取行
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.CsvOperation.Item(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            根据最小行，最大行，最小列，最大列，来生成一个DataTable类型的数据
+            行等于1代表第一行
+            列等于1代表第一列
+            maxrow: -1代表最大行
+            maxcol: -1代表最大列
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.CheckRowValid(System.Int32)">
+            <summary>
+            检查行数是否是有效的
+            </summary>
+            <param name="row"></param>  
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.CheckMaxRowValid(System.Int32)">
+            <summary>
+            检查最大行数是否是有效的
+            </summary>
+            <param name="maxRow"></param>  
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.CheckColValid(System.Int32)">
+            <summary>
+            检查列数是否是有效的
+            </summary>
+            <param name="col"></param>  
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.CheckMaxColValid(System.Int32)">
+            <summary>
+            检查检查最大列数是否是有效的
+            </summary>
+            <param name="maxCol"></param>  
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.LoadCsvFile">
+            <summary>
+            载入CSV文件
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.GetDeleteQuotaDataLine(System.String)">
+            <summary>
+            获取两个连续引号变成单个引号的数据行
+            </summary>
+            <param name="fileDataLine">文件数据行</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.IfOddQuota(System.String)">
+            <summary>
+            判断字符串是否包含奇数个引号
+            </summary>
+            <param name="dataLine">数据行</param>
+            <returns>为奇数时，返回为真；否则返回为假</returns>
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.IfOddStartQuota(System.String)">
+            <summary>
+            判断是否以奇数个引号开始
+            </summary>
+            <param name="dataCell"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.IfOddEndQuota(System.String)">
+            <summary>
+            判断是否以奇数个引号结尾
+            </summary>
+            <param name="dataCell"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.AddNewDataLine(System.String)">
+            <summary>
+            加入新的数据行
+            </summary>
+            <param name="newDataLine">新的数据行</param>
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.GetHandleData(System.String)">
+            <summary>
+            去掉格子的首尾引号，把双引号变成单引号
+            </summary>
+            <param name="fileCellData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.AddData(System.Data.DataTable,System.Int32)">
+            <summary>
+            添加表数据到CSV文件中
+            </summary>
+            <param name="dataDT">表数据</param>
+            <param name="beginCol">从第几列开始,beginCol = 1代表第一列</param>
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.Save">
+            <summary>
+            保存数据,如果当前硬盘中已经存在文件名一样的文件，将会覆盖
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.Save(System.String)">
+            <summary>
+            保存数据,如果当前硬盘中已经存在文件名一样的文件，将会覆盖
+            </summary>
+            <param name="fileName">文件名,包括文件路径</param>
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.Save(System.String,System.Text.Encoding)">
+            <summary>
+            保存数据,如果当前硬盘中已经存在文件名一样的文件，将会覆盖
+            </summary>
+            <param name="fileName">文件名,包括文件路径</param>
+            <param name="encoding">文件编码</param>
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.ConvertToSaveLine(System.Collections.ArrayList)">
+            <summary>
+            转换成保存行
+            </summary>
+            <param name="colAL">一行</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.CsvOperation.ConvertToSaveCell(System.String)">
+            <summary>
+            字符串转换成CSV中的格子
+            双引号转换成两个双引号，然后首尾各加一个双引号
+            这样就不需要考虑逗号及换行的问题
+            </summary>
+            <param name="cell">格子内容</param>
+            <returns></returns>
+        </member>
+        <member name="T:AutoFrameDll.Form_Message">
+            <summary>
+            线程专用消息对话框
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.Form_Message.m_station">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.Form_Message.BindIO">
+            <summary>
+            确认键绑定的IO
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.Form_Message.NotifyMode">
+            <summary>
+            通知模式
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.Form_Message.IoKeepTimeS">
+            <summary>
+            绑定IO保持时间,单位秒
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.Form_Message.#ctor(AutoFrameDll.StationBase)">
+            <summary>
+            线程专用消息对话框
+            </summary>
+                   
+        </member>
+        <member name="M:AutoFrameDll.Form_Message.MessageShow(System.String,System.String,System.Windows.Forms.MessageBoxButtons)">
+            <summary>
+            显示超时对话框
+            </summary>
+            <param name="strText"></param>
+            <param name="Title"></param>
+            <param name="btns"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.Form_Message.SetYesText(System.String)">
+            <summary>
+            设置YES按钮的文本显示
+            </summary>
+            <param name="strText"></param>
+        </member>
+        <member name="M:AutoFrameDll.Form_Message.SetNoText(System.String)">
+            <summary>
+            设置NO按钮的文本显示
+            </summary>
+            <param name="strText"></param>
+        </member>
+        <member name="M:AutoFrameDll.Form_Message.SetCancelText(System.String)">
+            <summary>
+            设置Cancel按钮的文本显示
+            </summary>
+            <param name="strText"></param>
+        </member>
+        <member name="F:AutoFrameDll.Form_Message.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.Form_Message.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:AutoFrameDll.Form_Message.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:AutoFrameDll.IniOperation">
+            <summary>
+            Ini文件读写封装类
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.IniOperation.GetPrivateProfileSectionNames(System.IntPtr,System.UInt32,System.String)">
+            <summary>
+            获取所有节点名称(Section)
+            </summary>
+            <param name="lpszReturnBuffer">存放节点名称的内存地址,每个节点之间用\0分隔</param>
+            <param name="nSize">内存大小(characters)</param>
+            <param name="lpFileName">Ini文件</param>
+            <returns>内容的实际长度,为0表示没有内容,为nSize-2表示内存大小不够</returns>
+        </member>
+        <member name="M:AutoFrameDll.IniOperation.GetPrivateProfileSection(System.String,System.IntPtr,System.UInt32,System.String)">
+            <summary>
+            获取某个指定节点(Section)中所有KEY和Value
+            </summary>
+            <param name="lpAppName">节点名称</param>
+            <param name="lpReturnedString">返回值的内存地址,每个之间用\0分隔</param>
+            <param name="nSize">内存大小(characters)</param>
+            <param name="lpFileName">Ini文件</param>
+            <returns>内容的实际长度,为0表示没有内容,为nSize-2表示内存大小不够</returns>
+        </member>
+        <member name="M:AutoFrameDll.IniOperation.GetPrivateProfileString(System.String,System.String,System.String,System.Char[],System.UInt32,System.String)">
+            <summary>
+            读取INI文件中指定的Key的值
+            </summary>
+            <param name="lpAppName">节点名称。如果为null,则读取INI中所有节点名称,每个节点名称之间用\0分隔</param>
+            <param name="lpKeyName">Key名称。如果为null,则读取INI中指定节点中的所有KEY,每个KEY之间用\0分隔</param>
+            <param name="lpDefault">读取失败时的默认值</param>
+            <param name="lpReturnedString">读取的内容缓冲区，读取之后，多余的地方使用\0填充</param>
+            <param name="nSize">内容缓冲区的长度</param>
+            <param name="lpFileName">INI文件名</param>
+            <returns>实际读取到的长度</returns>
+        </member>
+        <member name="M:AutoFrameDll.IniOperation.WritePrivateProfileSection(System.String,System.String,System.String)">
+            <summary>
+            将指定的键值对写到指定的节点，如果已经存在则替换。
+            </summary>
+            <param name="lpAppName">节点，如果不存在此节点，则创建此节点</param>
+            <param name="lpString">Item键值对，多个用\0分隔,形如key1=value1\0key2=value2
+            <para>如果为string.Empty，则删除指定节点下的所有内容，保留节点</para>
+            <para>如果为null，则删除指定节点下的所有内容，并且删除该节点</para>
+            </param>
+            <param name="lpFileName">INI文件</param>
+            <returns>是否成功写入</returns>
+        </member>
+        <member name="M:AutoFrameDll.IniOperation.WritePrivateProfileString(System.String,System.String,System.String,System.String)">
+            <summary>
+            将指定的键和值写到指定的节点，如果已经存在则替换
+            </summary>
+            <param name="lpAppName">节点名称</param>
+            <param name="lpKeyName">键名称。如果为null，则删除指定的节点及其所有的项目</param>
+            <param name="lpString">值内容。如果为null，则删除指定节点中指定的键。</param>
+            <param name="lpFileName">INI文件</param>
+            <returns>操作是否成功</returns>
+        </member>
+        <member name="M:AutoFrameDll.IniOperation.GetAllSectionNames(System.String)">
+            <summary>
+            读取INI文件中指定INI文件中的所有节点名称(Section)
+            </summary>
+            <param name="iniFile">Ini文件</param>
+            <returns>所有节点,没有内容返回string[0]</returns>
+        </member>
+        <member name="M:AutoFrameDll.IniOperation.GetAllItems(System.String,System.String)">
+            <summary>
+            获取INI文件中指定节点(Section)中的所有条目(key=value形式)
+            </summary>
+            <param name="iniFile">Ini文件</param>
+            <param name="section">节点名称</param>
+            <returns>指定节点中的所有项目,没有内容返回string[0]</returns>
+        </member>
+        <member name="M:AutoFrameDll.IniOperation.GetAllItemKeys(System.String,System.String)">
+            <summary>
+            获取INI文件中指定节点(Section)中的所有条目的Key列表
+            </summary>
+            <param name="iniFile">Ini文件</param>
+            <param name="section">节点名称</param>
+            <returns>如果没有内容,反回string[0]</returns>
+        </member>
+        <member name="M:AutoFrameDll.IniOperation.GetStringValue(System.String,System.String,System.String,System.String)">
+            <summary>
+            读取INI文件中指定KEY的字符串型值
+            </summary>
+            <param name="iniFile">Ini文件</param>
+            <param name="section">节点名称</param>
+            <param name="key">键名称</param>
+            <param name="defaultValue">如果没此KEY所使用的默认值</param>
+            <returns>读取到的值</returns>
+        </member>
+        <member name="M:AutoFrameDll.IniOperation.WriteItems(System.String,System.String,System.String)">
+            <summary>
+            在INI文件中，将指定的键值对写到指定的节点，如果已经存在则替换
+            </summary>
+            <param name="iniFile">INI文件</param>
+            <param name="section">节点，如果不存在此节点，则创建此节点</param>
+            <param name="items">键值对，多个用\0分隔,形如key1=value1\0key2=value2</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.IniOperation.WriteValue(System.String,System.String,System.String,System.String)">
+            <summary>
+            在INI文件中，指定节点写入指定的键及值。如果已经存在，则替换。如果没有则创建。
+            </summary>
+            <param name="iniFile">INI文件</param>
+            <param name="section">节点</param>
+            <param name="key">键</param>
+            <param name="value">值</param>
+            <returns>操作是否成功</returns>
+        </member>
+        <member name="M:AutoFrameDll.IniOperation.DeleteKey(System.String,System.String,System.String)">
+            <summary>
+            在INI文件中，删除指定节点中的指定的键。
+            </summary>
+            <param name="iniFile">INI文件</param>
+            <param name="section">节点</param>
+            <param name="key">键</param>
+            <returns>操作是否成功</returns>
+        </member>
+        <member name="M:AutoFrameDll.IniOperation.DeleteSection(System.String,System.String)">
+            <summary>
+            在INI文件中，删除指定的节点。
+            </summary>
+            <param name="iniFile">INI文件</param>
+            <param name="section">节点</param>
+            <returns>操作是否成功</returns>
+        </member>
+        <member name="M:AutoFrameDll.IniOperation.EmptySection(System.String,System.String)">
+            <summary>
+            在INI文件中，删除指定节点中的所有内容。
+            </summary>
+            <param name="iniFile">INI文件</param>
+            <param name="section">节点</param>
+            <returns>操作是否成功</returns>
+        </member>
+        <member name="T:AutoFrameDll.LightState">
+            <summary>
+            三色灯及蜂鸣器状态定义
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.LightState.所有关">
+            <summary>
+            所有的关闭
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.LightState.绿灯开">
+            <summary>
+            绿灯开
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.LightState.红灯开">
+            <summary>
+            红灯开
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.LightState.黄灯开">
+            <summary>
+            黄灯开
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.LightState.蜂鸣开">
+            <summary>
+            蜂鸣器开
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.LightState.绿灯闪">
+            <summary>
+            绿灯闪
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.LightState.红灯闪">
+            <summary>
+            红灯闪
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.LightState.黄灯闪">
+            <summary>
+            黄灯闪
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.LightState.蜂鸣闪">
+            <summary>
+            蜂鸣器闪
+            </summary>
+        </member>
+        <member name="T:AutoFrameDll.IoMgr">
+            <summary>
+            板卡IO管理类
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.IoMgr.m_strIoCard">
+            <summary>
+            IO板卡属性
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.IoMgr.m_strIoItem">
+            <summary>
+            IO板卡点位属性
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.IoMgr.m_strIoSystemItem">
+            <summary>
+            系统输入IO属性
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.IoMgr.m_strIoSystemItemOut">
+            <summary>
+            系统输出IO属性
+            </summary>
+        </member>
+        <member name="T:AutoFrameDll.IoMgr.IoChangedHandler">
+            <summary>
+            定义一个IO状态变化委托函数
+            </summary>
+            <param name="nCard"></param>
+        </member>
+        <member name="E:AutoFrameDll.IoMgr.IoChangedEvent">
+            <summary>
+            定义一个Io状态变化事件
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.IoMgr.Light">
+            <summary>
+            灯的状态
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.IoMgr.BuzzingTime">
+            <summary>
+            蜂鸣器闪烁时间间隔
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.IoMgr.YelloTime">
+            <summary>
+            黄灯闪烁时间间隔
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.IoMgr.GreenTime">
+            <summary>
+            绿灯闪烁时间间隔
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.IoMgr.RedTime">
+            <summary>
+            红灯闪烁时间间隔
+            </summary>
+        </member>
+        <member name="T:AutoFrameDll.IoMgr.IoSysDefine">
+            <summary>
+            系统输入输出的结构体
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.IoMgr.IoSysDefine.strName">
+            <summary>
+            功能描述
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.IoMgr.IoSysDefine.nCard">
+            <summary>
+            板卡号
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.IoMgr.IoSysDefine.nBit">
+            <summary>
+            点位号
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.IoMgr.IoSysDefine.bLevel">
+            <summary>
+            电平高低,0-低电平，1-高电平
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.IoMgr.IoSysDefine.bTrigger">
+            <summary>
+            当前状态是否已经有效
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.IoMgr.m_listCard">
+            <summary>
+            IO卡类指针向量
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.IoMgr.m_listIoSystemIn">
+            <summary>
+            系统常用IO输入
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.IoMgr.m_listIoSystemOut">
+            <summary>
+            系统常用IO输出
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.IoMgr.m_dicIn">
+            <summary>
+            IO输入点名称与点位映射
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.IoMgr.m_dicOut">
+            <summary>
+            IO输出点名称与点位映射         
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.IoMgr.m_dicInTranslate">
+            <summary>
+            输入IO点名称翻译
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.IoMgr.m_dicOutTranslate">
+            <summary>
+            输出IO点名称翻译
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.#ctor">
+            <summary>
+            类构造函数
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.AlarmLight(System.UInt32)">
+            <summary>
+            三色灯以及蜂鸣器状态控制
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="P:AutoFrameDll.IoMgr.CountCard">
+            <summary>
+            卡号总数
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.AddCard(System.String,System.Int32,System.Int32)">
+            <summary>
+            根据板卡名字动态加载对应的板卡类
+            </summary>
+            <param name="strName"></param>
+            <param name="nIndex"></param>
+            <param name="nCardNo"></param>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.ReadCfgFromXml(System.Xml.XmlDocument)">
+             <summary>
+            读取系统配置文件里的IO板卡信息
+             </summary>
+             <param name="doc"></param>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.ReadIoCfgFromXml(System.Xml.XmlDocument,System.Boolean)">
+             <summary>
+            读取系统配置文件里IO输入输出点配置 
+             </summary>
+             <param name="doc"></param>
+             <param name="bIn"></param>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.ReadSystemIoFromXml(System.Xml.XmlDocument)">
+             <summary>
+            读取系统配置文件里系统常用IO输入输出点配置 
+             </summary>
+             <param name="doc"></param>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.UpdateGridFromParam(System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView)">
+            <summary>
+            更新表格数据
+            </summary>
+            <param name="gridIoCard"></param>
+            <param name="gridIoIn"></param>
+            <param name="gridIoOut"></param>
+            <param name="gridSystemIoIn"></param>
+            <param name="gridSystemIoOut"></param>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.UpdateParamFromGrid(System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView)">
+            <summary>
+            更新内存参数
+            </summary>
+            <param name="gridIoCard"></param>
+            <param name="gridIoIn"></param>
+            <param name="gridIoOut"></param>
+            <param name="gridSystemIO"></param>
+            <param name="gridSystemIoOut"></param>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.SaveCfgXML(System.Xml.XmlDocument)">
+            <summary>
+            保存IO板卡,IO输入输出,系统IO信息到配置文件SystemCfg
+            </summary>
+            <param name="doc"></param>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.ReadIoIn(System.Int32,System.Int32@)">
+            <summary>
+            读取指定卡的输入状态
+            </summary>
+            <param name="nCardIndex"></param>
+            <param name="nData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.ReadIoInBit(System.Int32,System.Int32)">
+            <summary>
+            读取指定卡的输入位状态
+            </summary>
+            <param name="nCardIndex"></param>
+            <param name="nIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.ReadIoInBit(System.String)">
+            <summary>
+            读取IO输入点状态
+            </summary>
+            <param name="strIoName">IO 输入点名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.GetIoInState(System.Int32,System.Int32)">
+            <summary>
+            获取指定IO输入点的缓冲状态
+            </summary>
+            <param name="nCardIndex"></param>
+            <param name="nIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.GetIoInState(System.String)">
+            <summary>
+            获取指定IO输入点的缓冲状态
+            </summary>
+            <param name="strIoName">IO 输入点名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.ReadIoOut(System.Int32,System.Int32@)">
+            <summary>
+            读取指定卡的输出状态
+            </summary>
+            <param name="nCardIndex"></param>
+            <param name="nData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.GetIoOutState(System.Int32,System.Int32)">
+            <summary>
+            读取指定卡IO点的输出缓冲状态
+            </summary>
+            <param name="nCardIndex"></param>
+            <param name="nIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.GetIoOutState(System.String)">
+            <summary>
+            读取IO点的输出缓冲状态
+            </summary>
+            <param name="strIoName">IO 输出点名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.ReadIoOutBit(System.Int32,System.Int32)">
+            <summary>
+            获取指定IO输出点的状态
+            </summary>
+            <param name="nCardIndex"></param>
+            <param name="nIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.ReadIoOutBit(System.String)">
+            <summary>
+            读取IO点的输出状态
+            </summary>
+            <param name="strIoName">IO 输出点名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.WriteIoBit(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            设置指定IO输出点的状态
+            </summary>
+            <param name="nCardIndex"></param>
+            <param name="nIndex"></param>
+            <param name="bBit"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.WriteIoBit(System.String,System.Boolean)">
+            <summary>
+            设置IO点的输出状态
+            </summary>
+            <param name="strIoName">IO 输出点名称</param>
+             <param name="bBit">将要被设置的状态</param>
+            <returns></returns>
+            
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.GetIoInName(System.Int32,System.Int32)">
+            <summary>
+            得到输入IO的名字
+            </summary>
+            <param name="nCardIndex">卡号，从1开始</param>
+            <param name="nIndex">索引号，从1开始</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.GetIoOutName(System.Int32,System.Int32)">
+            <summary>
+            得到输出IO的名字
+            </summary>
+            <param name="nCardIndex">卡号，从1开始</param>
+            <param name="nIndex">索引号，从1开始</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.WrtieSystemIo(AutoFrameDll.IoMgr.IoSysDefine,System.Boolean)">
+            <summary>
+            写入系统功能IO
+            </summary>
+            <param name="isd"></param>
+            <param name="bEnable"></param>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.InitAllCard">
+             <summary>
+            初始化所有IO板卡
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.DeinitAllCard">
+            <summary>
+            反初始化所有IO板卡
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.IsSystemIoTrigger(AutoFrameDll.IoMgr.IoSysDefine)">
+            <summary>
+            判断系统ＩＯ是否要触发站位状态变更
+            </summary>
+            <param name="isd"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.IsSafeDoorOpen">
+            <summary>
+            安全门是否打开
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.ThreadMonitor">
+            <summary>
+            系统自动扫描线程函数
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.GetIoInTranslate(System.String)">
+            <summary>
+            获取输入IO名称的翻译
+            </summary>
+            <param name="strIoInName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.IoMgr.GetIoOutTranslate(System.String)">
+            <summary>
+            获取输出IO名称的翻译
+            </summary>
+            <param name="strIoOutName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AutoFrameDll.AxisCfg">
+            <summary>
+            轴配置
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.AxisCfg.dbGearRatio">
+            <summary>
+            齿轮比，单位脉冲每毫米、脉冲每度
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.AxisCfg.dbHomeSpeedMin">
+            <summary>
+            最小速度，单位脉冲
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.AxisCfg.dbHomeSpeedMax">
+            <summary>
+            最大速度，单位脉冲
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.AxisCfg.dbHomeAcc">
+            <summary>
+            加速时间，单位秒
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.AxisCfg.dbHomeDec">
+            <summary>
+            减速时间，单位秒
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.AxisCfg.nHomeMode">
+            <summary>
+            回原点的方式
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.AxisCfg.dbSpeedMax">
+            <summary>
+            最大速度，单位脉冲
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.AxisCfg.dbAcc">
+            <summary>
+            加速度，单位秒
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.AxisCfg.dbDec">
+            <summary>
+            减速度，单位秒
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.AxisCfg.dbSFac">
+            <summary>
+            平滑系数，取值0~1，值越大越平滑
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.AxisCfg.nInPosError">
+            <summary>
+            到位后的绝对值误差
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.AxisCfg.bEnableSPEL">
+            <summary>
+            启用软正限位
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.AxisCfg.bEnableSMEL">
+            <summary>
+            启用软负限位
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.AxisCfg.dbSPELPos">
+            <summary>
+            软负限位，单位pls
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.AxisCfg.dbSMELPos">
+            <summary>
+            软正限位,单位pls
+            </summary>
+        </member>
+        <member name="T:AutoFrameDll.MotionMgr">
+            <summary>
+            控制板卡管理类
+            </summary>
+        </member>
+        <member name="T:AutoFrameDll.MotionMgr.MotionMode">
+            <summary>
+            当前运动模式
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.MotionMgr.MotionMode.None">
+            <summary>
+            无
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.MotionMgr.MotionMode.Home">
+            <summary>
+            回原点
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.MotionMgr.MotionMode.AbsMove">
+            <summary>
+            绝对运动
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.MotionMgr.MotionMode.RelativeMove">
+            <summary>
+            相对运动
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.MotionMgr.MotionMode.VelocityMove">
+            <summary>
+            速度运动
+            </summary>
+        </member>
+        <member name="T:AutoFrameDll.MotionMgr.TargetPos">
+            <summary>
+            目标位置
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.MotionMgr.m_dictTargetPos">
+            <summary>
+            运动目标位置
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.MotionMgr.m_strMotionCard">
+            <summary>
+            板卡属性项
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.MotionMgr.m_listCard">
+            <summary>
+            板卡列表
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.MotionMgr.m_dictPauseAxis">
+            <summary>
+            需要暂停的轴
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.#ctor">
+            <summary>
+            类构造函数
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.OnPause">
+            <summary>
+            暂停
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.OnResume">
+            <summary>
+            恢复
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.MotionMgr.m_dictAxisCfg">
+            <summary>
+            轴配置
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.AppendAxisCfg(System.Int32,AutoFrameDll.AxisCfg)">
+            <summary>
+            添加轴配置
+            </summary>
+            <param name="nAxis"></param>
+            <param name="cfg"></param>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.GetAxisCfg(System.Int32,AutoFrameDll.AxisCfg@)">
+            <summary>
+            获取轴配置
+            </summary>
+            <param name="nAxis"></param>
+            <param name="cfg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.ReadCfgFromXml(System.Xml.XmlDocument)">
+             <summary>
+            读取系统配置文件里的运动卡信息 
+             </summary>
+             <param name="doc"></param>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.UpdateGridFromParam(System.Windows.Forms.DataGridView)">
+             <summary>
+            更新表格中的配置信息 
+             </summary>
+             <param name="grid"></param>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.UpdateParamFromGrid(System.Windows.Forms.DataGridView)">
+             <summary>
+            更新表格中的数据到内存参数 
+             </summary>
+             <param name="grid"></param>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.SaveCfgXML(System.Xml.XmlDocument)">
+             <summary>
+            保存配置到xml文件
+             </summary>
+             <param name="doc"></param>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.SaveAxisCfg">
+            <summary>
+            保存轴配置
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.GetMotionCard(System.Int32)">
+             <summary>
+            得到轴所在的板卡对象 
+             </summary>
+             <param name="nAxisNo"></param>
+             <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.GetSpeedPercent">
+            <summary>
+            获取系统速度
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.AbsMove(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            绝对位置移动,以脉冲位置移动
+            </summary>
+            <param name="nAxisNo"></param>
+            <param name="nPos"></param>
+            <param name="nSpeed"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.AbsMoveWithCfg(System.Int32,System.Double,System.Double)">
+            <summary>
+            绝对位置移动，以mm or deg位置移动
+            </summary>
+            <param name="nAxisNo"></param>
+            <param name="dPos"></param>
+            <param name="speedpercent">速度百分比</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.AbsMove(System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            带所有速度参数的绝对位置移动,以脉冲位置移动
+            </summary>
+            <param name="nAxisNo"></param>
+            <param name="fPos"></param>
+            <param name="vm"></param>
+            <param name="acc"></param>
+            <param name="dec"></param>
+            <param name="vs"></param>
+            <param name="ve"></param>
+            <param name="sFac"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.RelativeMove(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            相对位置移动，以脉冲位置移动
+            </summary>
+            <param name="nAxisNo"></param>
+            <param name="nPos"></param>
+            <param name="nSpeed"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.RelativeMoveWithCfg(System.Int32,System.Double,System.Double)">
+            <summary>
+            相对位置移动，以mm or deg位置移动
+            </summary>
+            <param name="nAxisNo"></param>
+            <param name="dOffset"></param>
+            <param name="speedpercent">速度百分比</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.RelativeMove(System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            带所有速度参数的相对位置移动，以脉冲位置移动
+            </summary>
+            <param name="nAxisNo"></param>
+            <param name="fOffset"></param>
+            <param name="vm"></param>
+            <param name="acc"></param>
+            <param name="dec"></param>
+            <param name="vs"></param>
+            <param name="ve"></param>
+            <param name="sFac"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.JogMove(System.Int32,System.Boolean,System.Int32,System.Int32)">
+            <summary>
+            jog运动
+            </summary>
+            <param name="nAxisNo"></param>
+            <param name="bPositive"></param>
+            <param name="bStrat"></param>
+            <param name="nSpeed"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.VelocityMove(System.Int32,System.Int32)">
+            <summary>
+            相对运行
+            </summary>
+            <param name="nAxisNo"></param>
+            <param name="nSpeed"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.GetMotionState(System.Int32)">
+            <summary>
+            获取轴卡运动状态
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.GetMotionIoState(System.Int32)">
+            <summary>
+            获取轴卡运动IO信号
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.GetAixsPos(System.Int32)">
+            <summary>
+            获取轴的当前位置
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.GetAixsPls(System.Int32)">
+            <summary>
+            获取轴的当前脉冲位置
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.IsAxisNormalStop(System.Int32)">
+            <summary>
+            轴是否正常停止
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.IsAxisInPos(System.Int32,System.Int32)">
+             <summary>
+             判定轴是否到位
+             </summary>
+             <param name="nAxisNo"></param>
+             <param name="nInPosError">到位误差</param>
+             <returns></returns>
+            
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.IsAxisPEL(System.Int32)">
+            <summary>
+            是否在正限位
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.IsAxisMEL(System.Int32)">
+            <summary>
+            是否在负限位
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.IsAxisOrg(System.Int32)">
+            <summary>
+            是否在原点
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.Home(System.Int32,System.Int32)">
+            <summary>
+            回原点 
+            </summary>
+            <param name="nAxisNo"></param>
+            <param name="nParam">针对不同类型的卡，此参数含义不同，可以是方向，也可以是模式,也可以不使用</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.Home(System.Int32,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            回原点
+            </summary>
+            <param name="nAxisNo">轴号</param>
+            <param name="nParam">回原点模式</param>
+            <param name="vm">最大速度</param>
+            <param name="vo">爬行速度</param>
+            <param name="acc">加速时间</param>
+            <param name="dec">减速时间</param>
+            <param name="offset">原点偏移</param>
+            <param name="sFac">平滑系数</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.Home(System.Int32)">
+            <summary>
+            根据轴配置回原点
+            </summary>
+            <param name="nAxisNo">轴号</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.SetPosZero(System.Int32)">
+            <summary>
+            位置置零
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.ClearError(System.Int32)">
+            <summary>
+            清除错误
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.SetAxisParam(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            设置单轴的某一运动参数
+            </summary>
+            <param name="nAxisNo">轴号</param>
+            <param name="nParam">参数:1:加速度 2:减速度 3:梯形或S曲线(8254) 3:起跳速度(S曲线) 4:结束速度(S曲线) 5:平滑时间(固高卡S曲线) 其它：自定义扩展</param>
+            <param name="nData">参数值</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.SetAxisParam(System.Int32,System.Int32,System.Double)">
+            <summary>
+            设置单轴的某一运动参数(浮点)
+            </summary>
+            <param name="nAxisNo">轴号</param>
+            <param name="nParam">参数:自定义扩展</param>
+            <param name="fData">参数值</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.ServoOn(System.Int32)">
+            <summary>
+            开启使能
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.ServoOff(System.Int32)">
+            <summary>
+            断开使能
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.GetServoState(System.Int32)">
+            <summary>
+            读取使能状态
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.StopAxis(System.Int32)">
+            <summary>
+            轴正常停止
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.PauseAxis(System.Int32)">
+            <summary>
+            轴暂停
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.StopEmg(System.Int32)">
+            <summary>
+            急停
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.IsHomeNormalStop(System.Int32)">
+            <summary>
+            回原点过程中检测是否正常停止
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.GetCardName(System.Int32)">
+            <summary>
+            获取运动控制卡名称
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.InitAllCard">
+             <summary>
+            初始化所有轴卡 
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.DeinitAllCard">
+            <summary>
+            反初化所有轴卡
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.GetMotionCard(System.Int32[]@)">
+            <summary>
+            获取轴数组对应的卡号，多轴运动时需要用到,对轴数组的合理性进行判定
+            </summary>
+            <param name="nAixsArray"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.AbsLinearMove(System.Int32[]@,System.Double[]@,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            以当前位置为起始点进行多轴直线插补
+            </summary>
+            <param name="nAixsArray">轴数组</param>
+            <param name="fPosArray">目标点的绝对座标位置</param>
+            <param name="vm">最大速度</param>
+            <param name="acc">加速度</param>
+            <param name="dec">减速度</param>
+            <param name="vs">起始速度</param>
+            <param name="ve">结束速度</param>
+            <param name="sFac">S曲线因子</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.RelativeLinearMove(System.Int32[]@,System.Double[]@,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            以当前位置为起始点进行多轴直线插补
+            </summary>
+            <param name="nAixsArray">轴数组,第一个轴为主轴，设定加速度等参数以主轴为基准</param>
+            <param name="fPosOffsetArray">目标点的相对座标位置</param>
+            <param name="vm">最大速度</param>
+            <param name="acc">加速度</param>
+            <param name="dec">减速度</param>
+            <param name="vs">起始速度</param>
+            <param name="ve">结束速度</param>
+            <param name="sFac">S曲线因子</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.AbsArcMove(System.Int32[]@,System.Double[]@,System.Double[]@,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            以当前点位为起始点进行两轴圆弧插补运动
+            </summary>
+            <param name="nAixsArray">轴数组,第一个轴为主轴，设定加速度等参数以主轴为基准</param>
+            <param name="fCenterArray">圆心的绝对座标位置</param>   
+            <param name="fEndArray">终点的绝对座标位置</param>   
+            <param name="Dir">圆弧的方向，　0:正向，　１：负向</param>
+            <param name="vm">最大速度</param>
+            <param name="acc">加速度</param>
+            <param name="dec">减速度</param>
+            <param name="vs">起始速度</param>
+            <param name="ve">结束速度</param>
+            <param name="sFac">S曲线因子</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.RelativeArcMove(System.Int32[]@,System.Double[]@,System.Double[]@,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            以当前点位为起始点，以偏差位置为圆心，进行多轴圆弧插补运动
+            </summary>
+            <param name="nAixsArray">轴数组,第一个轴为主轴，设定加速度等参数以主轴为基准</param>
+            <param name="fCenterOffsetArray">圆心的相对座标位置</param>   
+            <param name="fEndOffsetArray">终点的相对座标位置</param>   
+            <param name="Dir">圆弧的方向，　0:正向，　１：负向</param>
+            <param name="vm">最大速度</param>
+            <param name="acc">加速度</param>
+            <param name="dec">减速度</param>
+            <param name="vs">起始速度</param>
+            <param name="ve">结束速度</param>
+            <param name="sFac">S曲线因子</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.ConfigPointTable(System.Int32,System.Int32[]@,System.Boolean)">
+            <summary>
+            配置一个连续运动的缓冲表(2000点的buff需要更新fimeware)
+            </summary>
+            <param name="nPointTableIndex">缓冲列表的序号</param>
+            <param name="nAixsArray">轴号数组</param>
+            <param name="bAbsolute">true:绝对位置模式，　false:相对位置模式</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.GetPointTableCard(System.Int32)">
+            <summary>
+            获得连续运动BUFF区所对应的板卡
+            </summary>
+            <param name="nPointTableIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.PointTable_Line_Move(System.Int32,System.Double[]@,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            向连续运动的缓冲表插入一个直线插补运动（多轴）
+            </summary>
+            <param name="nPointTableIndex">缓冲列表的序号</param>
+            <param name="positionArray">目标位置数组，需要轴号数组匹配</param>
+            <param name="acc">加速度</param>
+            <param name="dec">减速度</param>
+            <param name="vs">起始速度</param>
+            <param name="vm">最大速度</param>
+            <param name="ve">终点速度</param>
+            <param name="sf">S曲线因子</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.PointTable_ArcE_Move(System.Int32,System.Double[]@,System.Double[]@,System.Int16,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            向连续运动的缓冲表插入一个圆弧插补运动（两轴）
+            </summary>
+            <param name="nPointTableIndex">缓冲列表的序号</param>
+            <param name="centerArray">圆弧中心点位置</param>
+            <param name="endArray">圆弧结束点位置</param>
+            <param name="dir">圆弧的方向, 0:顺时针，-1:逆时针</param>
+            <param name="acc">加速度</param>
+            <param name="dec">减速度</param>
+            <param name="vs">起始速度</param>
+            <param name="vm">最大速度</param>
+            <param name="ve">结束速度</param>
+            <param name="sf">S曲线因子</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.PointTable_IO(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            向连续运动缓冲表插入一个与运动同步的IO控制(IO控制在运动之前)
+            </summary>
+            <param name="nPointTableIndex">缓冲列表的序号</param>
+            <param name="nChannel">IO点的序号</param>
+            <param name="bOn">1：on, 0: off</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.PointTable_Delay(System.Int32,System.Int32)">
+            <summary>
+            向缓冲区插入一个延时指令
+            </summary>
+            <param name="nPointTableIndex"></param>
+            <param name="nMillsecond">需要延时的毫秒值</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.PointTable_Start(System.Int32,System.Boolean)">
+            <summary>
+            启动或停止一个连续运动
+            </summary>
+            <param name="nPointTableIndex">连续运动列表的序号</param>
+            <param name="bStart">true:开始运行, false:停止运行</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.PointTable_IsIdle(System.Int32)">
+            <summary>
+            确定连续运动列表的BUFF是否可以插入新的运动
+            </summary>
+            <param name="nPointTableIndex"></param>
+            <returns>true: 可以插入　，　false: BUFF已满</returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.SetSPELEnable(System.Int32,System.Boolean)">
+            <summary>
+            启用软件正限位
+            </summary>
+            <param name="nAxisNo"></param>
+            <param name="bEnable"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.SetSMELEnable(System.Int32,System.Boolean)">
+            <summary>
+            启用软件负限位
+            </summary>
+            <param name="nAxisNo"></param>
+            <param name="bEnable"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.SetSPELPos(System.Int32,System.Double)">
+            <summary>
+            设置软件正限位位置
+            </summary>
+            <param name="nAxisNo"></param>
+            <param name="pos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.SetSMELPos(System.Int32,System.Double)">
+            <summary>
+            设置软件负限位位置
+            </summary>
+            <param name="nAxisNo"></param>
+            <param name="pos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.ThreadMonitor">
+            <summary>
+            线程函数
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.UpdateTarget(System.Int32,AutoFrameDll.MotionMgr.MotionMode,System.Double,System.Double)">
+            <summary>
+            更新目标位置
+            </summary>
+            <param name="nAxisNo">轴号</param>
+            <param name="mode">运动模式</param>
+            <param name="pos">运动位置</param>
+            <param name="speed">速度</param>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.EnableAxisPause(System.Int32,System.Boolean)">
+            <summary>
+            设置轴是否启用暂停
+            </summary>
+            <param name="nAxisNo"></param>
+            <param name="bEnable"></param>
+        </member>
+        <member name="M:AutoFrameDll.MotionMgr.IsEnbaleAxisPause(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="nAxisNo"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AutoFrameDll.PlcMgr">
+            <summary>
+            PLC管理类
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.PlcMgr.m_strPlc">
+            <summary>
+            PLC属性项
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.PlcMgr.m_listPlc">
+            <summary>
+            PLC设备列表
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.PlcMgr.Monitor">
+            <summary>
+            PLC监控类
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.PlcMgr.#ctor">
+            <summary>
+            类构造函数
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.PlcMgr.AddPlc(System.Int32,System.String,Communicate.ComLink,System.Int32,Plc.PlcAddressMap)">
+            <summary>
+            添加一个PLC设备（通过串口通信）
+            </summary>
+            <param name="nIndex">PLC设备序号</param>
+            <param name="strName">PLC设备名称</param>
+            <param name="cl">串口</param>
+            <param name="nId">PLC站号</param>
+            <param name="map">元件映射表，主要包含元件的地址、数量信息</param>
+        </member>
+        <member name="M:AutoFrameDll.PlcMgr.AddPlc(System.Int32,System.String,Communicate.TcpLink,System.Int32,Plc.PlcAddressMap)">
+            <summary>
+            添加PLC设备哎
+            </summary>
+            <param name="nIndex">PLC设备序号</param>
+            <param name="strName">PLC设备名称</param>
+            <param name="tl">网口</param>
+            <param name="nId">PLC站号</param>
+            <param name="map">元件映射表，主要包含元件的地址、数量信息</param>
+        </member>
+        <member name="M:AutoFrameDll.PlcMgr.ReadCfgFromXml(System.Xml.XmlDocument)">
+             <summary>
+            读取系统配置文件里的PLC信息 
+             </summary>
+             <param name="doc"></param>
+        </member>
+        <member name="M:AutoFrameDll.PlcMgr.Getplc(System.Int32)">
+            <summary>
+            根据索引得到PLC
+            </summary>
+            <param name="nIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.PlcMgr.InitAllPlc">
+            <summary>
+            初始化所有PLC设备
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.PlcMgr.DeinitAllPlc">
+            <summary>
+            反初化所有PLC
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.PlcMgr.ThreadMonitor">
+            <summary>
+            线程函数
+            </summary>
+        </member>
+        <member name="T:AutoFrameDll.Properties.Resources">
+            <summary>
+              一个强类型的资源类，用于查找本地化的字符串等。
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.Properties.Resources.ResourceManager">
+            <summary>
+              返回此类使用的缓存的 ResourceManager 实例。
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.Properties.Resources.Culture">
+            <summary>
+              使用此强类型资源类，为所有资源查找
+              重写当前线程的 CurrentUICulture 属性。
+            </summary>
+        </member>
+        <member name="T:AutoFrameDll.RobotMgr">
+            <summary>
+            机器人管理类
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.RobotMgr.m_strRobotIoItem">
+            <summary>
+            IO表格列的项目名称
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.RobotMgr.m_strRobotItem">
+            <summary>
+            机器人表格列的项目名称
+            </summary>
+        </member>
+        <member name="T:AutoFrameDll.RobotMgr.IoSysDefine">
+            <summary>
+            IO结构体
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.RobotMgr.IoSysDefine.bIsIn">
+            <summary>
+            输入:true  输出:false
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.RobotMgr.IoSysDefine.strName">
+            <summary>
+            IO功能描述
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.RobotMgr.IoSysDefine.nCard">
+            <summary>
+            卡号
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.RobotMgr.IoSysDefine.nBit">
+            <summary>
+            位号
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.RobotMgr.IoSysDefine.nLev">
+            <summary>
+            电平高低, 0;1
+            </summary>
+        </member>
+        <member name="T:AutoFrameDll.RobotMgr.RobotDefine">
+            <summary>
+            机器人类
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.RobotMgr.RobotDefine.nIndex">
+            <summary>
+            机器人序号
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.RobotMgr.RobotDefine.strName">
+            <summary>
+            机器人名字
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.RobotMgr.RobotDefine.nLinkMode">
+            <summary>
+            通讯方式，0网口 1串口
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.RobotMgr.RobotDefine.nPort">
+            <summary>
+            索引号码
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.RobotMgr.RobotDefine.m_listStrCmd">
+            <summary>
+            常用命令列表
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.RobotMgr.RobotDefine.m_listIoSystemIn">
+            <summary>
+            常用输入IO
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.RobotMgr.RobotDefine.m_listIoSystemOut">
+            <summary>
+            常用输出IO
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.RobotMgr.m_listRobot">
+            <summary>
+            机器人链表
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.RobotMgr.ReadCfgFromXml(System.Xml.XmlDocument)">
+            <summary>
+            从xml文件中加载系统机器人参数
+            </summary>
+            <param name="doc"></param>
+        </member>
+        <member name="M:AutoFrameDll.RobotMgr.UpdateGridFromParam(System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView,System.Windows.Forms.ListBox,System.Int32,System.Boolean)">
+            <summary>
+            更新系统机器人参数到表格
+            </summary>
+            <param name="gridRobot">机器人表格</param>
+            <param name="gridRobotIoCmd">IO表格</param>
+            <param name="listBoxCmd">命令列表框</param>
+            <param name="n">当前选中机器人序号</param>
+            <param name="bRefresh">是否刷新机器人列表</param>
+        </member>
+        <member name="M:AutoFrameDll.RobotMgr.UpdataParamFromGrid(System.Windows.Forms.DataGridView,System.Windows.Forms.DataGridView,System.Windows.Forms.ListBox,System.Int32)">
+            <summary>
+            更新系统机器人参数
+            第一步：更新机器人表格中的数据到m_listRobot,如果新增的则添加。
+            第二步：找到io表格第1行对应机器人名字与机器人表格中匹配的项
+            第三步：用io表格第1行机对应机器人名字查找在m_listRobot中的索引号
+            第四步：更新m_listRobot中对应IO和命令
+            </summary>
+            <param name="gridRobot">机器人表格</param>
+            <param name="gridRobotIoCmd">IO表格</param>
+            <param name="listBoxCmd">命令列表</param>
+            <param name="n">机器人索引</param>
+        </member>
+        <member name="M:AutoFrameDll.RobotMgr.SaveCfgXML(System.Xml.XmlDocument)">
+            <summary>
+            保存系统机器人参数到xml
+            </summary>
+            <param name="doc"></param>
+        </member>
+        <member name="T:AutoFrameDll.PointInfo">
+            <summary>
+            点位信息
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.PointInfo.strName">
+            <summary>
+            点位名称
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.PointInfo.Pos">
+            <summary>
+            各轴的位置
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.PointInfo.x">
+            <summary>
+            x轴脉冲位置
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.PointInfo.y">
+            <summary>
+            y轴脉冲位置
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.PointInfo.z">
+            <summary>
+            z轴脉冲位置
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.PointInfo.u">
+            <summary>
+            u轴脉冲位置
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.PointInfo.a">
+            <summary>
+            a轴脉冲位置
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.PointInfo.b">
+            <summary>
+            b轴脉冲位置
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.PointInfo.c">
+            <summary>
+            c轴脉冲位置
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.PointInfo.d">
+            <summary>
+            d轴脉冲位置
+            </summary>
+        </member>
+        <member name="T:AutoFrameDll.StationBase">
+            <summary>
+            工站基类
+            </summary>
+        </member>
+        <member name="T:AutoFrameDll.StationBase.StationException">
+            <summary>
+            站位异常类，表示站位流程内出现流程异常
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.StationException.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="message">异常消息</param>
+        </member>
+        <member name="T:AutoFrameDll.StationBase.SafeException">
+            <summary>
+            站位异常类，表示站位正常退出或因其它站位退出信号退出
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.SafeException.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:AutoFrameDll.StationBase.ManualState">
+            <summary>
+            手动运行的状态
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase.ManualState.STATE_MANUAL_RUN">
+            <summary>
+            自动运行状态
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase.ManualState.STATE_MANUAL_STOP">
+            <summary>
+            就绪状态
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase.ManualState.STATE_MANUAL_PAUSE">
+            <summary>
+            急停状态
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase.ManualState.STATE_MANUAL_EMG">
+            <summary>
+            停止状态
+            </summary>
+        </member>
+        <member name="T:AutoFrameDll.StationBase.LastLog">
+            <summary>
+            最后的log
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase.LastLog.Time">
+            <summary>
+            LOG时间
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase.LastLog.strLog">
+            <summary>
+            log
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase.m_queLastLog">
+            <summary>
+            记录最近的log
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase.io_in">
+            <summary>
+            输入io数组
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase.io_out">
+            <summary>
+            输出io数组
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase.bPositiveMove">
+            <summary>
+            每个轴运动方向,true-正，false-负
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase.strAxisName">
+            <summary>
+            轴名字
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase.m_nAxisArray">
+            <summary>
+            轴号数组
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase.m_dicPoint">
+            <summary>
+            点位集合
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.StationBase.CurState">
+            <summary>
+            当前站位状态
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase.m_bRunThread">
+            <summary>
+            自动线程是否运行中
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase.m_AutoThread">
+            <summary>
+            自动线程的ID
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase.m_ManualThread">
+            <summary>
+            手动线程的ID
+            </summary>
+        </member>
+        <member name="T:AutoFrameDll.StationBase.ManualStateChangedHandler">
+            <summary>
+            定义一个站位状态变化委托函数
+            </summary>
+        </member>
+        <member name="E:AutoFrameDll.StationBase.ManualStateChangedEvent">
+            <summary>
+            定义一个站位状态变化事件
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase.m_Form_Manual">
+            <summary>
+            站位类绑定的手动自定义页面
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.StationBase.IsDeinit">
+            <summary>
+            当前站位是否处于Deinit状态
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.#ctor(System.String)">
+            <summary>
+            工站基类构造函数
+            </summary>
+            <param name="strName">站位名称</param>
+        </member>
+        <member name="F:AutoFrameDll.StationBase._bBeginCycle">
+            <summary>
+            站位当前是否全自动运行 
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.StationBase.BeginCycle">
+            <summary>
+            是否全自动运行属性
+            </summary>       
+        </member>
+        <member name="F:AutoFrameDll.StationBase._strName">
+            <summary>
+            站位名
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.StationBase.Name">
+            <summary>
+            站位名属性
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase._nIndex">
+            <summary>
+            站位序号
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.StationBase.Index">
+            <summary>
+            站位序号属性
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationBase._bStationEnable">
+            <summary>
+            站位是否启用
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.StationBase.StationEnable">
+            <summary>
+            得到站位启动状态or设置站位是否启动 属性
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.StationBase.AxisCount">
+            <summary>
+            获取轴的数量
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.SetAxisNo(System.Int32,System.Int32)">
+            <summary>
+            设置轴号
+            </summary>
+            <param name="index">轴序号</param>
+            <param name="nAxisNo">轴号</param>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.GetAxisNo(System.Int32)">
+            <summary>
+            得到轴号
+            </summary>
+            <param name="index">轴序号</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.IsEmg">
+            <summary>
+            当前站位是否处于急停状态
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.IsManual">
+            <summary>
+            当前站位是否处于停止状态
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:AutoFrameDll.StationBase.AxisX">
+            <summary>
+            得到X轴号
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.StationBase.AxisY">
+            <summary>
+            得到Y轴号
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.StationBase.AxisZ">
+            <summary>
+            得到Z轴号
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.StationBase.AxisU">
+            <summary>
+            得到U轴号
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.StationBase.AxisA">
+            <summary>
+            得到B轴号
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.StationBase.AxisB">
+            <summary>
+            得到C轴号
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.StationBase.AxisC">
+            <summary>
+            得到Z轴号
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.StationBase.AxisD">
+            <summary>
+            得到D轴号
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.StartRun">
+            <summary>
+            开始自动运行
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.StopRun">
+            <summary>
+            停止运行
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.StartScriptFun(System.String)">
+            <summary>
+            运行脚本
+            </summary>
+            <param name="strXml"></param>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.SwitchState(AutoFrameDll.StationState)">
+            <summary>
+            站位运行状态切换
+            </summary>
+            <param name="nState">将要切换到的站位状态</param>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.ShowMessage(System.String,System.Boolean,System.String[],System.Int32)">
+            <summary>
+            超时提示, 工程师模式时可以忽略超时错误继续运行，其它模式只支持继续等待或停止站位运行
+            </summary>
+            <param name="strText"></param>
+            <param name="bOnlyNotify">只显示确认按钮</param>
+            <param name="strBindIo">绑定IO数组，对应Yes/No/Cancel</param>
+            <param name="nKeepTimeS">IO保持时间，下降沿</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.ShowMessage(System.String,System.String[],System.String[],System.Int32)">
+            <summary>
+            仅用作消息框，可以修改按钮默认文本，支持绑定IO
+            </summary>
+            <param name="strText"></param>
+            <param name="strButtonText"></param>
+            <param name="strBindIo"></param>
+            <param name="nKeepTimeS"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.ShowLog(System.String,CommonTool.LogLevel)">
+            <summary>
+            显示记录，自带站位名称
+            </summary>
+            <param name="strLog"></param>
+            <param name="level"></param>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.IsAllowLog(AutoFrameDll.StationBase.LastLog)">
+            <summary>
+            是否允许显示日志，如果不做判断在子类里重写此方法return true
+            </summary>
+            <param name="log"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.WaitTimeDelay(System.Int32)">
+            <summary>
+            站位流程延时等待,当写流程需要较长时间等待时使用此函数
+            </summary>
+            <param name="nMilliSeconds">时间，以毫秒为单位</param>
+            <returns>1:已等待指定的时间，无其它返回值(站位出现报警异常会跳出无返回值)</returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.GetMotionTimeOut">
+            <summary>
+            获取运动超时时间设置值
+            </summary>
+            <returns>超时时间</returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.ShowTimeOutDlg(System.String,System.String)">
+            <summary>
+            显示超时提示对话框
+            </summary>
+            <param name="strInfo">提示消息</param>
+            <param name="strErrorCode">消息的错误分类码</param>
+            <returns>0：重置超时 1：忽略超时 ， 报异常退出时无返回值</returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.ShowTimeOutDlg(System.String,CommonTool.ErrorType,System.String)">
+            <summary>
+            显示超时提示对话框
+            </summary>
+            <param name="strInfo">消息</param>
+            <param name="errType">错误类型</param>
+            <param name="strObject">错误对象</param>
+            <returns>0：重置超时 1：忽略超时 ， 报异常退出时无返回值</returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.WaitHome(System.Int32,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            等待回原点
+            </summary>
+            <param name="nAxisNo">轴号</param>
+            <param name="nTimeOutS">超时时间(以秒为单位)，-1:一直等待， 0：使用系统参数设置时间， 其它：特定时间</param>
+            <param name="bShowDialog">超时后是否显示提示对话框卡住当前流程, true :显示对话框,  false:不显示 </param>
+            <param name="bPause">流程暂停时是否响应暂停 true:等待暂停恢复  false:不响应暂停继续扫描 </param>
+            <returns>0:未超时  1:超时  </returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.WaitMotion(System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            等待运动完成
+            </summary>
+            <param name="nAxisNo">轴号</param>
+            <param name="nTimeOutS">超时时间(以秒为单位)，-1:一直等待， 0：使用系统参数设置时间， 其它：特定时间</param>
+            <param name="bShowDialog">超时后是否显示提示对话框卡住当前流程, true :显示对话框,  false:不显示 </param>
+            <param name="bPause">流程暂停时是否响应暂停 true:等待暂停恢复  false:不响应暂停继续扫描 </param>
+            <param name="bShowLog">是否显示日志</param>
+            <returns>0:未超时  1:超时  </returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.GetIoTimeOut">
+            <summary>
+            获取IO超时时间设置
+            </summary>
+            <returns>超时时间</returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.WaitIo(System.Int32,System.Int32,System.Boolean,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            等待IO输入点有效
+            </summary>
+            <param name="nCardNo">卡号</param>
+            <param name="nBitIndex">点位索引 从1开始</param>
+            <param name="bValid">高电平有效或低电平有效</param>
+            <param name="nTimeOutS">超时时间(以秒为单位)，-1:一直等待， 0：使用系统参数设置时间， 其它：特定时间</param>
+            <param name="bShowDialog">超时后是否显示提示对话框卡住当前流程, true :显示对话框,  false:不显示 </param>
+            <param name="bPause">流程暂停时是否响应暂停 true:等待暂停恢复  false:不响应暂停继续扫描 </param>
+            <returns>0:未超时  1:超时  </returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.WaitAnyIo(System.String[],System.Boolean,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            等待任意IO有效
+            </summary>
+            <param name="strIoNames">IO名称列表</param>
+            <param name="bValid">有效值</param>
+            <param name="nTimeOutS">超时时间(以秒为单位)，-1:一直等待， 0：使用系统参数设置时间， 其它：特定时间</param>
+            <param name="bShowDialog">超时后是否显示提示对话框卡住当前流程, true :显示对话框, false:不显示</param>
+            <param name="bPause">保留参数，暂时没用</param>
+            <returns>有效IO名称，string.Empty表示超时</returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.WaitIo(System.String,System.Boolean,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            等待IO输入点有效
+            </summary>
+            <param name="strIoName">点位名称</param>
+            <param name="bValid">高电平有效或低电平有效</param>
+            <param name="nTimeOutS">超时时间(以秒为单位)，-1:一直等待， 0：使用系统参数设置时间， 其它：特定时间</param>
+            <param name="bShowDialog">超时后是否显示提示对话框卡住当前流程, true :显示对话框,  false:不显示 </param>
+            <param name="bPause">流程暂停时是否响应暂停 true:等待暂停恢复  false:不响应暂停继续扫描 </param>
+            <returns>0:未超时  1:超时  </returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.GetRegTimeOut">
+            <summary>
+            获取寄存器等待超时时间
+            </summary>
+            <returns>超时时间</returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.WaitRegBit(System.Int32,System.Boolean,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            等待系统寄存器是否有效
+            </summary>
+            <param name="nIndex"></param>
+            <param name="bValid"></param>
+            <param name="nTimeOutS">超时时间(以秒为单位)，-1:一直等待， 0：使用系统参数设置时间， 其它：特定时间</param>
+            <param name="bShowDialog">超时后是否显示提示对话框卡住当前流程, true :显示对话框,  false:不显示 </param>
+            <param name="bPause">流程暂停时是否响应暂停 true:等待暂停恢复  false:不响应暂停继续扫描 </param>
+            <returns>0:未超时  1:超时  </returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.WaitAnyRegBit(System.Int32[],System.Boolean,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            等待任意系统寄存器值是否有效
+            </summary>
+            <param name="nIndexs">系统寄存器数值</param>
+            <param name="bValid">有效值</param>
+            <param name="nTimeOutS">超时时间(以秒为单位)，-1:一直等待， 0：使用系统参数设置时间， 其它：特定时间</param>
+            <param name="bShowDialog">超时后是否显示提示对话框卡住当前流程, true :显示对话框, false:不显示</param>
+            <param name="bPause">保留参数，暂时没用</param>
+            <returns>有效寄存器，-1表示超时</returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.WaitRegInt(System.Int32,System.Int32,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            等待系统整型寄存器
+            </summary>
+            <param name="nIndex"></param>
+            <param name="nTarget"></param>
+            <param name="nTimeOutS">超时时间(以秒为单位)，-1:一直等待， 0：使用系统参数设置时间， 其它：特定时间</param>
+            <param name="bShowDialog">超时后是否显示提示对话框卡住当前流程, true :显示对话框,  false:不显示 </param>
+            <param name="bPause">流程暂停时是否响应暂停 true:等待暂停恢复  false:不响应暂停继续扫描 </param>
+            <returns>0:未超时  1:超时  </returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.CheckCommTimeOut(Communicate.ComLink,System.Boolean)">
+            <summary>
+            判定串口数据通讯是否超时报警
+            </summary>
+            <param name="comLink"></param>
+            <param name="bShowDialog">超时时是否显示提示对话框卡住流程 </param>
+            <returns>0:未超时  1:超时  </returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.CheckCommTimeOut(Communicate.TcpLink,System.Boolean)">
+            <summary>
+            判定网口数据通讯是否超时报警
+            </summary>
+            <param name="tcpLink"></param>
+            <param name="bShowDialog">超时后是否显示提示对话框卡住当前流程, true :显示对话框,  false:不显示 </param>
+            <returns>0:未超时  1:超时  </returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.GetCommTimeOut">
+            <summary>
+            获取通讯命令超时时间设置
+            </summary>
+            <returns>超时时间</returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.WaitOpcByTag(System.String,System.String,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            通过标签名称等待结果
+            </summary>
+            <param name="sTagName">标签名称</param>
+            <param name="sValue">等待结果</param>
+            <param name="nTimeOutS">超时时间(秒)，-1:表示一直等，0:表示参数OpcTimeOut中配置的时间</param>
+            <param name="bShowDialog">超时时是否弹出对话框</param>
+            <param name="bPause">超时时是否暂停</param>
+            <returns>0:未超时  1:超时</returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.WaitOpcByDesc(System.String,System.String,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            通过标签描述等待结果
+            </summary>
+            <param name="sDesc">标签描述</param>
+            <param name="sValue">等待结果</param>
+            <param name="nTimeOutS">超时时间，-1:表示一直等，0:表示参数OpcTimeOut中配置的时间</param>
+            <param name="bShowDialog">超时时是否弹出对话框</param>
+            <param name="bPause">超时时是否暂停</param>
+            <returns>0:未超时  1:超时</returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.wait_recevie_cmd(Communicate.TcpLink,System.String,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+             在网口上等待指定命令(命令可以多次读取组成,需要注意分隔符)，如果指定时间内未收到指定命令，则超时报警
+            </summary>
+            <param name="tcplink"></param>
+            <param name="strCmd"></param>
+            <param name="nTimeOutS">超时时间(以秒为单位)，-1:一直等待， 0：使用系统参数设置时间， 其它：特定时间</param>
+            <param name="bShowDialog">超时后是否显示提示对话框卡住当前流程, true :显示对话框,  false:不显示 </param>
+            <param name="bPause">流程暂停时是否响应暂停 true:等待暂停恢复  false:不响应暂停继续扫描 </param>
+            <returns>0:未超时  1:超时  </returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.wait_recevie_data(Communicate.TcpLink,System.String@,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+             在网口上等待一行数据，在指定超时时间内，读取到一行则立即返回，否则超时提示
+            </summary>
+            <param name="tcplink">网口编号</param>
+            <param name="strData"></param>
+            <param name="nTimeOutS">超时时间(以秒为单位)，-1:一直等待， 0：使用系统参数设置时间， 其它：特定时间</param>
+            <param name="bShowDialog">超时后是否显示提示对话框卡住当前流程, true :显示对话框,  false:不显示 </param>
+            <param name="bPause">流程暂停时是否响应暂停 true:等待暂停恢复  false:不响应暂停继续扫描 </param>
+            <returns>0:未超时  1:超时  </returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.wait_recevie_cmd(Communicate.ComLink,System.String,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+             在串口上等待指定命令(命令可以多条命令组成,需要注意分隔符)，如果指定时间内未收到指定命令，则超时报警
+            </summary>
+            <param name="comLink">串口编号</param>
+            <param name="strCmd">欲等待的命令</param>
+            <param name="nTimeOutS">超时时间(以秒为单位)，-1:一直等待， 0：使用系统参数设置时间， 其它：特定时间</param>     
+            <param name="bShowDialog">超时后是否显示提示对话框卡住当前流程, true :显示对话框,  false:不显示 </param>
+            <param name="bPause">流程暂停时是否响应暂停 true:等待暂停恢复  false:不响应暂停继续扫描 </param>
+            <returns>0:未超时  1:超时  </returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.wait_recevie_Data(Communicate.ComLink,System.String@,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+             在串口上等待一行数据，在指定超时时间内，读取到一行则立即返回，否则超时提示
+            </summary>
+            <param name="comLink">串口编号</param>
+            <param name="strData">返回读到的数据</param>
+            <param name="nTimeOutS">超时时间(以秒为单位)，-1:一直等待， 0：使用系统参数设置时间， 其它：特定时间</param>     
+            <param name="bShowDialog">超时后是否显示提示对话框并等待确认, true :显示对话框,  false:不显示 </param>
+            <param name="bPause">流程暂停时是否响应暂停 true:等待暂停恢复  false:不响应暂停继续扫描 </param>
+            <returns>0:未超时  1:超时  </returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.CheckContinue(System.Boolean,System.Boolean)">
+            <summary>
+            检查系统当前是否会继续运行
+            </summary>
+            <param name="bIsDeinit">线程处于退出模式</param>
+            <param name="bPause">是否响应暂停状态</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.WaitBegin">
+            <summary>
+            等待开始
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.ThreadProc">
+             <summary>
+            站位公共处理步骤
+             </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.StationInit">
+            <summary>
+            站位初始化,虚函数，重写需要子类继承
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.StationDeinit">
+            <summary>
+            站位结束处理过程,虚函数，重写需要子类继承
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.InitSecurityState">
+            <summary>
+            站位初始化为安全状态,虚函数，重写需要子类继承
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.IsReady">
+            <summary>
+            站位是否已经等待开始
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.IsStop">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.OnPause">
+            <summary>
+            响应流程暂停的处理，比如流水线在暂停时需要停止
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.OnResume">
+            <summary>
+            响应流程恢复的处理，比如流水线在恢复时需要继续运行
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.EmgStop">
+            <summary>
+            站位急停,虚函数，重写需要子类继承
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.DisableRun">
+            <summary>
+            站位被禁用时空运行
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.StationProcess">
+            <summary>
+            站位处理流程,虚函数，重写需要子类继承
+            </summary>
+        </member>
+        <member name="T:AutoFrameDll.StationBase.delegateFunc">
+            <summary>
+            手动运行时的委托函数
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.ManualRun(AutoFrameDll.StationBase.delegateFunc)">
+            <summary>
+            手动运行一个函数
+            </summary>
+            <param name="func"></param>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.StartManualRun">
+            <summary>
+            开始手动运行
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.StopManualRun">
+            <summary>
+            停止手动运行
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.PauseManualRun">
+            <summary>
+            暂停手动运行流程
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.ResumeManualRun">
+            <summary>
+            恢复手动运行流程
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.ManualRunThread">
+            <summary>
+            手动运行的线程函数
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.GetAxisPositiveByAxisNo(System.Int32)">
+            <summary>
+            根据轴号获取轴的方向
+            </summary>
+            <param name="nAxisNo">轴号，AxisX/AxisY/AxisZ/AxisU</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.GetAxisPositiveByIndex(System.Int32)">
+            <summary>
+            根据轴的索引号获取轴的方向
+            </summary>
+            <param name="index">索引号，从0开始</param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.InverseAxisPositiveByAxisNo(System.Int32)">
+            <summary>
+            根据轴号取反轴的方向，当发现UI界面上方向和实际方向不一致时取反
+            </summary>
+            <param name="nAxisNo">索引号，从0开始</param>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.InverseAxisPositiveByIndex(System.Int32)">
+            <summary>
+            根据轴的索引号取反轴的方向，当发现UI界面上方向和实际方向不一致时取反
+            </summary>
+            <param name="index">索引号，从0开始</param>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.RenameAxisName(System.Int32,System.String)">
+            <summary>
+            重命名轴名称
+            </summary>
+            <param name="index">轴号索引</param>
+            <param name="strNewName">新名称</param>
+        </member>
+        <member name="M:AutoFrameDll.StationBase.GetAxisName(System.Int32)">
+            <summary>
+            获取轴的名称
+            </summary>
+            <param name="index">索引号</param>
+            <returns></returns>
+        </member>
+        <member name="T:AutoFrameDll.StationState">
+            <summary>
+            站位状态
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationState.STATE_AUTO">
+            <summary>
+            自动运行状态
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationState.STATE_READY">
+            <summary>
+            就绪状态
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationState.STATE_EMG">
+            <summary>
+            急停状态
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationState.STATE_PAUSE">
+            <summary>
+            暂停状态
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationState.STATE_MANUAL">
+            <summary>
+            停止状态
+            </summary>
+        </member>
+        <member name="T:AutoFrameDll.StationMgr">
+            <summary>
+            站位管理类
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationMgr._strStationItem">
+            <summary>
+            站位属性项
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationMgr._strAxisItem">
+            <summary>
+            轴名字属性
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationMgr.m_strPointFile">
+            <summary>
+            点位文件的存储路径
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationMgr.m_lsStation">
+            <summary>
+            站位链表
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationMgr.m_dicFormStation">
+            <summary>
+            站位集合
+            </summary>
+        </member>
+        <member name="F:AutoFrameDll.StationMgr.m_dicManualFormStation">
+            <summary>
+            站位与自定义手动界面的集合
+            </summary>
+        </member>
+        <member name="P:AutoFrameDll.StationMgr.BAutoMode">
+             <summary>
+            当前是否全自动运行
+             </summary>
+        </member>
+        <member name="P:AutoFrameDll.StationMgr.CurrentState">
+            <summary>
+            站位当前状态
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.OnWarning(System.Object,System.EventArgs)">
+             <summary>
+            响应报警函数 
+             </summary>
+             <param name="Sender"></param>
+             <param name="e"></param>
+        </member>
+        <member name="T:AutoFrameDll.StationMgr.StateChangedHandler">
+            <summary>
+            定义一个站位状态变化委托函数
+            </summary>
+            <param name="OldState"></param>
+            <param name="NewState"></param>
+        </member>
+        <member name="E:AutoFrameDll.StationMgr.StateChangedEvent">
+            <summary>
+            定义一个站位状态变化事件
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.ChangeState(AutoFrameDll.StationState)">
+             <summary>
+            站位切换状态同时触发状态变更事件
+             </summary>
+             <param name="NewState"></param>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.GetStation(System.String)">
+             <summary>
+            根据站位名称获取一个站位类指针 
+             </summary>
+             <param name="strName"></param>
+             <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.GetStation(System.Windows.Forms.Form)">
+            <summary>
+            获取手动页面窗口对应的站位类
+            </summary>
+            <param name="frm"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.GetStation(System.Int32,System.String@)">
+            <summary>
+            根据轴号获取站位
+            </summary>
+            <param name="nAxisNo"></param>
+            <param name="strAxisName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.GetManualStation(System.Windows.Forms.Form)">
+            <summary>
+            获取当前手动自定义窗口对应的站位类
+            </summary>
+            <param name="frm"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.IsAutoRunning">
+             <summary>
+            当前是否在自动运行状态 
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.IsPause">
+            <summary>
+            当前是否在暂停状态
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.IsEmg">
+            <summary>
+            当前是否处于急停模式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.AllowPause">
+             <summary>
+            当前模式是否允许暂停 
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.AddStation(System.Windows.Forms.Form,AutoFrameDll.StationBase,System.Windows.Forms.Form)">
+            <summary>
+            向站位管理器增加站位,由于站位列表已经从配置中读取, 需要更换列表中的类对象引用
+            </summary>
+            <param name="frm">通用的手动页面类</param>
+            <param name="station">站位类</param>
+            <param name="frm_manual">手动自定义页面类</param>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.ReadCfgFromXml(System.Xml.XmlDocument)">
+             <summary>
+            读取系统配置文件里的站位信息 
+             </summary>
+             <param name="doc"></param>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.UpdateGridFromParam(System.Windows.Forms.DataGridView)">
+             <summary>
+            从内存中的参数更新到界面表格 
+             </summary>
+             <param name="grid"></param>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.UpdateParamFromGrid(System.Windows.Forms.DataGridView)">
+             <summary>
+            从界面表格更新到内存中参数表 
+             </summary>
+             <param name="grid"></param>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.SaveCfgXML(System.Xml.XmlDocument)">
+             <summary>
+            保存xml配置文件SystemCfg中的站位信息 
+             </summary>
+             <param name="doc"></param>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.LoadPointFile(System.String)">
+             <summary>
+            加载站位下的运动点位 
+             </summary>
+             <param name="strFile"></param>
+             <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.AppendPointFromResource(System.String)">
+            <summary>
+            从资源文件中加载点位
+            </summary>
+            <param name="strResource"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.UpdatePointGrid(System.Windows.Forms.DataGridView,System.Int32)">
+            <summary>
+            更新点位表格
+            </summary>
+            <param name="grid"></param>
+            <param name="nIndex"></param>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.UpdatePoint(System.Windows.Forms.DataGridView,System.Int32)">
+            <summary>
+            通过界面数据更新指定站位的点位数据
+            </summary>
+            <param name="grid"></param>
+            <param name="nIndex"></param>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.SavePointFile(System.String)">
+             <summary>
+            保存站位下的运动点位 
+             </summary>       
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.SavePointFile">
+             <summary>
+            保存站位下的运动点位 
+             </summary>       
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.ThreadMonitor">
+            <summary>
+            确定当前是否为全自动模式，无需启动按钮
+            </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.StartRun">
+             <summary>
+            所有站位开始运行，自动模式
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.StopRun">
+             <summary>
+            所有站位停止运行，转为手动 
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.AutoStartAllStation">
+             <summary>
+            所有站在就绪后开始运行一个循环 
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.InitAllStationSecurity">
+             <summary>
+            初始化所有站位为安全状态 
+             </summary>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.EmgStopAllStation">
+             <summary>
+            急停所有站位 
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.StopManualRun">
+            <summary>
+            停止所有站位的手动运行
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.PauseAllStation">
+             <summary>
+            暂停所有站位运行 
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.ResumeAllStation">
+             <summary>
+            将所有站位由暂停中恢复运行 
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.ResetAllStation">
+             <summary>
+            将所有站位从急停中复位 
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.IsAllReady">
+             <summary>
+            判断所有工站是否全部就绪状态
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.IsAutoThread(System.Threading.Thread)">
+            <summary>
+            判断一个线程是在自动状态还是手动状态
+            </summary>
+            <param name="thread"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.IsManaualThread(System.Threading.Thread)">
+            <summary>
+            判断一个线程是在自动状态还是手动状态
+            </summary>
+            <param name="thread"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoFrameDll.StationMgr.TestRun(AutoFrameDll.StationBase)">
+            <summary>
+            测试接口，暂未使用
+            </summary>
+            <param name="sb"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

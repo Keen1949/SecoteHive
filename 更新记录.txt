@@ -1,0 +1,59 @@
+2021.09.22
+Version: v2.8
+1.添加了post超时，弹窗报警机制，弹窗不卡流程。如果不处理失败原因，直接关闭弹窗报警界面，30分钟后会继续弹窗提醒，直到问题得到解决。
+
+
+2021.08.27
+Version: v2.7
+1.CSV模式，在plcToHive()方法中，Move File失败后，会先copy，再执行delete
+2.CSV模式，对于machine data的input和output防呆进行了优化
+3.在postJsonFile方法中添加了对Json内容时间的防呆
+4.把所有时间相减的地方，都使用TotalHours、TotalMilliseconds等Total属性
+
+2021.08.25
+Version: v2.6
+1.CSV模式，在plcToHive()方法的最外层try...catch的catch中加入对当前线程完成标志位的置位
+2.CSV模式，在Init和Deinit方法中都加入了对threadIsFinish的置位
+3.优化中英文切换配置，在log界面屏蔽不需要的模式，只保留NormalRun模式。
+
+2021.07.28
+Version: v2.5
+1.模式0，CSV模式，添加PLC心跳服务器。IP：127.0.0.1 Port：2000  PLC发送2\r\n,PC端打开，且处于正常运行状态，会回复1\r\n
+2.在参数配置界面，添加TCP服务配置和调试界面，可以修改IP，端口和是否启用等参数，前三项是TCP模式使用的，可以修改IP和端口号。第4项是CSV模式加入的心跳服务器
+
+2021.07.27
+Version: v2.4
+1.在postJsonFile()方法中，加入当前是否有需要上传的Json文件判断，没有就不执行后续代码
+2.在模式0的PlcToHive方法中，加入当前是否有需要解析的CSV文件判断，没有就不执行后续代码
+3.优化PlcToHive的所有try...catch方法，在catch中加入log和对文件的操作。return前，把threadIsFinish置true
+4.模式0，把errordata和machinedata的时间防呆，开始和结束时间差精确到毫秒
+5.模式1，把errordata和machinedata的时间防呆，开始和结束时间差精确到毫秒
+6.模式0，重写了MoveFile()方法，防止陷入死循环
+
+2021.07.26
+Version: v2.3
+1.优化三种模式下得设备暂停，重启方法，删除之前Opause()和Resume()方法中对线程的操作
+2.单台设备的CSV模式，优化了Hive服务器连接不上的log记录，在postJsonFile()中加入了链接失败后5分钟重新尝试机制
+3.单台设备的CSV模式，在PlcToHive方法的最外层，添加10ms延时，防止线程死刷
+4.StationPLC，StationCSV的post方法中加入对服务器返回值是否为空的判断
+5.StationTCP的NormalRun中，加入200ms延时
+6.改正StationCSV，postJsonFile()方法backup时的文件地址
+7.把所有的\r都改成了\r\n
+8.如果post失败，把失败原因放到了界面的log框内，用黄色背景显示
+
+2021.07.22
+Version: v2.2
+1.更新Form_Hive测试界面，把版本信息放入machinestate中
+2. Form_Hive的machinestate界面添加sw_version的输入选项
+3.优化数据大于3天的防呆，为了防止本地PC和Hive服务器时间不同意，统一卡71个小时
+4.优化状态的记录，不在写入xml文件，直接保存在固定变量中
+5.优化machine data协议配置界面的删除选中项按钮功能
+
+2021.07.21  
+Version: v2.1 
+1.优化HiveMgr方法中的ChangeState，添加版本信息
+2.优化StationPLC.cs方法，删除不必要的冗余信息
+3. StationPLC.cs方法中，优化machine state的正侧表达式匹配项，优化数据长度的判断
+4.优化TCP模式的数据长度判断
+5.优化TCP模式下，数据失效后的处理机制，直接删除失效数据
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           

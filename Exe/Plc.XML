@@ -1,0 +1,2197 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Plc</name>
+    </assembly>
+    <members>
+        <member name="T:Plc.Modbus">
+            <summary>
+            Modbus协议部分，包含数据帧的格式分析，及读写操作
+            物理层的数据包收发，需要派生类实现
+            </summary>
+        </member>
+        <member name="T:Plc.Modbus.FunctionCode">
+            <summary>
+            Modbus功能码
+            </summary>
+        </member>
+        <member name="M:Plc.Modbus.SendFrame(System.Byte[])">
+            <summary>
+            发送Modbus数据帧
+            </summary>
+            <param name="frame"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Modbus.ReceiveFrame(System.Byte[])">
+            <summary>
+            接收Modbus数据帧
+            </summary>
+            <param name="frame"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Modbus.GenerateReadFrame(Plc.Modbus.FunctionCode,System.Int32,System.Int32)">
+            <summary>
+            生成Modbus数据帧（读取命令）
+            </summary>
+            <param name="code">功能码</param>
+            <param name="nAddr">起始地址</param>
+            <param name="nCount">读取数量</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Modbus.ReadCoilStatus(System.Int32,System.Int32,System.Byte[])">
+            <summary>
+            0x01:线圈读取
+            </summary>
+            <param name="nAddr"></param>
+            <param name="nCount"></param>
+            <param name="coilData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Modbus.ReadInputStatus(System.Int32,System.Int32,System.Byte[])">
+            <summary>
+            0x02:输入读取
+            </summary>
+            <param name="nAddr"></param>
+            <param name="nCount"></param>
+            <param name="coilData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Modbus.ReadHoldingReg(System.Int32,System.Int32,System.UInt16[])">
+            <summary>
+            0x03:保持寄存器读取
+            </summary>
+            <param name="nAddr"></param>
+            <param name="nCount"></param>
+            <param name="regData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Modbus.ReadInputReg(System.Int32,System.Int32,System.UInt16[])">
+            <summary>
+            0x04:输入寄存器读取
+            </summary>
+            <param name="nAddr"></param>
+            <param name="nCount"></param>
+            <param name="regData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Modbus.GenerateWriteFrame_Single(Plc.Modbus.FunctionCode,System.Int32,System.Int32)">
+            <summary>
+            生成Modbus数据帧（写入单个数据）
+            </summary>
+            <param name="code"></param>
+            <param name="nAddr"></param>
+            <param name="nValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Modbus.WriteSingleCoil(System.Int32,System.Boolean)">
+            <summary>
+            0x05:写入一个线圈
+            </summary>
+            <param name="nAddr"></param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Modbus.WriteWriteSingleReg(System.Int32,System.Int32)">
+            <summary>
+            0x06:写入一个保存寄存器
+            </summary>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Modbus.GenerateWriteFrame_MultiCoil(Plc.Modbus.FunctionCode,System.Int32,System.Int32,System.Byte[])">
+            <summary>
+            生成Modbus数据帧（写入多个线圈）
+            </summary>
+            <param name="code"></param>
+            <param name="nAddr"></param>
+            <param name="nCoilCount"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Modbus.WriteMultiCoil(System.Int32,System.Int32,System.Byte[])">
+            <summary>
+            0x0F:线圈连续写入
+            </summary>
+            <param name="nAddr"></param>
+            <param name="nCoilCount"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Modbus.GenerateWriteFrame_MultiReg(Plc.Modbus.FunctionCode,System.Int32,System.UInt16[])">
+            <summary>
+            生成Modbus数据帧（写入多个寄存器）
+            </summary>
+            <param name="code"></param>
+            <param name="nAddr"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Modbus.WriteMultiReg(System.Int32,System.UInt16[])">
+            <summary>
+            0x10:写入多个寄存器
+            </summary>
+            <param name="nAddr"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Plc.ModbusRtu">
+            <summary>
+            ModbusRtu协议，在Modbus的基础上实现数据包收发功能
+            </summary>
+        </member>
+        <member name="F:Plc.ModbusRtu.m_nId">
+            <summary>
+            站号
+            </summary>
+        </member>
+        <member name="F:Plc.ModbusRtu.m_ComLink">
+            <summary>
+            串口
+            </summary>
+        </member>
+        <member name="M:Plc.ModbusRtu.#ctor(Communicate.ComLink,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="cl">串口，用于数据包收发</param>
+            <param name="nId">站号，ModbusRTU 必须有站号</param>
+        </member>
+        <member name="M:Plc.ModbusRtu.SendFrame(System.Byte[])">
+            <summary>
+            发送Modbus数据帧
+            </summary>
+            <param name="frame"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.ModbusRtu.ReceiveFrame(System.Byte[])">
+            <summary>
+            接收Modbus数据帧
+            </summary>
+            <param name="frame"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.ModbusRtu.GetCrc16(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            CRC校验
+            </summary>
+            <param name="pucFrame"></param>
+            <param name="nOffset"></param>
+            <param name="nCount"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Plc.ModbusRtu.aucCRCHi">
+            <summary>
+            CRC校验表
+            </summary>
+        </member>
+        <member name="F:Plc.ModbusRtu.aucCRCLo">
+            <summary>
+            CRC校验表
+            </summary>
+        </member>
+        <member name="T:Plc.ModbusTcp">
+            <summary>
+            ModbusTcp协议，在Modbus的基础上实现数据包收发功能
+            </summary>
+        </member>
+        <member name="F:Plc.ModbusTcp.m_nId">
+            <summary>
+            站号
+            </summary>
+        </member>
+        <member name="F:Plc.ModbusTcp.m_TcpLink">
+            <summary>
+            网口
+            </summary>
+        </member>
+        <member name="M:Plc.ModbusTcp.#ctor(Communicate.TcpLink,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="tl">网口，用于数据包收发</param>
+            <param name="nId">站号，对于 ModbusTcp 站号不是必须的，一般默认为0</param>
+        </member>
+        <member name="M:Plc.ModbusTcp.#ctor(Communicate.TcpLink)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="tl"></param>
+        </member>
+        <member name="M:Plc.ModbusTcp.SendFrame(System.Byte[])">
+            <summary>
+            发送Modbus数据帧
+            </summary>
+            <param name="frame"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.ModbusTcp.ReceiveFrame(System.Byte[])">
+            <summary>
+            接收Modbus数据帧
+            </summary>
+            <param name="frame"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Plc.DataBlock">
+            <summary>
+            数据块定义
+            制定起始地址，多个数据块可合并
+            </summary>
+        </member>
+        <member name="P:Plc.DataBlock.Start">
+            <summary>
+            数据块的起始位置
+            </summary>
+        </member>
+        <member name="P:Plc.DataBlock.End">
+            <summary>
+            数据块的结束位置
+            </summary>
+        </member>
+        <member name="P:Plc.DataBlock.IntervalMax">
+            <summary>
+            两个数据块合并时，允许的间隔
+            </summary>
+        </member>
+        <member name="P:Plc.DataBlock.DataBuffer">
+            <summary>
+            保存数据块的数值
+            </summary>
+        </member>
+        <member name="M:Plc.DataBlock.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Plc.DataBlock.#ctor(System.Int32,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="st">起始位置</param>
+            <param name="end">结束位置</param>
+        </member>
+        <member name="M:Plc.DataBlock.Set(System.Int32,System.Int32)">
+            <summary>
+            设置起始位置、结束位置
+            </summary>
+            <param name="st"></param>
+            <param name="end"></param>
+        </member>
+        <member name="M:Plc.DataBlock.SetIntervalMax(System.Int32)">
+            <summary>
+            设置数据块合并时的最大间隔
+            </summary>
+            <param name="nInterval"></param>
+        </member>
+        <member name="M:Plc.DataBlock.GenerateBuffer">
+            <summary>
+            申请空间，保存数据块的内容
+            </summary>
+        </member>
+        <member name="M:Plc.DataBlock.AllowMerge(Plc.DataBlock)">
+            <summary>
+            判断数据块是否可以合并
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.DataBlock.AllowMerge(Plc.DataBlock,System.Int32)">
+            <summary>
+            判断数据块是否可以合并，并对数据块的大小进行限制
+            </summary>
+            <param name="item"></param>
+            <param name="maxSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.DataBlock.Merge(Plc.DataBlock)">
+            <summary>
+            数据块合并
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:Plc.DataBlock.CompareTo(Plc.DataBlock)">
+            <summary>
+            比较两个数据块的大小，根据起始位置进行比较
+            </summary>
+            <param name="db"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.DataBlock.Contain(System.Int32)">
+            <summary>
+            判断指定的位置，是否在数据块以内
+            </summary>
+            <param name="num"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.DataBlock.Contain(Plc.DataBlock)">
+            <summary>
+            判断指定的数据块，是否被包含
+            </summary>
+            <param name="db"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.DataBlock.Read(System.Int32,System.UInt16@)">
+            <summary>
+            读取数据块指定位置的数据
+            </summary>
+            <param name="num">读取位置</param>
+            <param name="val">指定位置的数值</param>
+            <returns>读取是否成功</returns>
+        </member>
+        <member name="M:Plc.DataBlock.Read(System.Int32,System.Int32)">
+            <summary>
+             读取数据块中连续的一段数据
+            </summary>
+            <param name="head">起始位置</param>
+            <param name="count">读取数量</param>
+            <returns></returns>
+        </member>
+        <member name="T:Plc.BitBlock">
+            <summary>
+            位元件数据块，每一个元素是一个Bit
+            </summary>
+        </member>
+        <member name="F:Plc.BitBlock.BitIntervalMax">
+            <summary>
+            两个数据块合并时，允许的最大间隔
+            </summary>
+        </member>
+        <member name="M:Plc.BitBlock.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Plc.BitBlock.#ctor(System.Int32)">
+            <summary>
+            构造函数，包含一个数据
+            </summary>
+            <param name="num"></param>
+        </member>
+        <member name="M:Plc.BitBlock.#ctor(System.Int32,System.Int32)">
+            <summary>
+            构造函数，包含一组数据
+            </summary>
+            <param name="nHead">起始位置</param>
+            <param name="nCount">数量</param>
+        </member>
+        <member name="M:Plc.BitBlock.GenerateBuffer">
+            <summary>
+            分配空间，保存元素的数值
+            </summary>
+        </member>
+        <member name="M:Plc.BitBlock.Read(System.Int32,System.UInt16@)">
+            <summary>
+            读取一个元素
+            </summary>
+            <param name="num">位置</param>
+            <param name="val">元素值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.BitBlock.Read(System.Int32,System.Int32)">
+            <summary>
+            读取一组
+            </summary>
+            <param name="head">元素</param>
+            <param name="count">元素数量</param>
+            <returns></returns>
+        </member>
+        <member name="T:Plc.WordBlock">
+            <summary>
+            字元件数据块，每一个元素是一个Word
+            </summary>
+        </member>
+        <member name="F:Plc.WordBlock.WordIntervalMax">
+            <summary>
+            两个数据块合并时，允许的最大间隔
+            </summary>
+        </member>
+        <member name="M:Plc.WordBlock.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Plc.WordBlock.#ctor(System.Int32)">
+            <summary>
+            构造函数，包含一个元素
+            </summary>
+            <param name="num"></param>
+        </member>
+        <member name="M:Plc.WordBlock.#ctor(System.Int32,System.Int32)">
+            <summary>
+            构造函数，包含一组元素
+            </summary>
+            <param name="nHead"></param>
+            <param name="nCount"></param>
+        </member>
+        <member name="M:Plc.WordBlock.GenerateBuffer">
+            <summary>
+            申请一个数组，用于保存元素的数值
+            </summary>
+        </member>
+        <member name="M:Plc.WordBlock.Read(System.Int32,System.UInt16@)">
+            <summary>
+            读取一个元素
+            </summary>
+            <param name="num">元素位置</param>
+            <param name="val">元素值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.WordBlock.Read(System.Int32,System.Int32)">
+            <summary>
+            读取一组元素值
+            </summary>
+            <param name="head">起始位置</param>
+            <param name="count">数量</param>
+            <returns></returns>
+        </member>
+        <member name="T:Plc.PlcElementMonitor">
+            <summary>
+            监控类，实现对一种软元件监控
+            </summary>
+        </member>
+        <member name="P:Plc.PlcElementMonitor.Element">
+            <summary>
+            软元件类型
+            </summary>
+        </member>
+        <member name="F:Plc.PlcElementMonitor.OriginalItems">
+            <summary>
+            监控列表，未合并
+            </summary>
+        </member>
+        <member name="F:Plc.PlcElementMonitor.MergeItems">
+            <summary>
+            监控列表，合并以后的列表
+            </summary>
+        </member>
+        <member name="F:Plc.PlcElementMonitor.IsBitData">
+            <summary>
+            是否是位元件
+            </summary>
+        </member>
+        <member name="F:Plc.PlcElementMonitor.HaveMerged">
+            <summary>
+            原始项目是否已经合并
+            </summary>
+        </member>
+        <member name="M:Plc.PlcElementMonitor.#ctor(Plc.SoftElement)">
+            <summary>
+            构造函数，指定元件类型
+            </summary>
+            <param name="element"></param>
+        </member>
+        <member name="M:Plc.PlcElementMonitor.Add(System.Int32)">
+            <summary>
+            添加监视项目
+            </summary>
+            <param name="addr">监视元素的位置</param>
+        </member>
+        <member name="M:Plc.PlcElementMonitor.Add(System.Int32,System.Int32)">
+            <summary>
+            添加监视项目
+            </summary>
+            <param name="addr">监视的起始位置</param>
+            <param name="count">元素数量</param>
+        </member>
+        <member name="M:Plc.PlcElementMonitor.ReadBit(System.Int32)">
+            <summary>
+            读取一个“位元件”的值（只对位元件有效）
+            </summary>
+            <param name="addr">元件位置</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcElementMonitor.ReadBit(System.Int32,System.Int32)">
+            <summary>
+            读取字元件的其中一位（只对字元件有效）
+            </summary>
+            <param name="addr">字元件地址</param>
+            <param name="index">字内偏移量</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcElementMonitor.ReadWord(System.Int32,System.UInt16@)">
+            <summary>
+            读取一个字
+            对于字元件：读取一个字
+            对于位元件：读取连续16个位
+            </summary>
+            <param name="addr">起始地址</param>
+            <param name="val">元素值</param>
+            <returns>读取是否成功，元素地址超限，会读取失败</returns>
+        </member>
+        <member name="M:Plc.PlcElementMonitor.ReadWords(System.Int32,System.Int32)">
+            <summary>
+            读取一组元素
+            对于字元件：读取多个字
+            对于位元件：读取多个位（位元件数量 = count * 16）
+            </summary>
+            <param name="addr">起始地址</param>
+            <param name="count">数量</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcElementMonitor.Clear">
+            <summary>
+            清除监视列表
+            </summary>
+        </member>
+        <member name="M:Plc.PlcElementMonitor.Merge(System.Int32)">
+            <summary>
+            监视列表合并
+            </summary>
+            <param name="countMax">数据块合并的最大限制</param>
+        </member>
+        <member name="M:Plc.PlcElementMonitor.Update(Plc.PlcDevice)">
+            <summary>
+            更新监控项目的最新值
+            </summary>
+            <param name="dev">PLC设备</param>
+            <returns></returns>
+        </member>
+        <member name="T:Plc.PlcDeviceMonitor">
+            <summary>
+            监控类，实现对一个PLC设备监控
+            </summary>
+        </member>
+        <member name="F:Plc.PlcDeviceMonitor.m_plcDevice">
+            <summary>
+            PLC设备
+            </summary>
+        </member>
+        <member name="F:Plc.PlcDeviceMonitor.m_dictElement">
+            <summary>
+            监控项目集合
+            Key:监控的元件类型
+            Value：监控的元件列表
+            </summary>
+        </member>
+        <member name="M:Plc.PlcDeviceMonitor.#ctor(Plc.PlcDevice)">
+            <summary>
+            类构造函数
+            </summary>
+        </member>
+        <member name="M:Plc.PlcDeviceMonitor.AddMonitorItem(Plc.SoftElement,System.Int32)">
+            <summary>
+            添加监视的项目
+            </summary>
+            <param name="element"></param>
+            <param name="addr"></param>
+        </member>
+        <member name="M:Plc.PlcDeviceMonitor.AddMonitorItem(Plc.SoftElement,System.Int32,System.Int32)">
+            <summary>
+            添加监视的项目
+            </summary>
+            <param name="element">元件类型</param>
+            <param name="addr">元件起始地址</param>
+            <param name="count">元件数量</param>
+        </member>
+        <member name="M:Plc.PlcDeviceMonitor.ReadBit(Plc.SoftElement,System.Int32)">
+            <summary>
+            读取一个Bit，只对“位元件”有效
+            </summary>
+            <param name="element"> 元件类型：XYM </param>
+            <param name="addr">元件地址</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDeviceMonitor.ReadBit(Plc.SoftElement,System.Int32,System.Int32)">
+            <summary>
+            读取一个Bit，只对“字元件”有效
+            </summary>
+            <param name="element"> 元件类型：D </param>
+            <param name="addr"></param>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDeviceMonitor.ReadWord(Plc.SoftElement,System.Int32,System.UInt16@)">
+            <summary>
+            读取一个字
+            </summary>
+            <param name="element">元件类型：X、Y、M、D </param>
+            <param name="addr">起始地址</param>
+            <param name="val"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDeviceMonitor.ReadWords(Plc.SoftElement,System.Int32,System.Int32)">
+            <summary>
+            批量读取字
+            </summary>
+            <param name="element">元件类型：X、Y、M、D </param>
+            <param name="addr">起始地址</param>
+            <param name="count">数量</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDeviceMonitor.Update">
+            <summary>
+            更新PLC设备监视项目，监视的元件类型包括：X、Y、M、D
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Plc.PlcMonitor">
+            <summary>
+            对一组PLC设备监控
+            </summary>
+        </member>
+        <member name="F:Plc.PlcMonitor.m_PlcList">
+            <summary>
+            PLC设备列表
+            </summary>
+        </member>
+        <member name="F:Plc.PlcMonitor.m_MonitorList">
+            <summary>
+            PLC设备监控类列表，每一项是对一个PLC设备的监控类
+            </summary>
+        </member>
+        <member name="M:Plc.PlcMonitor.#ctor(System.Collections.Generic.List{Plc.PlcDevice})">
+            <summary>
+            对一组PLC设备监控
+            </summary>
+            <param name="plcList">PLC设备列表</param>
+        </member>
+        <member name="M:Plc.PlcMonitor.PlcNumberCheck(System.Int32)">
+            <summary>
+            PLC设备序号检查
+            </summary>
+            <param name="num"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcMonitor.Add(System.Int32,Plc.SoftElement,System.Int32)">
+            <summary>
+            添加监视项目
+            </summary>
+            <param name="plcIndex">PLC序号</param>
+            <param name="element">监控的元件类型</param>
+            <param name="addr">元件的地址</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcMonitor.Add(System.Int32,Plc.SoftElement,System.Int32,System.Int32)">
+            <summary>
+            添加监视项目
+            </summary>
+            <param name="plcIndex"></param>
+            <param name="element"></param>
+            <param name="addr"></param>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcMonitor.ReadBit(System.Int32,Plc.SoftElement,System.Int32)">
+            <summary>
+            读取“位元件”值，元件类型包括：X、Y、M
+            </summary>
+            <param name="plcIndex"></param>
+            <param name="element"></param>
+            <param name="addr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcMonitor.ReadBit(System.Int32,Plc.SoftElement,System.Int32,System.Int32)">
+            <summary>
+            读取“位元件”值，元件类型包括：D
+            </summary>
+            <param name="plcIndex"></param>
+            <param name="element"></param>
+            <param name="addr"></param>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcMonitor.ReadWord(System.Int32,Plc.SoftElement,System.Int32,System.UInt16@)">
+            <summary>
+            读取一个“字元件”值，元件类型包括：X、Y、M、D
+            </summary>
+            <param name="plcIndex"></param>
+            <param name="element"></param>
+            <param name="addr"></param>
+            <param name="val"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcMonitor.ReadWords(System.Int32,Plc.SoftElement,System.Int32,System.Int32)">
+            <summary>
+            读取一组“字元件”值，元件类型包括：X、Y、M、D
+            </summary>
+            <param name="plcIndex"></param>
+            <param name="element"></param>
+            <param name="addr"></param>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcMonitor.Update">
+            <summary>
+            更新监视项目值，监视项目包括：PLC列表中（每一种元件类型），已添加的项目
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Plc.Plc_ModbusRtu">
+            <summary>
+            ModbusRTU设备
+            </summary>
+        </member>
+        <member name="F:Plc.Plc_ModbusRtu.m_ComLink">
+            <summary>
+            ModbusRTU使用的串口
+            </summary>
+        </member>
+        <member name="F:Plc.Plc_ModbusRtu.m_Modbus">
+            <summary>
+            Modbus协议
+            </summary>
+        </member>
+        <member name="M:Plc.Plc_ModbusRtu.#ctor(System.Int32,System.String,Communicate.ComLink,System.Int32,Plc.PlcAddressMap)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="nIndex">PLC设备序号</param>
+            <param name="strName">PLC设备名称</param>
+            <param name="cl">使用的串口</param>
+            <param name="nId">Modbus站号</param>
+            <param name="mp">元件的地址映射表</param>
+        </member>
+        <member name="M:Plc.Plc_ModbusRtu.Open">
+            <summary>
+            打开设备
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusRtu.Close">
+            <summary>
+            关闭设备
+            </summary>
+        </member>
+        <member name="M:Plc.Plc_ModbusRtu.ReadBit(Plc.SoftElement,System.Int32,System.Boolean@)">
+            <summary>
+            读取一个位元件
+            </summary>
+            <param name="element">元件类型：X、Y、M </param>
+            <param name="nAddr">元件地址</param>
+            <param name="bVal">元件的状态值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusRtu.ReadMultiBit(Plc.SoftElement,System.Int32,System.Boolean[])">
+            <summary>
+            读取多个位元件
+            </summary>
+            <param name="element">元件类型：X、Y、M </param>
+            <param name="nAddr">元件地址</param>
+            <param name="bVals">元件值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusRtu.ReadRegBit(Plc.SoftElement,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            读取字元件的一位
+            </summary>
+            <param name="element">元件类型：D </param>
+            <param name="nAddr">元件地址</param>
+            <param name="nIndex">位在字内的偏移</param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusRtu.ReadWord(Plc.SoftElement,System.Int32,System.UInt16@)">
+            <summary>
+            读取一个字
+            对于字元件：读取一个字
+            对于位元件：读取连续16个位
+            </summary>
+            <param name="element">元件类型：X、Y、M、D </param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusRtu.ReadMultiWord(Plc.SoftElement,System.Int32,System.UInt16[])">
+            <summary>
+            读取一组字
+            对于字元件：读取多个字（读取数量 = count）
+            对于位元件：读取多个位（读取数量 = count * 16 ）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusRtu.ReadDWord(Plc.SoftElement,System.Int32,System.UInt32@)">
+            <summary>
+            读取一个双字
+            对于字元件：读取2个字
+            对于位元件：读取连续32个位
+            </summary>
+            <param name="element">元件类型：X、Y、M、D </param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusRtu.ReadMultiDWord(Plc.SoftElement,System.Int32,System.UInt32[])">
+            <summary>
+            读取一组双字
+            对于字元件：读取多个双字（读取数量 = count * 2）
+            对于位元件：读取多个位（读取数量 = count * 32 ）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusRtu.WriteBit(Plc.SoftElement,System.Int32,System.Boolean)">
+            <summary>
+            写入一个位，只对位元件有效（YM有效，X不能写入）
+            </summary>
+            <param name="element">元件类型：Y、M </param>
+            <param name="nAddr"></param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusRtu.WriteMultiBit(Plc.SoftElement,System.Int32,System.Boolean[])">
+            <summary>
+            写入多个位，只对位元件有效（YM有效，X不能写入）
+            </summary>
+            <param name="element"> Y、M </param>
+            <param name="nAddr"></param>
+            <param name="bVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusRtu.WriteRegBit(Plc.SoftElement,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            向位元件写入一位（只对D元件有效）
+            </summary>
+            <param name="element">元件类型：D </param>
+            <param name="nAddr"></param>
+            <param name="nIndex"></param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusRtu.WriteWord(Plc.SoftElement,System.Int32,System.UInt16)">
+            <summary>
+            写入一个字（为位元件时，写入16位）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusRtu.WriteMultiWord(Plc.SoftElement,System.Int32,System.UInt16[])">
+            <summary>
+            写入多个字（为位元件时，写入数量 x 16）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusRtu.WriteDWord(Plc.SoftElement,System.Int32,System.UInt32)">
+            <summary>
+            写入一个双字（为位元件时，写入32位）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusRtu.WriteMultiDWord(Plc.SoftElement,System.Int32,System.UInt32[])">
+            <summary>
+            写入多个双字（为位元件时，写入数量 x 32）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Plc.KeyenceLinkProtocol">
+            <summary>
+            Keyence链接协议
+            </summary>
+        </member>
+        <member name="F:Plc.KeyenceLinkProtocol.m_TcpLink">
+            <summary>
+            通信使用的网口
+            </summary>
+        </member>
+        <member name="M:Plc.KeyenceLinkProtocol.#ctor(Communicate.TcpLink)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="tl">通信网口</param>
+        </member>
+        <member name="M:Plc.KeyenceLinkProtocol.ReadMultiBit(Plc.SoftElement,System.Int32,System.Boolean[])">
+            <summary>
+            读取位元件，只能用于位元件
+            </summary>
+            <param name="element">元件类型：X、Y、M</param>
+            <param name="nAddr">元件起始地址</param>
+            <param name="bVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.KeyenceLinkProtocol.ReadMultiWord(Plc.SoftElement,System.Int32,System.UInt16[])">
+            <summary>
+            读取多个字元件
+            </summary>
+            <param name="element">元件类型：X、Y、M、D </param>
+            <param name="nAddr">元件起始地址</param>
+            <param name="nValues">保存元件值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.KeyenceLinkProtocol.WriteMultiBit(Plc.SoftElement,System.Int32,System.Boolean[])">
+            <summary>
+            写入多个元件（X元件不可写入）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="bValues"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.KeyenceLinkProtocol.WriteMultiWord(Plc.SoftElement,System.Int32,System.UInt16[])">
+            <summary>
+            写入多个元件
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nValues"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Plc.Plc_Keyence">
+            <summary>
+            Keyence PLC设备
+            </summary>
+        </member>
+        <member name="F:Plc.Plc_Keyence.m_Protocol">
+            <summary>
+            Keyence链接协议
+            </summary>
+        </member>
+        <member name="F:Plc.Plc_Keyence.m_TcpLink">
+            <summary>
+            通信网口
+            </summary>
+        </member>
+        <member name="M:Plc.Plc_Keyence.#ctor(System.Int32,System.String,Communicate.TcpLink,Plc.PlcAddressMap)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="nIndex">PLC设备序号</param>
+            <param name="strName">PLC设备名称</param>
+            <param name="tl">网口</param>
+            <param name="mp">映射表</param>
+        </member>
+        <member name="M:Plc.Plc_Keyence.Open">
+            <summary>
+            打开设备
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Keyence.Close">
+            <summary>
+            关闭设备
+            </summary>
+        </member>
+        <member name="M:Plc.Plc_Keyence.ReadBit(Plc.SoftElement,System.Int32,System.Boolean@)">
+            <summary>
+            读取一个位元件
+            </summary>
+            <param name="element">元件类型：X、Y、M </param>
+            <param name="nAddr">元件地址</param>
+            <param name="bVal">元件的状态值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Keyence.ReadMultiBit(Plc.SoftElement,System.Int32,System.Boolean[])">
+            <summary>
+            读取多个位元件
+            </summary>
+            <param name="element">元件类型：X、Y、M </param>
+            <param name="nAddr">元件地址</param>
+            <param name="bVals">元件值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Keyence.ReadRegBit(Plc.SoftElement,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            读取字元件的一位
+            </summary>
+            <param name="element">元件类型：D </param>
+            <param name="nAddr">元件地址</param>
+            <param name="nIndex">位在字内的偏移</param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Keyence.ReadWord(Plc.SoftElement,System.Int32,System.UInt16@)">
+            <summary>
+            读取一个字
+            对于字元件：读取一个字
+            对于位元件：读取连续16个位
+            </summary>
+            <param name="element">元件类型：X、Y、M、D </param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Keyence.ReadMultiWord(Plc.SoftElement,System.Int32,System.UInt16[])">
+            <summary>
+            读取一组字
+            对于字元件：读取多个字（读取数量 = count）
+            对于位元件：读取多个位（读取数量 = count * 16 ）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Keyence.ReadDWord(Plc.SoftElement,System.Int32,System.UInt32@)">
+            <summary>
+            读取一个双字
+            对于字元件：读取一个双字
+            对于位元件：读取连续32个位
+            </summary>
+            <param name="element">元件类型：X、Y、M、D </param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Keyence.ReadMultiDWord(Plc.SoftElement,System.Int32,System.UInt32[])">
+            <summary>
+            读取一组双字
+            对于字元件：读取多个双字（读取数量 = count）
+            对于位元件：读取多个双位（读取数量 = count * 32 ）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Keyence.WriteBit(Plc.SoftElement,System.Int32,System.Boolean)">
+            <summary>
+            写入一个位，只对位元件有效（YM有效，X不能写入）
+            </summary>
+            <param name="element">元件类型：Y、M </param>
+            <param name="nAddr"></param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Keyence.WriteMultiBit(Plc.SoftElement,System.Int32,System.Boolean[])">
+            <summary>
+            写入多个位，只对位元件有效（YM有效，X不能写入）
+            </summary>
+            <param name="element"> Y、M </param>
+            <param name="nAddr"></param>
+            <param name="bVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Keyence.WriteRegBit(Plc.SoftElement,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            向位元件写入一位（只对D元件有效）
+            </summary>
+            <param name="element">元件类型：D </param>
+            <param name="nAddr"></param>
+            <param name="nIndex"></param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Keyence.WriteWord(Plc.SoftElement,System.Int32,System.UInt16)">
+            <summary>
+            写入一个字（为位元件时，写入16位）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Keyence.WriteMultiWord(Plc.SoftElement,System.Int32,System.UInt16[])">
+            <summary>
+            写入多个字（为位元件时，写入数量 x 16）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Keyence.WriteDWord(Plc.SoftElement,System.Int32,System.UInt32)">
+            <summary>
+            写入一个双字（为位元件时，写入32位）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Keyence.WriteMultiDWord(Plc.SoftElement,System.Int32,System.UInt32[])">
+            <summary>
+            写入多个双字（为位元件时，写入数量 x 32）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nData"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Plc.McProtocol">
+            <summary>
+            三菱 MC协议
+            </summary>
+        </member>
+        <member name="T:Plc.McProtocol.McElementCode">
+            <summary>
+            软元件代码
+            </summary>
+        </member>
+        <member name="F:Plc.McProtocol.m_nStationNo">
+            <summary>
+            设备站号，默认是0
+            </summary>
+        </member>
+        <member name="F:Plc.McProtocol.m_nWaitingTime">
+            <summary>
+            接收的等待时间
+            </summary>
+        </member>
+        <member name="F:Plc.McProtocol.m_TcpLink">
+            <summary>
+            通信网口
+            </summary>
+        </member>
+        <member name="M:Plc.McProtocol.#ctor(Communicate.TcpLink)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="tl">网口</param>
+        </member>
+        <member name="M:Plc.McProtocol.SetWaitingTime(System.Int32)">
+            <summary>
+            设置接收的等待时间
+            </summary>
+            <param name="nMs">超时时间，单位:ms</param>
+        </member>
+        <member name="M:Plc.McProtocol.SendFrame(System.Byte[])">
+            <summary>
+            发送数据帧
+            </summary>
+            <param name="data"> 指令 + 子指令 + 请求数据部分 </param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.McProtocol.ReceiveFrame(System.Int32@,System.Byte[]@)">
+            <summary>
+            接收响应数据
+            </summary>
+            <param name="nEndCode">结束代码</param>
+            <param name="data">接收的数据</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.McProtocol.ReadMultiBit(Plc.SoftElement,System.Int32,System.Boolean[])">
+            <summary>
+            读取多个位（XYM 元件）
+            </summary>
+            <param name="element">元件类型</param>
+            <param name="nAddr">元件起始地址</param>
+            <param name="bVals">元件值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.McProtocol.WriteMultiBit(Plc.SoftElement,System.Int32,System.Boolean[])">
+            <summary>
+            写入多个位（XYM 元件）
+            </summary>
+            <param name="element">元件类型</param>
+            <param name="nAddr">元件起始地址</param>
+            <param name="bVals">元件值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.McProtocol.ReadMultiWord(Plc.SoftElement,System.Int32,System.UInt16[])">
+            <summary>
+            读取多个字（读取位元件时，16个位元件作为一个字）
+            </summary>
+            <param name="element">元件类型：X、Y、M、D </param>
+            <param name="nAddr">元件地址</param>
+            <param name="nVals">保存元件值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.McProtocol.WriteMultiWord(Plc.SoftElement,System.Int32,System.UInt16[])">
+            <summary>
+            写入多个字（写取位元件时，16个位元件作为一个字）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.McProtocol.GetMcElementCode(Plc.SoftElement)">
+            <summary>
+            MC协议中，元件代码
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Plc.Plc_Mitsubishi">
+            <summary>
+            三菱PLC设备
+            </summary>
+        </member>
+        <member name="F:Plc.Plc_Mitsubishi.m_Protocol">
+            <summary>
+            MC 协议
+            </summary>
+        </member>
+        <member name="F:Plc.Plc_Mitsubishi.m_TcpLink">
+            <summary>
+            通信网口
+            </summary>
+        </member>
+        <member name="M:Plc.Plc_Mitsubishi.#ctor(System.Int32,System.String,Communicate.TcpLink,System.Int32,Plc.PlcAddressMap)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="nIndex">PLC设备序号</param>
+            <param name="strName">设备名称</param>
+            <param name="tl">网口</param>
+            <param name="nId"></param>
+            <param name="mp">地址映射表</param>
+        </member>
+        <member name="M:Plc.Plc_Mitsubishi.Open">
+            <summary>
+            打开设备
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Mitsubishi.Close">
+            <summary>
+            关闭设备
+            </summary>
+        </member>
+        <member name="M:Plc.Plc_Mitsubishi.ReadBit(Plc.SoftElement,System.Int32,System.Boolean@)">
+            <summary>
+            读取一个位元件
+            </summary>
+            <param name="element">元件类型：X、Y、M </param>
+            <param name="nAddr">元件地址</param>
+            <param name="bVal">元件的状态值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Mitsubishi.ReadMultiBit(Plc.SoftElement,System.Int32,System.Boolean[])">
+            <summary>
+            读取多个位元件
+            </summary>
+            <param name="element">元件类型：X、Y、M </param>
+            <param name="nAddr">元件地址</param>
+            <param name="bVals">元件值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Mitsubishi.ReadRegBit(Plc.SoftElement,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            读取字元件的一位
+            </summary>
+            <param name="element">元件类型：D </param>
+            <param name="nAddr">元件地址</param>
+            <param name="nIndex">位在字内的偏移</param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Mitsubishi.ReadWord(Plc.SoftElement,System.Int32,System.UInt16@)">
+            <summary>
+            读取一个字
+            对于字元件：读取一个字
+            对于位元件：读取连续16个位
+            </summary>
+            <param name="element">元件类型：X、Y、M、D </param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Mitsubishi.ReadMultiWord(Plc.SoftElement,System.Int32,System.UInt16[])">
+            <summary>
+            读取一组字
+            对于字元件：读取多个字（读取数量 = count）
+            对于位元件：读取多个位（读取数量 = count * 16 ）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Mitsubishi.ReadDWord(Plc.SoftElement,System.Int32,System.UInt32@)">
+            <summary>
+            读取一个双字
+            对于字元件：读取一个双字
+            对于位元件：读取连续32个位
+            </summary>
+            <param name="element">元件类型：X、Y、M、D </param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Mitsubishi.ReadMultiDWord(Plc.SoftElement,System.Int32,System.UInt32[])">
+            <summary>
+            读取一组双字
+            对于字元件：读取多个双字（读取数量 = count）
+            对于位元件：读取多个双位（读取数量 = count * 32 ）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Mitsubishi.WriteBit(Plc.SoftElement,System.Int32,System.Boolean)">
+            <summary>
+            写入一个位，只对位元件有效（YM有效，X不能写入）
+            </summary>
+            <param name="element">元件类型：Y、M </param>
+            <param name="nAddr"></param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Mitsubishi.WriteMultiBit(Plc.SoftElement,System.Int32,System.Boolean[])">
+            <summary>
+            写入多个位，只对位元件有效（YM有效，X不能写入）
+            </summary>
+            <param name="element"> Y、M </param>
+            <param name="nAddr"></param>
+            <param name="bVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Mitsubishi.WriteRegBit(Plc.SoftElement,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            向位元件写入一位（只对D元件有效）
+            </summary>
+            <param name="element">元件类型：D </param>
+            <param name="nAddr"></param>
+            <param name="nIndex"></param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Mitsubishi.WriteWord(Plc.SoftElement,System.Int32,System.UInt16)">
+            <summary>
+            写入一个字（为位元件时，写入16位）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Mitsubishi.WriteMultiWord(Plc.SoftElement,System.Int32,System.UInt16[])">
+            <summary>
+            写入多个字（为位元件时，写入数量 x 16）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Mitsubishi.WriteDWord(Plc.SoftElement,System.Int32,System.UInt32)">
+            <summary>
+            写入一个双字（为位元件时，写入32位）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Mitsubishi.WriteMultiDWord(Plc.SoftElement,System.Int32,System.UInt32[])">
+            <summary>
+            写入多个双字（为位元件时，写入数量 x 32）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nData"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Plc.SoftElement">
+            <summary>
+            PLC软元件的类型
+            </summary>
+        </member>
+        <member name="F:Plc.SoftElement.X">
+            <summary>
+            X元件
+            </summary>
+        </member>
+        <member name="F:Plc.SoftElement.Y">
+            <summary>
+            元件
+            </summary>
+        </member>
+        <member name="F:Plc.SoftElement.M">
+            <summary>
+            M元件
+            </summary>
+        </member>
+        <member name="F:Plc.SoftElement.D">
+            <summary>
+            D元件
+            </summary>
+        </member>
+        <member name="T:Plc.PlcAddressMap">
+            <summary>
+            软元件地址映射表，包括：元件类型、起始地址、元件数量
+            </summary>
+        </member>
+        <member name="T:Plc.PlcAddressMap.SoftElementAddress">
+            <summary>
+            软元件地址信息：单位、起始地址、数量
+            </summary>
+        </member>
+        <member name="F:Plc.PlcAddressMap.SoftElementAddress.Element">
+            <summary>
+            元件类型
+            </summary>
+        </member>
+        <member name="F:Plc.PlcAddressMap.SoftElementAddress.StartAdrress">
+            <summary>
+            元件起始地址
+            </summary>
+        </member>
+        <member name="F:Plc.PlcAddressMap.SoftElementAddress.Count">
+            <summary>
+            元件数量
+            </summary>
+        </member>
+        <member name="M:Plc.PlcAddressMap.SoftElementAddress.#ctor(Plc.SoftElement,System.Int32,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="tp">元件类型</param>
+            <param name="addr">元件起始地址</param>
+            <param name="cnt">元件数量</param>
+        </member>
+        <member name="M:Plc.PlcAddressMap.SoftElementAddress.Check(System.Int32,System.Int32)">
+            <summary>
+            元件地址有效性检查，检查地址是否在指定的范围内
+            </summary>
+            <param name="nAddrToUse">元件的起始地址</param>
+            <param name="nCountToUse">元件的数量</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcAddressMap.SoftElementAddress.Check(System.Int32)">
+            <summary>
+            元件地址有效性检查，检查地址是否在指定的范围内
+            </summary>
+            <param name="nAddrToUse">元件起始地址</param>
+            <returns></returns>
+        </member>
+        <member name="F:Plc.PlcAddressMap.X">
+            <summary>
+            X元件的地址范围
+            </summary>
+        </member>
+        <member name="F:Plc.PlcAddressMap.Y">
+            <summary>
+            Y元件的地址范围
+            </summary>
+        </member>
+        <member name="F:Plc.PlcAddressMap.M">
+            <summary>
+            M元件的地址范围
+            </summary>
+        </member>
+        <member name="F:Plc.PlcAddressMap.D">
+            <summary>
+            D元件的地址范围
+            </summary>
+        </member>
+        <member name="M:Plc.PlcAddressMap.#ctor">
+            <summary>
+            构造函数，元件地址范围的默认值是：0~0xFFFF
+            </summary>
+        </member>
+        <member name="M:Plc.PlcAddressMap.Check(Plc.SoftElement,System.Int32,System.Int32)">
+            <summary>
+            检查元件的地址是否有效
+            </summary>
+            <param name="element">元件类型</param>
+            <param name="nAddrToUse">元件起始地址</param>
+            <param name="nCountToUse">元件的数量</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcAddressMap.Check(Plc.SoftElement,System.Int32)">
+            <summary>
+            检查元件的地址是否有效
+            </summary>
+            <param name="element">元件类型</param>
+            <param name="nAddrToUse">元件的地址</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcAddressMap.AddMap(System.String,System.String,System.String)">
+            <summary>
+            指定元件的有效地址范围
+            </summary>
+            <param name="typ">元件类型</param>
+            <param name="addr">元件的起始地址</param>
+            <param name="cnt">元件的数量</param>
+        </member>
+        <member name="T:Plc.PlcCmdCountLimit">
+            <summary>
+            多个指令打包时，指令个数的限制
+            </summary>
+        </member>
+        <member name="F:Plc.PlcCmdCountLimit.BitsReadCount">
+            <summary>
+            位批量读取，一次读取数量上限
+            </summary>
+        </member>
+        <member name="F:Plc.PlcCmdCountLimit.BitsWriteCount">
+            <summary>
+            位批量写入，一次写入数量上限
+            </summary>
+        </member>
+        <member name="F:Plc.PlcCmdCountLimit.WordsReadCount">
+            <summary>
+            字批量读取，一次读取数量上限
+            </summary>
+        </member>
+        <member name="F:Plc.PlcCmdCountLimit.WordsWriteCount">
+            <summary>
+            字批量写入，一次写入数量上限
+            </summary>
+        </member>
+        <member name="M:Plc.PlcCmdCountLimit.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Plc.PlcCmdCountLimit.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="nBitsRead"></param>
+            <param name="nBitsWrite"></param>
+            <param name="nWordsRead"></param>
+            <param name="nWordsWrite"></param>
+        </member>
+        <member name="T:Plc.PlcDevice">
+            <summary>
+            PLC设备的基类，定义PLC的公用函数
+            所有的PLC类型都继承此类，且实现这些接口函数
+            </summary>
+        </member>
+        <member name="F:Plc.PlcDevice.m_bOpen">
+            <summary>
+            指示PLC设备是否打开
+            </summary>
+        </member>
+        <member name="F:Plc.PlcDevice.m_nIndex">
+            <summary>
+            PLC设备的序号
+            </summary>
+        </member>
+        <member name="F:Plc.PlcDevice.m_strName">
+            <summary>
+            PLC设备的名称
+            </summary>
+        </member>
+        <member name="F:Plc.PlcDevice.m_AddrMap">
+            <summary>
+            元件的有效地址信息
+            </summary>
+        </member>
+        <member name="F:Plc.PlcDevice.m_CmdLimit">
+            <summary>
+            元件批量读写时，一次读写的最大数量
+            </summary>
+        </member>
+        <member name="M:Plc.PlcDevice.#ctor(System.Int32,System.String,Plc.PlcAddressMap)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="nIndex">序号</param>
+            <param name="strName">名称</param>
+            <param name="mp">地址表</param>
+        </member>
+        <member name="M:Plc.PlcDevice.IsBitElement(Plc.SoftElement)">
+            <summary>
+            “位元件”判断：X、Y、M
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.IsWordElement(Plc.SoftElement)">
+            <summary>
+            “字元件”判断：D
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.GetIndex">
+            <summary>
+            获取设备的序号
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.GetName">
+            <summary>
+            获取设备名称
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.IsOpen">
+            <summary>
+            判断设备是否打开
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.Open">
+            <summary>
+            打开设备，读写之前需要执行Open操作
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.Close">
+            <summary>
+            关闭设备
+            </summary>
+        </member>
+        <member name="M:Plc.PlcDevice.ReadBit(Plc.SoftElement,System.Int32,System.Boolean@)">
+            <summary>
+            读取位元件 : XYM
+            </summary>
+            <param name="element"> XYM </param>
+            <param name="nAddr"></param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.ReadMultiBit(Plc.SoftElement,System.Int32,System.Boolean[])">
+            <summary>
+            读取位元件 : XYM
+            </summary>
+            <param name="element"> XYM </param>
+            <param name="nAddr"></param>
+            <param name="bVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.ReadRegBit(Plc.SoftElement,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            读取位元件 : D
+            </summary>
+            <param name="element"> D </param>
+            <param name="nAddr"></param>
+            <param name="nIndex"></param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.ReadWord(Plc.SoftElement,System.Int32,System.UInt16@)">
+            <summary>
+            读取字元件 : XYMD （16个位元件组成一个字）
+            </summary>
+            <param name="element"> XYMD </param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.ReadMultiWord(Plc.SoftElement,System.Int32,System.UInt16[])">
+            <summary>
+            读取字元件 : XYMD （16个位元件组成一个字）
+            </summary>
+            <param name="element"> XYMD </param>
+            <param name="nAddr"></param>
+            <param name="nVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.ReadDWord(Plc.SoftElement,System.Int32,System.UInt32@)">
+            <summary>
+            读取双字元件 : XYMD （32个位元件组成一个双字）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.ReadMultiDWord(Plc.SoftElement,System.Int32,System.UInt32[])">
+            <summary>
+            读取双字元件 : XYMD （32个位元件组成一个字）
+            </summary>
+            <param name="element"> XYMD </param>
+            <param name="nAddr"></param>
+            <param name="nVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.WriteBit(Plc.SoftElement,System.Int32,System.Boolean)">
+            <summary>
+            写入位元件 : XYM
+            </summary>
+            <param name="element"> XYM </param>
+            <param name="nAddr"></param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.WriteMultiBit(Plc.SoftElement,System.Int32,System.Boolean[])">
+            <summary>
+            批量写入位元件 : XYM
+            </summary>
+            <param name="element"> XYM </param>
+            <param name="nAddr"></param>
+            <param name="bVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.WriteRegBit(Plc.SoftElement,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            修改寄存器的一位 : D
+            </summary>
+            <param name="element"> D </param>
+            <param name="nAddr"></param>
+            <param name="nIndex"></param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.WriteWord(Plc.SoftElement,System.Int32,System.UInt16)">
+            <summary>
+            写入字元件 : XYMD
+            </summary>
+            <param name="element"> XYMD </param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.WriteMultiWord(Plc.SoftElement,System.Int32,System.UInt16[])">
+            <summary>
+            批量写入字元件 : XYMD（16个位元件组成一个字）
+            </summary>
+            <param name="element"> XYMD </param>
+            <param name="nAddr"></param>
+            <param name="nData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.WriteDWord(Plc.SoftElement,System.Int32,System.UInt32)">
+            <summary>
+            写入双字元件 : XYMD
+            </summary>
+            <param name="element"> XYMD </param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.PlcDevice.WriteMultiDWord(Plc.SoftElement,System.Int32,System.UInt32[])">
+            <summary>
+            批量写入双字元件 : XYMD（32个位元件组成一个字）
+            </summary>
+            <param name="element"> XYMD </param>
+            <param name="nAddr"></param>
+            <param name="nData"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Plc.InovanceLinkProtocol">
+            <summary>
+            汇川计算机链接协议
+            </summary>
+        </member>
+        <member name="F:Plc.InovanceLinkProtocol.m_nStationNo">
+            <summary>
+            PLC设备站号
+            </summary>
+        </member>
+        <member name="F:Plc.InovanceLinkProtocol.m_nWaitingTime">
+            <summary>
+            PLC设备在接收命令以后，回应命令之前的等待时间
+            </summary>
+        </member>
+        <member name="F:Plc.InovanceLinkProtocol.m_ComLink">
+            <summary>
+            通信用的串口
+            </summary>
+        </member>
+        <member name="M:Plc.InovanceLinkProtocol.#ctor(Communicate.ComLink,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="cl">通信用的串口</param>
+            <param name="nId">站号</param>
+        </member>
+        <member name="M:Plc.InovanceLinkProtocol.SetWaitingTime(System.Int32)">
+            <summary>
+            设置接收的等待时间
+            </summary>
+            <param name="nMs">超时时间，单位:ms</param>
+        </member>
+        <member name="M:Plc.InovanceLinkProtocol.GetCheckSum(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            计算和校验
+            </summary>
+            <param name="buffer"></param>
+            <param name="index"></param>
+            <param name="cnt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.InovanceLinkProtocol.SendAck">
+            <summary>
+            发送 ACK 回应
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.InovanceLinkProtocol.CheckAck">
+            <summary>
+            检查 ACK 回应
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.InovanceLinkProtocol.ReadMultiBit(Plc.SoftElement,System.Int32,System.Boolean[])">
+            <summary>
+            读取多个位元件
+            </summary>
+            <param name="element">元件类型：X、Y、M </param>
+            <param name="nAddr">元件起始地址</param>
+            <param name="bValues">保存元件值，其长度表示元件数量</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.InovanceLinkProtocol.ReadMultiWord(Plc.SoftElement,System.Int32,System.UInt16[])">
+            <summary>
+            读取多个字（16位元件组成一个字）
+            </summary>
+            <param name="element">元件类型：X、Y、M、D </param>
+            <param name="nAddr">起始地址</param>
+            <param name="nValues">元件值，其长度表示元件数量</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.InovanceLinkProtocol.WriteMultiBit(Plc.SoftElement,System.Int32,System.Boolean[])">
+            <summary>
+            写入多个位元件（XYM）
+            </summary>
+            <param name="element">元件类型：X、Y、M </param>
+            <param name="nAddr">元件起始地址</param>
+            <param name="bValues">元件值，其长度表示元件数量</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.InovanceLinkProtocol.WriteMultiWord(Plc.SoftElement,System.Int32,System.UInt16[])">
+            <summary>
+            写入多个字（16位元件组成一个字）
+            </summary>
+            <param name="element">元件类型：X、Y、M、D </param>
+            <param name="nAddr">元件起始地址</param>
+            <param name="nValues">写入的数据，其长度表示元件的数量</param>
+            <returns></returns>
+        </member>
+        <member name="T:Plc.Plc_Inovance">
+            <summary>
+            汇川PLC设备
+            </summary>
+        </member>
+        <member name="F:Plc.Plc_Inovance.m_ComLink">
+            <summary>
+            串口
+            </summary>
+        </member>
+        <member name="F:Plc.Plc_Inovance.m_Protocol">
+            <summary>
+            汇川的计算机链接协议
+            </summary>
+        </member>
+        <member name="M:Plc.Plc_Inovance.#ctor(System.Int32,System.String,Communicate.ComLink,System.Int32,Plc.PlcAddressMap)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="nIndex">PLC设备序号</param>
+            <param name="strName">PLC设备名称</param>
+            <param name="cl">串口</param>
+            <param name="nId">设备站号</param>
+            <param name="mp">元件地址映射表</param>
+        </member>
+        <member name="M:Plc.Plc_Inovance.Open">
+            <summary>
+            打开设备
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Inovance.Close">
+            <summary>
+            关闭设备
+            </summary>
+        </member>
+        <member name="M:Plc.Plc_Inovance.ReadBit(Plc.SoftElement,System.Int32,System.Boolean@)">
+            <summary>
+            读取一个位元件
+            </summary>
+            <param name="element">元件类型：X、Y、M </param>
+            <param name="nAddr">元件地址</param>
+            <param name="bVal">元件的状态值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Inovance.ReadMultiBit(Plc.SoftElement,System.Int32,System.Boolean[])">
+            <summary>
+            读取多个位元件
+            </summary>
+            <param name="element">元件类型：X、Y、M </param>
+            <param name="nAddr">元件地址</param>
+            <param name="bVals">元件值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Inovance.ReadRegBit(Plc.SoftElement,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            读取字元件的一位
+            </summary>
+            <param name="element">元件类型：D </param>
+            <param name="nAddr">元件地址</param>
+            <param name="nIndex">位在字内的偏移</param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Inovance.ReadWord(Plc.SoftElement,System.Int32,System.UInt16@)">
+            <summary>
+            读取一个字
+            对于字元件：读取一个字
+            对于位元件：读取连续16个位
+            </summary>
+            <param name="element">元件类型：X、Y、M、D </param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Inovance.ReadMultiWord(Plc.SoftElement,System.Int32,System.UInt16[])">
+            <summary>
+            读取一组字
+            对于字元件：读取多个字（读取数量 = count）
+            对于位元件：读取多个位（读取数量 = count * 16 ）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Inovance.ReadDWord(Plc.SoftElement,System.Int32,System.UInt32@)">
+            <summary>
+            读取一个双字
+            对于字元件：读取一个双字
+            对于位元件：读取连续32个位
+            </summary>
+            <param name="element">元件类型：X、Y、M、D </param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Inovance.ReadMultiDWord(Plc.SoftElement,System.Int32,System.UInt32[])">
+            <summary>
+            读取一组双字
+            对于字元件：读取多个双字（读取数量 = count）
+            对于位元件：读取多个双位（读取数量 = count * 32 ）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Inovance.WriteBit(Plc.SoftElement,System.Int32,System.Boolean)">
+            <summary>
+            写入一个位，只对位元件有效（YM有效，X不能写入）
+            </summary>
+            <param name="element">元件类型：Y、M </param>
+            <param name="nAddr"></param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Inovance.WriteMultiBit(Plc.SoftElement,System.Int32,System.Boolean[])">
+            <summary>
+            写入多个位，只对位元件有效（YM有效，X不能写入）
+            </summary>
+            <param name="element"> Y、M </param>
+            <param name="nAddr"></param>
+            <param name="bVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Inovance.WriteRegBit(Plc.SoftElement,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            向位元件写入一位（只对D元件有效）
+            </summary>
+            <param name="element">元件类型：D </param>
+            <param name="nAddr"></param>
+            <param name="nIndex"></param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Inovance.WriteWord(Plc.SoftElement,System.Int32,System.UInt16)">
+            <summary>
+            写入一个字（为位元件时，写入16位）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Inovance.WriteMultiWord(Plc.SoftElement,System.Int32,System.UInt16[])">
+            <summary>
+            写入多个字（为位元件时，写入数量 x 16）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Inovance.WriteDWord(Plc.SoftElement,System.Int32,System.UInt32)">
+            <summary>
+            写入一个双字（为位元件时，写入32位）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_Inovance.WriteMultiDWord(Plc.SoftElement,System.Int32,System.UInt32[])">
+            <summary>
+            写入多个双字（为位元件时，写入数量 x 32）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nData"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Plc.Plc_ModbusTcp">
+            <summary>
+            ModbusTCP设备
+            </summary>
+        </member>
+        <member name="F:Plc.Plc_ModbusTcp.m_TcpLink">
+            <summary>
+            ModbusTCP使用的串口
+            </summary>
+        </member>
+        <member name="F:Plc.Plc_ModbusTcp.m_Modbus">
+            <summary>
+            Modbus协议
+            </summary>
+        </member>
+        <member name="M:Plc.Plc_ModbusTcp.#ctor(System.Int32,System.String,Communicate.TcpLink,Plc.PlcAddressMap)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="nIndex">PLC设备序号</param>
+            <param name="strName">设备名称</param>
+            <param name="tl">通信网口</param>
+            <param name="mp">元件地址映射表</param>
+        </member>
+        <member name="M:Plc.Plc_ModbusTcp.#ctor(System.Int32,System.String,Communicate.TcpLink,System.Int32,Plc.PlcAddressMap)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="nIndex">PLC设备序号</param>
+            <param name="strName">设备名称</param>
+            <param name="tl">通信网口</param>
+            <param name="nId">Modbus站号</param>
+            <param name="mp">元件地址映射表</param>
+        </member>
+        <member name="M:Plc.Plc_ModbusTcp.Open">
+            <summary>
+            打开设备
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusTcp.Close">
+            <summary>
+            关闭设备
+            </summary>
+        </member>
+        <member name="M:Plc.Plc_ModbusTcp.ReadBit(Plc.SoftElement,System.Int32,System.Boolean@)">
+            <summary>
+            读取一个位元件
+            </summary>
+            <param name="element">元件类型：X、Y、M </param>
+            <param name="nAddr">元件地址</param>
+            <param name="bVal">元件的状态值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusTcp.ReadMultiBit(Plc.SoftElement,System.Int32,System.Boolean[])">
+            <summary>
+            读取多个位元件
+            </summary>
+            <param name="element">元件类型：X、Y、M </param>
+            <param name="nAddr">元件地址</param>
+            <param name="bVals">元件值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusTcp.ReadRegBit(Plc.SoftElement,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            读取字元件的一位
+            </summary>
+            <param name="element">元件类型：D </param>
+            <param name="nAddr">元件地址</param>
+            <param name="nIndex">位在字内的偏移</param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusTcp.ReadWord(Plc.SoftElement,System.Int32,System.UInt16@)">
+            <summary>
+            读取一个字
+            对于字元件：读取一个字
+            对于位元件：读取连续16个位
+            </summary>
+            <param name="element">元件类型：X、Y、M、D </param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusTcp.ReadMultiWord(Plc.SoftElement,System.Int32,System.UInt16[])">
+            <summary>
+            读取一组字
+            对于字元件：读取多个字（读取数量 = count）
+            对于位元件：读取多个位（读取数量 = count * 16 ）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusTcp.ReadDWord(Plc.SoftElement,System.Int32,System.UInt32@)">
+            <summary>
+            读取一个双字
+            对于字元件：读取2个字
+            对于位元件：读取连续32个位
+            </summary>
+            <param name="element">元件类型：X、Y、M、D </param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusTcp.ReadMultiDWord(Plc.SoftElement,System.Int32,System.UInt32[])">
+            <summary>
+            读取一组双字
+            对于字元件：读取多个双字（读取数量 = count * 2）
+            对于位元件：读取多个位（读取数量 = count * 32 ）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusTcp.WriteBit(Plc.SoftElement,System.Int32,System.Boolean)">
+            <summary>
+            写入一个位，只对位元件有效（YM有效，X不能写入）
+            </summary>
+            <param name="element">元件类型：Y、M </param>
+            <param name="nAddr"></param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusTcp.WriteMultiBit(Plc.SoftElement,System.Int32,System.Boolean[])">
+            <summary>
+            写入多个位，只对位元件有效（YM有效，X不能写入）
+            </summary>
+            <param name="element"> Y、M </param>
+            <param name="nAddr"></param>
+            <param name="bVals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusTcp.WriteRegBit(Plc.SoftElement,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            向位元件写入一位（只对D元件有效）
+            </summary>
+            <param name="element">元件类型：D </param>
+            <param name="nAddr"></param>
+            <param name="nIndex"></param>
+            <param name="bVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusTcp.WriteWord(Plc.SoftElement,System.Int32,System.UInt16)">
+            <summary>
+            写入一个字（为位元件时，写入16位）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusTcp.WriteMultiWord(Plc.SoftElement,System.Int32,System.UInt16[])">
+            <summary>
+            写入多个字（为位元件时，写入数量 x 16）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusTcp.WriteDWord(Plc.SoftElement,System.Int32,System.UInt32)">
+            <summary>
+            写入一个双字（为位元件时，写入32位）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plc.Plc_ModbusTcp.WriteMultiDWord(Plc.SoftElement,System.Int32,System.UInt32[])">
+            <summary>
+            写入多个双字（为位元件时，写入数量 x 32）
+            </summary>
+            <param name="element"></param>
+            <param name="nAddr"></param>
+            <param name="nVal"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

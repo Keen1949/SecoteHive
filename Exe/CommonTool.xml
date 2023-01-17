@@ -1,0 +1,1863 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CommonTool</name>
+    </assembly>
+    <members>
+        <member name="T:CommonTool.LASTINPUTINFO">
+            <summary>
+            Contains the time of the last input.
+            </summary>
+        </member>
+        <member name="F:CommonTool.LASTINPUTINFO.cbSize">
+            <summary>
+            The size of the structure, in bytes. This member must be set to sizeof(LASTINPUTINFO).
+            </summary>
+        </member>
+        <member name="F:CommonTool.LASTINPUTINFO.dwTime">
+            <summary>
+            The tick count when the last input event was received.
+            </summary>
+        </member>
+        <member name="T:CommonTool.HelpTool">
+            <summary>
+            帮助类
+            </summary>
+        </member>
+        <member name="M:CommonTool.HelpTool.GetLastInputInfo(CommonTool.LASTINPUTINFO@)">
+            <summary>
+            调用windows API获取鼠标键盘空闲时间
+            </summary>
+            <param name="plii"></param>
+            <returns></returns>
+        </member>
+        <member name="F:CommonTool.HelpTool.SW_HIDE">
+            <summary>
+            Hides the window and activates another window
+            </summary>
+        </member>
+        <member name="F:CommonTool.HelpTool.SW_SHOWNORMAL">
+            <summary>
+            Activates and displays a window. 
+            If the window is minimized or maximized, 
+            the system restores it to its original size and position.
+             An application should specify this flag when displaying the window for the first time.
+            </summary>
+        </member>
+        <member name="F:CommonTool.HelpTool.SW_SHOW">
+            <summary>
+            Activates the window and displays it in its current size and position
+            </summary>
+        </member>
+        <member name="F:CommonTool.HelpTool.SW_RESTORE">
+            <summary>
+            Activates and displays the window. 
+            If the window is minimized or maximized, 
+            the system restores it to its original size and position. 
+            An application should specify this flag when restoring a minimized window
+            </summary>
+        </member>
+        <member name="M:CommonTool.HelpTool.ShowWindowAsync(System.IntPtr,System.Int32)">
+            <summary>
+            该函数设置由不同线程产生的窗口的显示状态
+            </summary>
+            <param name="hWnd">窗口句柄</param>
+            <param name="cmdShow">指定窗口如何显示。查看允许值列表，请查阅ShowWindow函数的说明部分</param>
+            <returns>如果函数原来可见，返回值为非零；如果函数原来被隐藏，返回值为零</returns>
+        </member>
+        <member name="M:CommonTool.HelpTool.SetForegroundWindow(System.IntPtr)">
+            <summary>
+             该函数将创建指定窗口的线程设置到前台，并且激活该窗口。键盘输入转向该窗口，并为用户改各种可视的记号。
+             系统给创建前台窗口的线程分配的权限稍高于其他线程。 
+            </summary>
+            <param name="hWnd">将被激活并被调入前台的窗口句柄</param>
+            <returns>如果窗口设入了前台，返回值为非零；如果窗口未被设入前台，返回值为零</returns>
+        </member>
+        <member name="M:CommonTool.HelpTool.IsIconic(System.IntPtr)">
+            <summary>
+            .指定的窗口是否最小化
+            </summary>
+            <param name="hWnd">窗口句柄</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.HelpTool.GetIdleTick">
+            <summary>
+            获取鼠标键盘空闲时间
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.HelpTool.ByteToASCIIString(System.Byte[])">
+            <summary>
+            字节数组转换为ASCII字符串
+            </summary>
+            <param name="array"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.HelpTool.ByteToASCIIString(System.Byte[],System.Int32,System.Int32,System.Char)">
+            <summary>
+            字节数组转换为ASCII字符串
+            </summary>
+            <param name="array"></param>
+            <param name="startIndex"></param>
+            <param name="length"></param>
+            <param name="split"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.HelpTool.ASCIIStringToByte(System.String)">
+            <summary>
+            ASCII字符串转换为字节数组
+            </summary>
+            <param name="strASCII"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.HelpTool.ASCIIStringToByte(System.String,System.String)">
+            <summary>
+            ASCII字符串转换为字节数组
+            </summary>
+            <param name="strASCII"></param>
+            <param name="split"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.HelpTool.GetCurrentInstance(System.Boolean)">
+            <summary>
+            获取当前进程的实例
+            </summary>
+            <param name="bIgnorePath">是否忽略路径比较，如果忽略路径比较，只能运行一个实例；
+            反之同一个路径下的只能运行一个</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.HelpTool.RestartApplication">
+            <summary>
+            重启应用程序
+            </summary>
+        </member>
+        <member name="M:CommonTool.HelpTool.StartApplication(System.String,System.Boolean)">
+            <summary>
+            启动应用程序
+            </summary>
+            <param name="strAppPath">应用程序完整路径</param>
+            <param name="bOneInstance">只运行一个进程</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.HelpTool.IsAppRunning(System.String)">
+            <summary>
+            应用程序是否运行
+            </summary>
+            <param name="strAppName">应用程序的名称，不包含路径和后缀</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.HelpTool.StopApplication(System.String)">
+            <summary>
+            关闭进程
+            </summary>
+            <param name="strAppName">应用程序的名称，不包含路径和后缀</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.HelpTool.GetFileTitle(System.String)">
+            <summary>
+            根据文件路径获取文件标题
+            </summary>
+            <param name="strPath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.HelpTool.EntityToEntity(System.Object,System.Object,System.String[])">
+            <summary>
+            将一个实体类复制到另一个实体类
+            </summary>
+            <param name="objectsrc">源实体类</param>
+            <param name="objectdest">复制到的实体类</param>
+            <param name="excudeFields">不复制的属性</param>
+        </member>
+        <member name="M:CommonTool.HelpTool.ToRad(System.Double)">
+            <summary>
+            转换为弧度
+            </summary>
+            <param name="degree"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.HelpTool.ToDegree(System.Double)">
+            <summary>
+            转换为角度
+            </summary>
+            <param name="rad"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.HelpTool.CopyFolder(System.String,System.String)">
+            <summary>
+            文件夹拷贝
+            </summary>
+            <param name="strSourceFolder">源文件夹</param>
+            <param name="strDestFolder">目标文件夹</param>
+        </member>
+        <member name="M:CommonTool.HelpTool.ConnectShare(System.String,System.String,System.String,System.String@)">
+            <summary>
+            连接共享文件夹
+            </summary>
+            <param name="path">共享路径</param>
+            <param name="user">用户名</param>
+            <param name="password">密码</param>
+            <param name="error">输出错误</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.HelpTool.Encode(System.String)">
+            <summary>
+            文本加密
+            </summary>
+            <param name="strText"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.HelpTool.Decode(System.String)">
+            <summary>
+            字符串解密
+            </summary>
+            <param name="strEncode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.HelpTool.ExportGridToExcel(System.Windows.Forms.DataGridView)">
+            <summary>
+            把DataGridView里的数据导出到Excel表
+            </summary>
+            <param name="grid"></param>
+        </member>
+        <member name="T:CommonTool.Base">
+            <summary>
+            进制
+            </summary>
+        </member>
+        <member name="F:CommonTool.Base.BASE_BINARY">
+            <summary>
+            二进制
+            </summary>
+        </member>
+        <member name="F:CommonTool.Base.BASE_OCTAL">
+            <summary>
+            8进制
+            </summary>
+        </member>
+        <member name="F:CommonTool.Base.BASE_DECIMAL">
+            <summary>
+            10进制
+            </summary>
+        </member>
+        <member name="F:CommonTool.Base.BASE_HEX">
+            <summary>
+            16进制
+            </summary>
+        </member>
+        <member name="T:CommonTool.IniHelper">
+            <summary>
+            INI文件读写类
+            </summary>
+        </member>
+        <member name="M:CommonTool.IniHelper.GetPrivateProfileString(System.String,System.String,System.String,System.Text.StringBuilder,System.Int32,System.String)">
+            <summary>
+            获取INI文件中的键值
+            </summary>
+            <param name="lpAppName">ini节名</param>
+            <param name="lpKeyName">ini键名</param>
+            <param name="lpDefault">默认值：当无对应键值，则返回该值。</param>
+            <param name="lpReturnedString">结果缓冲区</param>
+            <param name="nSize">结果缓冲区大小</param>
+            <param name="lpFileName">ini文件位置</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.WritePrivateProfileString(System.String,System.String,System.String,System.String)">
+            <summary>
+            写入INI文件键值
+            </summary>
+            <param name="lpAppName">ini节名</param>
+            <param name="lpKeyName">ini键名</param>
+            <param name="lpString">写入值</param>
+            <param name="lpFileName">ini文件位置</param>
+            <returns>0：写入失败 1：写入成功</returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.GetPrivateProfileSectionNames(System.Byte[],System.Int32,System.String)">
+            <summary>
+            获取INI文件中所有节点的名称
+            </summary>
+            <param name="lpszReturnBuffer">结果缓冲区</param>
+            <param name="nSize">缓冲区大小</param>
+            <param name="lpFileName">INI文件路径</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.GetPrivateProfileSection(System.String,System.Byte[],System.Int32,System.String)">
+            <summary>
+            获取INI文件中节点对应的所有关键字和值
+            </summary>
+            <param name="lpAppName"></param>
+            <param name="lpReturnedString"></param>
+            <param name="nSize"></param>
+            <param name="lpFileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.WritePrivateProfileSection(System.String,System.String,System.String)">
+            <summary>
+            替换INI文件中的节点名称
+            </summary>
+            <param name="lpAppName">旧节点名称</param>
+            <param name="lpString">新的节点名称</param>
+            <param name="lpFileName">INI文件</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:CommonTool.IniHelper.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="strIniFile"></param>
+        </member>
+        <member name="P:CommonTool.IniHelper.IniFile">
+            <summary>
+            INI文件
+            </summary>
+        </member>
+        <member name="M:CommonTool.IniHelper.GetString(System.String,System.String,System.String)">
+            <summary>
+            获取指定节点的键值
+            </summary>
+            <param name="strSection">节点</param>
+            <param name="strKey">关键字</param>
+            <param name="strDefault">默认值</param>
+            <returns>键值</returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.WriteString(System.String,System.String,System.String)">
+            <summary>
+            写入指定节点键值
+            </summary>
+            <param name="strSection">节点</param>
+            <param name="strKey">关键字</param>
+            <param name="strValue">值</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.AppendString(System.String,System.String,System.String)">
+            <summary>
+            往指定节点和关键字追加字符串
+            </summary>
+            <param name="strSection"></param>
+            <param name="strKey"></param>
+            <param name="strValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.GetArray(System.String,System.String,System.Char,System.Boolean)">
+            <summary>
+            获取指定节点和关键字的数值数组
+            </summary>
+            <param name="strSection"></param>
+            <param name="strKey"></param>
+            <param name="separator">分隔符</param>
+            <param name="bTrim">是否Trim</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.WriteArray(System.String,System.String,System.String[],System.Int32,System.Char)">
+            <summary>
+            写指定节点和关键字的数组
+            </summary>
+            <param name="strSection">节点</param>
+            <param name="strKey">关键字</param>
+            <param name="strArray">字符串数组</param>
+            <param name="nWriteCount">写入数组的长度</param>
+            <param name="separator">分隔符</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.GetInt(System.String,System.String,System.Int32,CommonTool.Base)">
+            <summary>
+            获取指定节点和关键字的数值
+            </summary>
+            <param name="strSection">节点</param>
+            <param name="strKey">关键字</param>
+            <param name="nDefault">默认值</param>
+            <param name="fromBase">进制</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.WriteInt(System.String,System.String,System.Int32,CommonTool.Base)">
+            <summary>
+            写入指定节点关键字的数值
+            </summary>
+            <param name="strSection"></param>
+            <param name="strKey"></param>
+            <param name="nValue"></param>
+            <param name="toBase"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.GetDouble(System.String,System.String,System.Double)">
+            <summary>
+            获取指定节点和关键字的浮点型数值
+            </summary>
+            <param name="strSection"></param>
+            <param name="strKey"></param>
+            <param name="dbDefault"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.WriteDouble(System.String,System.String,System.Double,System.Int32)">
+            <summary>
+            写入指定节点关键字的浮点数数值
+            </summary>
+            <param name="strSection">节点</param>
+            <param name="strKey">关键字</param>
+            <param name="dbValue">数值</param>
+            <param name="nPrecision">精度</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.GetBool(System.String,System.String,System.Boolean)">
+            <summary>
+            获取指定节点和关键字的bool型数值
+            </summary>
+            <param name="strSection"></param>
+            <param name="strKey"></param>
+            <param name="bDefault"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.WriteBool(System.String,System.String,System.Boolean)">
+            <summary>
+            写入指定节点关键字的bool型数值
+            </summary>
+            <param name="strSection"></param>
+            <param name="strKey"></param>
+            <param name="bValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.IsSectionExist(System.String)">
+            <summary>
+            判断节点是否存在
+            </summary>
+            <param name="strSection">节点</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.GetSectionNames">
+            <summary>
+            获取所有的节点
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.DeleteSection(System.String)">
+            <summary>
+            删除节点
+            </summary>
+            <param name="strSection">节点</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.IsKeyExist(System.String,System.String)">
+            <summary>
+            指定键是否存在
+            </summary>
+            <param name="strSection"></param>
+            <param name="strKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.GetKeyNames(System.String)">
+            <summary>
+            获取指定节点的所有键
+            </summary>
+            <param name="strSection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.IniHelper.DeleteKey(System.String,System.String)">
+            <summary>
+            删除键
+            </summary>
+            <param name="strSection"></param>
+            <param name="strKey"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonTool.LanguageMgr">
+            <summary>
+            语言管理类
+            </summary>
+        </member>
+        <member name="T:CommonTool.LanguageMgr.LanguageChangeHandler">
+            <summary>
+            语言改变委托
+            </summary>
+            <param name="strLanguage">语言：en-US、zh-CN</param>
+            <param name="bChange">是改变还是保存</param>
+        </member>
+        <member name="E:CommonTool.LanguageMgr.LanguageChangeEvent">
+            <summary>
+            语言改变事件
+            </summary>
+        </member>
+        <member name="M:CommonTool.LanguageMgr.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:CommonTool.LanguageMgr.ChangeLanguage(System.String,System.Boolean)">
+            <summary>
+            改变语言方法
+            </summary>
+            <param name="strLanName">语言名称，例如en-US zh-CN</param>
+            <param name="bChange">是改变还是保存</param>
+        </member>
+        <member name="M:CommonTool.LanguageMgr.ChangeUIText(System.String,System.Windows.Forms.Control,CommonTool.IniHelper,System.String)">
+            <summary>
+            修改控件文本显示
+            </summary>
+            <param name="strFormName">Form名称</param>
+            <param name="ctrl">控件</param>
+            <param name="ini">ini文件</param>
+            <param name="strParent"></param>
+        </member>
+        <member name="M:CommonTool.LanguageMgr.ChangeUIText(System.String,System.Windows.Forms.MenuStrip,CommonTool.IniHelper)">
+            <summary>
+            修改主菜单文本
+            </summary>
+            <param name="strFormName">Form名称</param>
+            <param name="menu">菜单</param>
+            <param name="ini">ini文件</param>
+        </member>
+        <member name="M:CommonTool.LanguageMgr.ChangeUIText(System.String,System.Windows.Forms.ToolStripMenuItem,CommonTool.IniHelper)">
+            <summary>
+            修改子菜单文本
+            </summary>
+            <param name="strFormName">Form名称</param>
+            <param name="menuItem">子菜单</param>
+            <param name="ini">ini文件</param>
+        </member>
+        <member name="M:CommonTool.LanguageMgr.ChangeUIText(System.String,System.Windows.Forms.StatusStrip,CommonTool.IniHelper)">
+            <summary>
+            修改状态栏文本
+            </summary>
+            <param name="strFormName">Form名称</param>
+            <param name="status">状态栏</param>
+            <param name="ini">ini文件</param>
+        </member>
+        <member name="P:CommonTool.LanguageMgr.Language">
+            <summary>
+            语言 zh-CN - 中文  en-US - 英文
+            </summary>
+        </member>
+        <member name="P:CommonTool.LanguageMgr.LanguageID">
+            <summary>
+            语言代码：0 - 中文  1 - 英文
+            </summary>
+        </member>
+        <member name="M:CommonTool.LanguageMgr.SaveUIText(System.String,System.Windows.Forms.Control,CommonTool.IniHelper,System.String)">
+            <summary>
+            保存UI文本
+            </summary>
+            <param name="strFormName"></param>
+            <param name="ctrl"></param>
+            <param name="ini"></param>
+            <param name="strParent"></param>
+        </member>
+        <member name="M:CommonTool.LanguageMgr.SaveUIText(System.String,System.Windows.Forms.MenuStrip,CommonTool.IniHelper)">
+            <summary>
+            保存主菜单文本
+            </summary>
+            <param name="strFormName">Form名称</param>
+            <param name="menu">主菜单</param>
+            <param name="ini">ini文件</param>
+        </member>
+        <member name="M:CommonTool.LanguageMgr.SaveUIText(System.String,System.Windows.Forms.ToolStripMenuItem,CommonTool.IniHelper)">
+            <summary>
+            保存子菜单文本
+            </summary>
+            <param name="strFormName">Form名称</param>
+            <param name="menuItem">子菜单</param>
+            <param name="ini">ini文件</param>
+        </member>
+        <member name="M:CommonTool.LanguageMgr.SaveUIText(System.String,System.Windows.Forms.StatusStrip,CommonTool.IniHelper)">
+            <summary>
+            保存状态栏文本
+            </summary>
+            <param name="strFormName">Form名称</param>
+            <param name="status">状态栏</param>
+            <param name="ini">ini文件</param>
+        </member>
+        <member name="M:CommonTool.LanguageMgr.GetString(System.String,System.String,System.String,System.String)">
+            <summary>
+            获取中英文字符串
+            </summary>
+            <param name="strNameSpace">命名空间</param>
+            <param name="strClassName">类名</param>
+            <param name="strKey">关键字名称</param>
+            <param name="strDefault">默认字符串</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.LanguageMgr.WriteString(System.String,System.String,System.String,System.String)">
+            <summary>
+            写中英文字符串
+            </summary>
+            <param name="strNameSpace">命名空间</param>
+            <param name="strClassName">类名</param>
+            <param name="strKey">关键字名称</param>
+            <param name="strValue">字符串</param>
+        </member>
+        <member name="T:CommonTool.LogLevel">
+            <summary>
+            日志等级
+            </summary>
+        </member>
+        <member name="F:CommonTool.LogLevel.Info">
+            <summary>
+            信息
+            </summary>
+        </member>
+        <member name="F:CommonTool.LogLevel.Warn">
+            <summary>
+            警告
+            </summary>
+        </member>
+        <member name="F:CommonTool.LogLevel.Error">
+            <summary>
+            错误
+            </summary>
+        </member>
+        <member name="T:CommonTool.LogHandler">
+            <summary>
+            日志信息显示委托函数
+            </summary>
+            <param name="logListBox"></param>
+            <param name="strLog"></param>
+            <param name="level">信息等级</param>
+        </member>
+        <member name="T:CommonTool.LogView">
+            <summary>
+            日志显示到列表框的基类
+            </summary>
+        </member>
+        <member name="E:CommonTool.LogView.LogEvent">
+            <summary>
+            日志信息显示事件
+            </summary>
+        </member>
+        <member name="F:CommonTool.LogView.m_LogList">
+            <summary>
+            用来显示站位运行日志的列表框
+            </summary>
+        </member>
+        <member name="M:CommonTool.LogView.ShowLog(System.String,CommonTool.LogLevel)">
+            <summary>
+            触发日志显示事件
+            </summary>
+            <param name="strLog"></param>
+            <param name="level">显示的等级,便于颜色提示　</param>
+        </member>
+        <member name="M:CommonTool.LogView.SetLogListBox(System.Windows.Forms.Control)">
+            <summary>
+            设置日志要显示在哪个列表框上
+            </summary>
+            <param name="logListBox"></param>
+        </member>
+        <member name="T:CommonTool.UserMode">
+            <summary>
+            系统登录用户
+            </summary>
+        </member>
+        <member name="F:CommonTool.UserMode.Operator">
+            <summary>
+            生产模式, 对应OP权限
+            </summary>
+        </member>
+        <member name="F:CommonTool.UserMode.FAE">
+            <summary>
+            CPK数据模式，对应客服工程师
+            </summary>     
+        </member>
+        <member name="F:CommonTool.UserMode.Adjustor">
+            <summary>
+            调试员模式
+            </summary>
+        </member>
+        <member name="F:CommonTool.UserMode.Engineer">
+            <summary>
+            工程师模式，对应软件工程师
+            </summary>
+        </member>
+        <member name="F:CommonTool.UserMode.Administrator">
+            <summary>
+            管理员模式
+            </summary>
+        </member>
+        <member name="T:CommonTool.Security">
+            <summary>
+            安全权限控制类
+            </summary>
+        </member>
+        <member name="T:CommonTool.Security.ModeChangedHandler">
+            <summary>
+            定义一个模式变化委托函数
+            </summary>
+        </member>
+        <member name="E:CommonTool.Security.ModeChangedEvent">
+            <summary>
+            定义模式变化事件
+            </summary>
+        </member>
+        <member name="M:CommonTool.Security.GetUserMode">
+            <summary>
+            获取当前模式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.Security.IsOpMode">
+            <summary>
+            是否为OP模式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.Security.IsFaeMode">
+            <summary>
+            是否为CPK模式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.Security.IsAdjustorMode">
+            <summary>
+            调试员模式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.Security.IsEngMode">
+            <summary>
+            是否为工程师模式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.Security.IsAdminMode">
+            <summary>
+            是否为管理员模式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.Security.ChangeOpMode">
+            <summary>
+            系统权限切换到OP等级
+            </summary>
+        </member>
+        <member name="M:CommonTool.Security.ChangeFaeMode(System.String)">
+            <summary>
+            系统权限切换到FAE等级
+            </summary>
+            <param name="strPassword"></param>
+            <returns>切换成功或切换失败，成功则对整个系统触发权限变更事件</returns>
+        </member>
+        <member name="M:CommonTool.Security.ChangeAdjustorMode(System.String)">
+            <summary>
+            系统权限切换到调试员
+            </summary>
+            <param name="strPassword"></param>
+            <returns>切换成功或切换失败，成功则对整个系统触发权限变更事件</returns>
+        </member>
+        <member name="M:CommonTool.Security.ChangeEngMode(System.String)">
+            <summary>
+            系统权限切换到工程师等级
+            </summary>
+            <param name="strPassword"></param>
+            <returns>切换成功或切换失败，成功则对整个系统触发权限变更事件</returns>
+        </member>
+        <member name="M:CommonTool.Security.ChangeAdministratorMode(System.String)">
+            <summary>
+            系统权限切换到管理员
+            </summary>
+            <param name="strPassword"></param>
+            <returns>切换成功或切换失败，成功则对整个系统触发权限变更事件</returns>
+        </member>
+        <member name="M:CommonTool.Security.ChangePassword(CommonTool.UserMode,System.String)">
+            <summary>
+            修改用户密码，只有管理员才有权限修改密码
+            </summary>
+            <param name="newMode">用户</param>
+            <param name="strNewPassword">密码</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.Security.ChangeUserMode(CommonTool.UserMode,System.String)">
+            <summary>
+            切换用户模式
+            </summary>
+            <param name="newMode"></param>
+            <param name="strPassword"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonTool.SingletonTemplate`1">
+            <summary>
+            实现单件的模板类
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="F:CommonTool.SingletonTemplate`1.m_instance">
+            <summary>
+            实例引用
+            </summary>
+        </member>
+        <member name="F:CommonTool.SingletonTemplate`1.syslock">
+            <summary>
+            线程互斥对像
+            </summary>
+        </member>
+        <member name="E:CommonTool.SingletonTemplate`1.LogEvent">
+            <summary>
+            日志信息显示事件
+            </summary>
+        </member>
+        <member name="F:CommonTool.SingletonTemplate`1.m_LogListBox">
+            <summary>
+            用来显示站位运行日志的列表框
+            </summary>
+        </member>
+        <member name="M:CommonTool.SingletonTemplate`1.ShowLog(System.String,CommonTool.LogLevel)">
+            <summary>
+            触发日志显示事件
+            </summary>
+            <param name="strLog"></param>
+            <param name="level">显示的等级,便于颜色提示</param>
+        </member>
+        <member name="M:CommonTool.SingletonTemplate`1.SetLogListBox(System.Windows.Forms.Control)">
+            <summary>
+            设置日志要显示在哪个列表框上
+            </summary>
+            <param name="logListBox"></param>
+        </member>
+        <member name="M:CommonTool.SingletonTemplate`1.GetInstance">
+            <summary>
+            获取实例
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:CommonTool.SingletonTemplate`1.m_thread">
+            <summary>
+            实例对像
+            </summary>
+        </member>
+        <member name="F:CommonTool.SingletonTemplate`1.m_bRunThread">
+            <summary>
+            线程是否运行中
+            </summary>
+        </member>
+        <member name="M:CommonTool.SingletonTemplate`1.ThreadMonitor">
+            <summary>
+            线程函数
+            </summary>
+        </member>
+        <member name="M:CommonTool.SingletonTemplate`1.StartMonitor">
+             <summary>
+            开始监视线程 
+             </summary>
+        </member>
+        <member name="M:CommonTool.SingletonTemplate`1.StopMonitor">
+             <summary>
+            结束监视线程 
+             </summary>
+        </member>
+        <member name="T:CommonTool.SystemMode">
+            <summary>
+            系统运行模式设这一，自动运行模式，空跑模式，标定模式，其它自定义模式，
+            </summary>
+        </member>
+        <member name="F:CommonTool.SystemMode.Normal_Run_Mode">
+            <summary>
+            正常运行模式
+            </summary>
+        </member>
+        <member name="F:CommonTool.SystemMode.Dry_Run_Mode">
+            <summary>
+            空跑模式，是否带料由流程决定
+            </summary>
+        </member>
+        <member name="F:CommonTool.SystemMode.Calib_Run_Mode">
+            <summary>
+            自动标定模式
+            </summary>
+        </member>
+        <member name="F:CommonTool.SystemMode.Simulate_Run_Mode">
+            <summary>
+            模拟运行模式
+            </summary>
+        </member>
+        <member name="F:CommonTool.SystemMode.Other_Mode">
+            <summary>
+            其它自定义模式
+            </summary>
+        </member>
+        <member name="T:CommonTool.SystemMgr">
+            <summary>
+            系统管理类
+            </summary>
+        </member>
+        <member name="F:CommonTool.SystemMgr.m_strDescribe">
+            <summary>
+            系统参数配置文件表头
+            </summary>
+        </member>
+        <member name="T:CommonTool.SystemMgr.SystemParam">
+            <summary>
+            系统参数配置文件表头类
+            </summary>
+        </member>
+        <member name="F:CommonTool.SystemMgr.SystemParam.m_strKey">
+            <summary>
+            键值
+            </summary>
+        </member>
+        <member name="F:CommonTool.SystemMgr.SystemParam.m_strValue">
+            <summary>
+            当前值
+            </summary>
+        </member>
+        <member name="F:CommonTool.SystemMgr.SystemParam.m_strUnit">
+            <summary>
+            单位
+            </summary>
+        </member>
+        <member name="F:CommonTool.SystemMgr.SystemParam.m_strMin">
+            <summary>
+            最小值
+            </summary>
+        </member>
+        <member name="F:CommonTool.SystemMgr.SystemParam.m_strMax">
+            <summary>
+            最大值
+            </summary>
+        </member>
+        <member name="F:CommonTool.SystemMgr.SystemParam.m_strDescribe">
+            <summary>
+            参数描述
+            </summary>
+        </member>
+        <member name="F:CommonTool.SystemMgr.SystemParam.m_strTranslate">
+            <summary>
+            参数描述翻译 2020-2-15 Binggoo
+            </summary>
+        </member>
+        <member name="F:CommonTool.SystemMgr.SystemParam.m_nLevel">
+            <summary>
+            权限等级 2020-05-14 Binggoo
+            </summary>
+        </member>
+        <member name="F:CommonTool.SystemMgr.m_strSystemParamName">
+            <summary>
+            定义一个字符串变量,保存系统参数配置文件的名字
+            </summary>
+        </member>
+        <member name="F:CommonTool.SystemMgr.m_DicParam">
+            <summary>
+            定义一个集合变量，保存系统配置文件*SystemParam*.xml的信息
+            </summary>
+        </member>
+        <member name="F:CommonTool.SystemMgr.m_DicTempParam">
+            <summary>
+            定义一个集合变量，保存系统配置文件*SystemParam*.xml的信息,此变量保存切换文件时的值
+            </summary>
+        </member>
+        <member name="T:CommonTool.SystemMgr.BitChangedHandler">
+            <summary>
+            定义一个系统位寄存器的委托,响应自动界面函数
+            </summary>
+            <param name="nIndex"></param>
+            <param name="bBit"></param>
+        </member>
+        <member name="E:CommonTool.SystemMgr.BitChangedEvent">
+            <summary>
+            系统位寄存器变更事件
+            </summary>
+        </member>
+        <member name="T:CommonTool.SystemMgr.IntChangedHandler">
+            <summary>
+            定义一个系统整型寄存器的委托,响应自动界面函数
+            </summary>
+            <param name="nIndex"></param>
+            <param name="nData"></param>
+        </member>
+        <member name="E:CommonTool.SystemMgr.IntChangedEvent">
+            <summary>
+            系统整型寄存器变更事件
+            </summary>
+        </member>
+        <member name="T:CommonTool.SystemMgr.DoubleChangedHandler">
+            <summary>
+            定义一个系统浮点型寄存器的委托,响应自动界面函数
+            </summary>
+            <param name="nIndex"></param>
+            <param name="fData"></param>
+        </member>
+        <member name="E:CommonTool.SystemMgr.DoubleChangedEvent">
+            <summary>
+            系统浮点型寄存器变更事件
+            </summary>
+        </member>
+        <member name="T:CommonTool.SystemMgr.StringChangedHandler">
+            <summary>
+            定义一个字符串型寄存器的委托,响应自动界面函数
+            </summary>
+            <param name="nIndex"></param>
+            <param name="sData"></param>
+        </member>
+        <member name="E:CommonTool.SystemMgr.StringChangedEvent">
+            <summary>
+            字符串型寄存器变更事件
+            </summary>
+        </member>
+        <member name="T:CommonTool.SystemMgr.SystemParamChangedHandler">
+            <summary>
+            系统参数改变委托
+            </summary>
+            <param name="strParam">键值</param>
+            <param name="oldValue">旧值</param>
+            <param name="newValue">新值</param>
+        </member>
+        <member name="E:CommonTool.SystemMgr.SystemParamChangedEvent">
+            <summary>
+            系统参数改变事件
+            </summary>
+        </member>
+        <member name="F:CommonTool.SystemMgr.m_strFileDescribe">
+            <summary>
+            系统配置参数文件头信息
+            </summary>
+        </member>
+        <member name="T:CommonTool.SystemMgr.OnCreate">
+            <summary>
+            文件监控目录下有新文件
+            </summary>
+            <param name="source"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:CommonTool.SystemMgr.OnDelete">
+            <summary>
+            文件监控目录下有删除文件
+            </summary>
+            <param name="source"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:CommonTool.SystemMgr.OnChange">
+            <summary>
+            文件监控目录下有发生文件
+            </summary>
+            <param name="source"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:CommonTool.SystemMgr.OnRename">
+            <summary>
+            文件监控目录下文件名字有变化
+            </summary>
+            <param name="source"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:CommonTool.SystemMgr.StateChangedHandler">
+            <summary>
+            状态变更委托
+            </summary>
+            <param name="Mode"></param>
+        </member>
+        <member name="E:CommonTool.SystemMgr.StateChangedEvent">
+            <summary>
+            定义状态变更事件
+            </summary>
+        </member>
+        <member name="P:CommonTool.SystemMgr.Mode">
+            <summary>
+            当前系统的运行模式
+            </summary>
+        </member>
+        <member name="M:CommonTool.SystemMgr.ChangeMode(CommonTool.SystemMode)">
+            <summary>
+            改变系统运行模式
+            </summary>
+            <param name="Mode"></param>
+        </member>
+        <member name="M:CommonTool.SystemMgr.IsDryRunMode">
+            <summary>
+            判断当前是否属于空跑模式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.IsAutoCalibMode">
+            <summary>
+            判断当前是否属于自动标定模式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.IsSimulateRunMode">
+            <summary>
+            判断当前是否属于模拟运行模式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.IsNormalRunMode">
+            <summary>
+            判断当前是否属于正常运行模式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.#ctor">
+            <summary>
+            构造函数, 初始化内存区
+            </summary>
+        </member>
+        <member name="P:CommonTool.SystemMgr.ScanTime">
+            <summary>
+            获取系统扫描周期时间
+            </summary>
+        </member>
+        <member name="P:CommonTool.SystemMgr.SystemSpeed">
+            <summary>
+            获取系统速度百分比
+            </summary>
+        </member>
+        <member name="M:CommonTool.SystemMgr.LoadParamFile(System.String)">
+            <summary>
+            从XML文件中读取配置文件参数,如加载SystemParam.xml文件
+            </summary>
+            <param name="strFile">文件路径</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.AppendParamFromResource(System.String)">
+            <summary>
+            追加参数配置
+            </summary>
+            <param name="strResource"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.LoadParamFileToGrid(System.String,System.Windows.Forms.DataGridView)">
+            <summary>
+            加载参数文件到表格
+            </summary>
+            <param name="strFile"></param>
+            <param name="grid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.LoadParamFileToGrid(System.String,System.Int32,System.Int32,System.Windows.Forms.DataGridView)">
+            <summary>
+            把指定参数节点加载到表格中显示
+            </summary>
+            <param name="strFile"></param>
+            <param name="nStartNode">开始节点索引，从0开始</param>
+            <param name="nNodeCout">读取节点的数量</param>
+            <param name="grid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.SaveParamFile(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            更新保存配置文件,如更新m_DicParam到SystemParam.xml文件
+            </summary>
+            <param name="strFile">文件路径</param>
+            <param name="strModifier">修改者</param>
+            <param name="strFileDescribe">文件描述</param>
+            <param name="bConfigMode">保存模式,取m_DicTempParam,m_DicParam其中之一</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.GetSystemParamName(System.String)">
+            <summary>
+            从系统文件中获取参数配置文件名
+            </summary>
+            <param name="strFile">加载文件名</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.SaveSystemParamCfgXml(System.Xml.XmlDocument)">
+            <summary>
+            设置保存系统参数文件名
+            </summary>
+            <param name="doc"></param>
+        </member>
+        <member name="M:CommonTool.SystemMgr.AppendSystemParamName(System.String)">
+            <summary>
+            初始化时在systemCfg.xml中没有找到参数配置文件则默认添加systemParam.xml
+            </summary>
+            <param name="strFile"></param>
+        </member>
+        <member name="M:CommonTool.SystemMgr.GetCellString(System.Object)">
+            <summary>
+            更新参数并输出
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.UpdateParamFromTemp">
+            <summary>
+            更新运行参数
+            </summary>
+        </member>
+        <member name="M:CommonTool.SystemMgr.UpdateParamFromGrid(System.Windows.Forms.DataGridView,System.Boolean)">
+            <summary>
+            更新界面表格内容到变量m_DicParam, 支持增加参数
+            </summary>
+            <param name="grid">表格控件关联变量</param>
+            <param name="bConfigMode">当前是否为配置模式(可增加新参数)</param>
+        </member>
+        <member name="M:CommonTool.SystemMgr.UpdateGridFromParam(System.Windows.Forms.DataGridView,System.Boolean)">
+            <summary>
+            更新变量m_DicParam内容到界面表格
+            </summary>
+            <param name="grid">表格控件关联变量</param>
+            <param name="bConfig">默认为false </param>
+        </member>
+        <member name="M:CommonTool.SystemMgr.GetRegBit(System.Int32)">
+            <summary>
+            获取指定的位寄存器的状态
+            </summary>
+            <param name="nIndex">寄存器索引</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.WriteRegBit(System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            向指定的位寄存器写入状态
+            </summary>
+            <param name="nIndex">寄存器索引</param>
+            <param name="bBit">状态值</param>
+            <param name="bNotify">是否通知Form_Auto自动界面</param>
+        </member>
+        <member name="M:CommonTool.SystemMgr.GetRegInt(System.Int32)">
+            <summary>
+            获取指定的整型寄存器的值
+            </summary>
+            <param name="nIndex">寄存器索引</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.WriteRegInt(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            向指定的整型寄存器写入值
+            </summary>
+            <param name="nIndex">寄存器索引</param>
+            <param name="nData">要写入的数值</param>
+            <param name="bNotify">是否通知Form_Auto自动界面</param>
+        </member>
+        <member name="M:CommonTool.SystemMgr.GetRegDouble(System.Int32)">
+            <summary>
+            获取一个浮点型寄存器的值
+            </summary>
+            <param name="nIndex">寄存器的值</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.WriteRegDouble(System.Int32,System.Double,System.Boolean)">
+            <summary>
+            向一个浮点数寄存器写入值
+            </summary>
+            <param name="nIndex">寄存器索引</param>
+            <param name="fData">要写入的值</param>
+            <param name="bNotify">是否通知Form_Auto自动界面</param>
+        </member>
+        <member name="M:CommonTool.SystemMgr.GetRegString(System.Int32)">
+            <summary>
+            获取一个字符串型寄存器的值
+            </summary>
+            <param name="nIndex">寄存器的值</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.WriteRegString(System.Int32,System.String,System.Boolean)">
+            <summary>
+            向一个字符创寄存器写入值
+            </summary>
+            <param name="nIndex">寄存器索引</param>
+            <param name="sData">要写入的值</param>
+            <param name="bNotify">是否通知Form_Auto自动界面</param>
+        </member>
+        <member name="M:CommonTool.SystemMgr.GetParamInt(System.String)">
+            <summary>
+            获取参数整型值
+            </summary>
+            <param name="szParam">字符串值索引</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.SetParamInt(System.String,System.Int32)">
+            <summary>
+            设置参数整型值
+            </summary>
+            <param name="szParam">值索引</param>
+            <param name="nData">整型值</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.GetParamBool(System.String)">
+            <summary>
+            获取参数布尔值
+            </summary>
+            <param name="szParam">字符串值索引</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.SetParamBool(System.String,System.Boolean)">
+            <summary>
+            设置参数布尔值
+            </summary>
+            <param name="szParam">值索引</param>
+            <param name="bBit">布尔值</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.GetParamDouble(System.String)">
+            <summary>
+            获取参数浮点数值
+            </summary>
+            <param name="szParam">字符串值索引</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.SetParamDouble(System.String,System.Double)">
+            <summary>
+            设置参数浮点数值
+            </summary>
+            <param name="szParam">值索引</param>
+            <param name="fData">浮点值</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.GetParamString(System.String)">
+            <summary>
+            获取参数字符串值
+            </summary>
+            <param name="szParam">值索引</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.SetParamString(System.String,System.String)">
+            <summary>
+            设置参数字符串值
+            </summary>
+            <param name="szParam">值索引</param>
+            <param name="strData">字符串值</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.GetLogPath(System.String)">
+            <summary>
+            得到保存log路径下子文件夹的绝对路径
+            </summary>
+            <param name="strSubDir"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.GetImagePath(System.String)">
+            <summary>
+            得到保存Image路径下子文件夹的绝对路径
+            </summary>
+            <param name="strSubDir"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.GetDataPath(System.String)">
+            <summary>
+            得到保存data路径下子文件夹的绝对路径
+            </summary>
+            <param name="strSubDir"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.GetReportPath(System.String)">
+            <summary>
+            获取自动测试报告路径
+            </summary>
+            <param name="strSubDir"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.CopyFiles(System.String,System.String)">
+            <summary>
+            复制文件夹中的所有文件夹与文件到另一个文件夹
+            </summary>
+            <param name="sourcePath">源文件夹</param>
+            <param name="destPath">目标文件夹</param>
+        </member>
+        <member name="M:CommonTool.SystemMgr.MoveFiles(System.String,System.String)">
+            <summary>
+            移动文件夹中的所有文件夹与文件到另一个文件夹
+            </summary>
+            <param name="strDir">源文件夹</param>
+            <param name="strDestDir">目的文件夹</param>
+        </member>
+        <member name="M:CommonTool.SystemMgr.MonitorImgFile(System.Int32,System.String,System.String,CommonTool.SystemMgr.OnCreate,CommonTool.SystemMgr.OnDelete,CommonTool.SystemMgr.OnRename,CommonTool.SystemMgr.OnChange)">
+            <summary>
+            监控指定目录文件夹下文件的增加、改变、删除、重命名
+            </summary>
+            <param name="numberFile">数组索引</param>
+            <param name="strMonitorFloder">要监控的指定目录文件夹</param>
+            <param name="strFilter">指定文件类型,可以过滤掉其他类型的文件</param>
+            <param name="fileCreate">文件创建事件</param>
+            <param name="fileDelete">文件删除事件</param>
+            <param name="fileRename">文件重命名事件</param>
+            <param name="fileChange">文件内容改变事件</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.StopMonitorImgFile(System.Int32)">
+            <summary>
+            停止对文件夹的监视
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.SystemMgr.OnCreated(System.Object,System.IO.FileSystemEventArgs)">
+            <summary>
+            监视文件增加处理过程
+            </summary>
+            <param name="source"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonTool.SystemMgr.OnChanged(System.Object,System.IO.FileSystemEventArgs)">
+            <summary>
+            监视文件改变处理过程
+            </summary>
+            <param name="source"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonTool.SystemMgr.OnDeleted(System.Object,System.IO.FileSystemEventArgs)">
+            <summary>
+            监视文件增删除处理过程
+            </summary>
+            <param name="source"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonTool.SystemMgr.OnRenamed(System.Object,System.IO.RenamedEventArgs)">
+            <summary>
+            监视文件重命名处理过程
+            </summary>
+            <param name="source"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonTool.SystemMgr.CheckSystemIdle">
+            <summary>
+            检测屏幕鼠标键盘是否无操作超过设定的时间
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:CommonTool.ErrorType">
+            <summary>
+            错误类型
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Info">
+            <summary>
+            信息
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Emg">
+            <summary>
+            急停错误
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Warn">
+            <summary>
+            报警
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion">
+            轴控制错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_Init">
+            <summary>
+            轴初始化错误
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_DeInit">
+            轴释放错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_ServoOn">
+            <summary>
+            轴使能错误
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_ServoOff">
+            <summary>
+            轴去使能错误
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_Home">
+            <summary>
+            轴回原点错误
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_Abs">
+            <summary>
+            轴绝对运动错误
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_Rel">
+            <summary>
+            轴相对运动错误
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_Jog">
+            <summary>
+            轴JOG运行错误
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_Vel">
+            <summary>
+            轴速度运动错误
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_Stop">
+            <summary>
+            轴停止错误
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_EmgStop">
+            <summary>
+            轴急停错误
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_State">
+            <summary>
+            轴状态错误
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_SetPos">
+            <summary>
+            设置轴位置错误
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_SetParam">
+            <summary>
+            设置轴参数错误
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_TimeOut">
+            <summary>
+            轴运动超时
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_El_TimeOut">
+            <summary>
+            限位超时
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_Pel_TimeOut">
+            <summary>
+            正限位超时
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_Mel_TimeOut">
+            <summary>
+            负限位超时
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_Org_TimeOut">
+            <summary>
+            原点超时
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Motion_Home_TimeOut">
+            <summary>
+            HOME超时
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_IO">
+            IO控制错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_IO_Init">
+            IO初始化错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_IO_Read_In">
+            IO读输入错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_IO_Read_Out">
+            IO读输出错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_IO_Write">
+            IO写错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_IO_State">
+            <summary>
+            IO状态错误
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_IO_TimeOut">
+            IO超时错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Robot">
+            机器人错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Com">
+            串口通信错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Com_Open">
+            串口打开错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Com_Read">
+            串口读错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Com_Write">
+            串口写错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Com_TimeOut">
+            串口超时错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Tcp">
+            网络通信错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Tcp_Open">
+            网络打开错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Tcp_Read">
+            网络读错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Tcp_Write">
+            网络写错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Tcp_TimeOut">
+            网络超时错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Opc">
+            OPC通信错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Opc_Open">
+            OPC打开错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Opc_Read">
+            OPC读错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Opc_Write">
+            OPC写错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Opc_TimeOut">
+            OPC超时错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Plc">
+            PLC通信错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Plc_Open">
+            PLC打开错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Plc_Read">
+            PLC读错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Plc_Write">
+            PLC写错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Plc_TimeOut">
+            PLC超时错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Work_Flow">
+            流程错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_RegBit_TimeOut">
+            <summary>
+            位寄存器超时
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_RegInt_TimeOut">
+            <summary>
+            整型寄存器超时
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_RegDouble_TimeOut">
+            <summary>
+            浮点寄存器超时
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_RegString_TimeOut">
+            <summary>
+            字符串寄存器超时
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Vision">
+            <summary>
+            视觉错误
+            </summary>
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Vision_Open">
+            视觉打开错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Vision_Snap">
+            视觉拍照错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Vision_Process">
+            视觉处理错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Vision_Param">
+            视觉参数错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_System">
+            系统错误
+        </member>
+        <member name="F:CommonTool.ErrorType.Err_Und">
+            未定义错误
+        </member>
+        <member name="T:CommonTool.WarningEventData">
+            <summary>
+            报警事件类封装
+            </summary>
+        </member>
+        <member name="F:CommonTool.WarningEventData.bAdd">
+             <summary>
+            判断是增加还是删除信息 
+             </summary>
+        </member>
+        <member name="F:CommonTool.WarningEventData.nIndex">
+             <summary>
+            增加或删除信息的索引号 
+             </summary>
+        </member>
+        <member name="M:CommonTool.WarningEventData.#ctor(System.Boolean,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="bAdd"></param>
+            <param name="nIndex"></param>
+        </member>
+        <member name="T:CommonTool.WARNING_DATA">
+            <summary>
+            报警数据
+            </summary>
+        </member>
+        <member name="F:CommonTool.WARNING_DATA.tm">
+            <summary>
+            报警时间
+            </summary>
+        </member>
+        <member name="F:CommonTool.WARNING_DATA.strLevel">
+            <summary>
+            报警等级
+            </summary>
+        </member>
+        <member name="F:CommonTool.WARNING_DATA.strCode">
+            <summary>
+            报警错误码
+            </summary>
+        </member>
+        <member name="F:CommonTool.WARNING_DATA.strCategory">
+            <summary>
+            报警种类
+            </summary>
+        </member>
+        <member name="F:CommonTool.WARNING_DATA.strObject">
+            <summary>
+            报警对象
+            </summary>
+        </member>
+        <member name="F:CommonTool.WARNING_DATA.strMsg">
+            <summary>
+            报警信息
+            </summary>
+        </member>
+        <member name="F:CommonTool.WARNING_DATA.strLog">
+            <summary>
+            包含完整信息的log
+            </summary>
+        </member>
+        <member name="T:CommonTool.WarningMgr">
+            <summary>
+            报警日志管理类
+            </summary>
+        </member>
+        <member name="F:CommonTool.WarningMgr.m_listError">
+            <summary>
+            内存中的错误列表
+            </summary>
+        </member>
+        <member name="E:CommonTool.WarningMgr.WarningEventHandler">
+            <summary>
+            报警事件
+            </summary>
+        </member>
+        <member name="F:CommonTool.WarningMgr.m_syncLock">
+            <summary>
+            多线程互斥锁
+            </summary>
+        </member>
+        <member name="T:CommonTool.WarningMgr.TransformHandler">
+            <summary>
+            自定义转换委托
+            </summary>
+            <param name="wd"></param>
+            <returns></returns>
+        </member>
+        <member name="E:CommonTool.WarningMgr.TransformEvent">
+            <summary>
+            自定义转换事件
+            </summary>
+        </member>
+        <member name="M:CommonTool.WarningMgr.#ctor">
+             <summary>
+            初始化,加载启动目录下的配置文件log4net.config 
+             </summary>
+        </member>
+        <member name="M:CommonTool.WarningMgr.ReadXmlConfig(System.String)">
+            <summary>
+            读取日志参数配置
+            </summary>
+            <param name="strFile"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.WarningMgr.CheckLogPath">
+            <summary>
+            根据当前配置的日志文件路径变更log4net的存储路径
+            </summary>
+        </member>
+        <member name="M:CommonTool.WarningMgr.Info(System.String)">
+             <summary>
+            保存一条信息日志 
+             </summary>
+             <param name="strMsg"></param>
+        </member>
+        <member name="M:CommonTool.WarningMgr.Warning(System.String)">
+             <summary>
+            系统产生警告时调用,增加一条警告日志,并保存到错误日志文件和系统日志 
+             </summary>
+             <param name="strMsg"></param>
+        </member>
+        <member name="M:CommonTool.WarningMgr.Warning(System.String,System.String)">
+             <summary>
+            系统产生警告时调用,增加一条警告日志,并保存到错误日志文件和系统日志 
+             </summary>
+             <param name="strMsg"></param>
+             <param name="strObject">报警对象</param>
+        </member>
+        <member name="M:CommonTool.WarningMgr.Error(System.String)">
+             <summary>
+            系统产生错误时调用,增加一条错误日志,并保存到错误日志文件和系统日志
+             </summary>
+             <param name="strMsg"></param>
+        </member>
+        <member name="M:CommonTool.WarningMgr.Error(CommonTool.ErrorType,System.String,System.String)">
+            <summary>
+            系统产生错误时调用,增加一条错误日志,并保存到错误日志文件和系统日志
+            </summary>
+            <param name="type">错误类型</param>
+            <param name="strObject">错误对象</param>
+            <param name="strMsg">错误消息</param>
+        </member>
+        <member name="M:CommonTool.WarningMgr.Error(System.String,System.String,System.String,System.String)">
+            <summary>
+            系统产生错误时调用,增加一条错误日志,并保存到错误日志文件和系统日志
+            </summary>
+            <param name="strErrCode"></param>
+            <param name="strType"></param>
+            <param name="strObject"></param>
+            <param name="strMsg"></param>
+        </member>
+        <member name="M:CommonTool.WarningMgr.AddNewError(System.String,System.String)">
+             <summary>
+            增加一条新的错误信息 
+             </summary>
+             <param name="strMessage"></param>
+             <param name="strLevel"></param>
+        </member>
+        <member name="M:CommonTool.WarningMgr.HasErrorMsg">
+             <summary>
+            判断当前是否存在错误信息 
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="P:CommonTool.WarningMgr.Count">
+            <summary>
+            当前错误报警信息的总个数
+            </summary>
+        </member>
+        <member name="M:CommonTool.WarningMgr.GetLastMsg">
+             <summary>
+            得到错误信息中的最后一条信息 
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:CommonTool.WarningMgr.GetWarning(System.Int32)">
+            <summary>
+            获取指定索引位的错误信息
+            </summary>
+            <param name="nIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTool.WarningMgr.SaveError(CommonTool.WARNING_DATA)">
+             <summary>
+            保存错误信息到错误日志文件 
+             </summary>
+             <param name="wd"></param>
+        </member>
+        <member name="M:CommonTool.WarningMgr.ClearWarning(System.Int32)">
+             <summary>
+            清除m_listError的一条信息,并保存此条信息到错误日志文件 
+             </summary>
+             <param name="nIndex"></param>
+        </member>
+        <member name="M:CommonTool.WarningMgr.ClearAllWarning">
+             <summary>
+            清空当前错误信息列表,并保存信息到错误日志文件 
+             </summary>
+        </member>
+        <member name="M:CommonTool.WarningMgr.SnapScreen">
+            <summary>
+            截屏
+            </summary>
+        </member>
+    </members>
+</doc>

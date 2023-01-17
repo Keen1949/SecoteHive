@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SystemCfg>
+  <Opc>
+    <Opc 服务器IP="" 服务器名称="KEPware.KEPServerEx.V4" 组名称="PLC" 刷新频率="250" 启用="False" />
+  </Opc>
+  <Data>
+    <DataShow 是否保存="False">
+    </DataShow>
+    <DataSave 保存类型="DB" Server="127.0.0.1" Port="3306" UserID="root" Password="483B2D2B273C2D6B78797B" Database="test" TableName="table_test" 保存路径="D:\exe\pdca" 是否保存="True">
+      <Item 名称="开始时间" 数据索引="m_dtBeginTime" />
+      <Item 名称="结束时间" 数据索引="m_dtEndTime" />
+      <Item 名称="Recheck_X" 数据索引="m_dbRecheckX" />
+      <Item 名称="Recheck_Y" 数据索引="m_dbRecheckY" />
+      <Item 名称="二维码" 数据索引="m_strBarCode" />
+    </DataSave>
+  </Data>
+  <Robot>
+    <!--配置机器人信息-->
+    <!--通信方式：0 - TCP网络通信 1 - COM串口通信-->
+    <!--远程：远程控制机器人的通信索引号-->
+    <!--手控：手动调试控制机器人的通信索引号-->
+    <!--监视：监控机器人的通信索引号-->
+    <Robot 序号="1" 名称="Strobe机器人" 品牌="Epson" 通信方式="0" 远程="0" 手控="1" 监视="2">
+      <!--用于配置远程控制IO-->
+      <SysIoIn>
+        <SysIoIn 功能描述="就绪" 点位名称="Strobe机器人Ready" 有效电平="1" 启用="1" />
+        <SysIoIn 功能描述="运行" 点位名称="Strobe机器人Running" 有效电平="1" 启用="1" />
+        <SysIoIn 功能描述="暂停" 点位名称="Strobe机器人Paused" 有效电平="1" 启用="1" />
+        <SysIoIn 功能描述="急停" 点位名称="Strobe机器人Estop" 有效电平="1" 启用="1" />
+        <SysIoIn 功能描述="警告" 点位名称="Strobe机器人Warning" 有效电平="1" 启用="0" />
+      </SysIoIn>
+      <SysIoOut>
+        <SysIoOut 功能描述="启动" 点位名称="Strobe机器人启动" 有效电平="2" 脉冲宽度="500" 启用="1" />
+        <SysIoOut 功能描述="停止" 点位名称="Strobe机器人停止" 有效电平="2" 脉冲宽度="500" 启用="1" />
+        <SysIoOut 功能描述="暂停" 点位名称="Strobe机器人暂停" 有效电平="2" 脉冲宽度="500" 启用="1" />
+        <SysIoOut 功能描述="复位" 点位名称="Strobe机器人复位" 有效电平="2" 脉冲宽度="500" 启用="1" />
+        <SysIoOut 功能描述="继续" 点位名称="Strobe机器人继续" 有效电平="2" 脉冲宽度="500" 启用="1" />
+      </SysIoOut>
+      <!--用于配置机器人IO-->
+      <IoIn>
+        <IoIn 点序号="8" 点位名称="取料气缸升" />
+        <IoIn 点序号="9" 点位名称="取料气缸降" />
+        <IoIn 点序号="10" 点位名称="取料真空检" />
+      </IoIn>
+      <IoOut>
+        <IoOut 点序号="8" 点位名称="取料气缸升" />
+        <IoOut 点序号="9" 点位名称="取料气缸降" />
+        <IoOut 点序号="10" 点位名称="取料真空吸" />
+      </IoOut>
+      <!--用于配置机器人点位-->
+      <Point>
+        <Point 点序号="0" 点位名称="初始位置" />
+        <Point 点序号="1" 点位名称="取料点" />
+        <Point 点序号="2" 点位名称="中转点" />
+      </Point>
+      <!--用于配置发送给机器人的命令-->
+      <Cmd>
+        <Cmd 命令="Init" 描述="初始化" 参数数量="6" 回复="Init" />
+      </Cmd>
+    </Robot>
+  </Robot>
+  <Light>
+  </Light>
+  <Cylinder>
+  </Cylinder>
+  <RunMode>
+    <Calib />
+    <GRR>
+    </GRR>
+  </RunMode>
+  <Server>
+    <Server 序号="1" 本地IP地址="192.168.1.22" 监听端口="3000" 启用="True" />
+    <Server 序号="2" 本地IP地址="192.168.1.22" 监听端口="3001" 启用="True" />
+    <Server 序号="3" 本地IP地址="192.168.1.22" 监听端口="3002" 启用="True" />
+    <Server 序号="4" 本地IP地址="192.168.1.50" 监听端口="8501" 启用="True" />
+  </Server>
+</SystemCfg>
